@@ -1,3 +1,4 @@
+// navbar
 const toggleBtn = document.getElementById('toggleBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const hamburgerIcon = document.getElementById('hamburgerIcon');
@@ -14,3 +15,8 @@ const toggleBtn = document.getElementById('toggleBtn');
         hamburgerIcon.classList.add('fa-xmark');
       }
     });
+
+
+
+
+
