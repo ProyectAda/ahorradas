@@ -39,6 +39,7 @@
         </div>
     </header>
     <!-- -----------------------BALANCE--------------- -->
+     <!---------------------section balance--------------->
     <section>
             <div class="lg:grid grid-cols-3 gap-3">
                 <div class="pt-12 lg:p-4 lg:pt-10 ">
@@ -69,6 +70,78 @@
                             </div>
                         </div>
                     </div>
+                    <!-- ------------------------filtros-------------- -->
+                    <div class=" m-5 w-70 h-80 rounded-lg bg-white md:w-70 h-96 lg:w-72">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <h4 class="p-4 text-[25px] font-sans font-bold">Filtros</h4>
+                            </div>
+                            <div class="pt-6 md:text-right pr-8 ">
+                                <a href="#" class="text-base ">Ocultar filtros</a>
+                            </div>
+                        </div>
+                        <div id="despliege-filtro">
+                            <div class="pl-4">
+                                <label for="label" class="font-bold">Tipo</label>
+                                <div>
+                                    <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60 ">
+                                        <select name="tipo" id="" class="w-52 md:w-[42rem] p-2 lg:w-56">
+                                            <option value="todos">Todos</option>
+                                            <option value="gasto">Gastos</option>
+                                            <option value="ganancia">Ganancias</option>                     
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pl-4">
+                                <label for="label" class="font-bold">Categoría</label>
+                                <div>
+                                    <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60 ">
+                                        <select name="categoria" id="" class="w-52 md:w-[42rem] p-2 lg:w-56">
+                                            <option value="todos">Todas</option>
+                                            <option value="comida">Comida</option>
+                                            <option value="servicios">Servicios</option> 
+                                            <option value="salidas">Salidas</option> 
+                                            <option value="educacion">Educación</option>
+                                            <option value="transporte">Transporte</option>
+                                            <option value="trabajo">Trabajo</option>                       
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pl-4">
+                                <label for="date" class="font-bold">Desde</label>
+                                <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60 ">
+                                    <input type="date" id="" class="w-52 md:w-[42.5rem] p-2 lg:w-56 ">
+                                </div>
+                            </div>
+                            <div class="pl-4" >
+                                <label for="label" class="font-bold">Ordenar por</label>
+                                <div>
+                                    <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60 ">
+                                        <select name="fitroOrdenar" id="" class="w-52 md:w-[42rem] p-2 lg:w-56">
+                                            <option value="recientes">Mas reciente</option>
+                                            <option value="antiguas">Menos reciente</option>
+                                            <option value="monto_mayor">Mayor monto</option>  
+                                            <option value="monto_menor">Menor monto</option>         
+                                            <option value="A/Z">A/Z</option>      
+                                            <option value="Z/A">Z/A</option>        
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
 
 
 
