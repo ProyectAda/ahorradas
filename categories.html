@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/641b5da981.js" crossorigin="anonymous"></script>
+    <title>AhorrADAS</title>
+</head>
+
+    <body class="bg-slate-50">
+    <header>
+        <!-- Barra de navegación -->
+        <nav class="bg-[#00d1b2] p-4">
+          <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-white text-2xl font-semibold hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-wallet p-2 "></i>AhorrADAS</a>
+      
+            <!-- Botón de hamburguesa para pantallas pequeñas -->
+            <div class="block lg:hidden">
+                <button id="toggleBtn" class="text-white focus:outline-none ">
+                    <i id="hamburgerIcon" class="fa-solid fa-bars text-xl hover:bg-[#00947e]/[.36] p-2 rounded-lg "></i>
+                  </button>
+            </div>
+      
+            <!-- Menú de navegación -->
+            <div class="hidden lg:flex space-x-4">
+              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-line p-2"></i>Balance</a>
+              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-tag p-2 "></i>Categorías</a>
+              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
+            </div>
+          </div>
+        </nav>
+      
+        <!-- Menú desplegable para pantallas pequeñas -->
+        <div id="mobileMenu" class="lg:hidden hidden bg-white">
+          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-line p-2"></i>Balance</a>
+          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fa-solid fa-tag p-2"></i>Categorías</a>
+          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
+        </div>
+    </header>
+    
+          <!-- Contenedor de categorías -->
+          <section class="m-4 sm:m-6 md:m-8 lg:m-12">
+            <div class="max-w-full mx-auto bg-white p-4 sm:p-6 md:p-8 lg:p-10 rounded-md shadow-md">
+        
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Categorías</h1>
+        
+                <div class="flex flex-col mb-4">
+                    <label for="category" class="block text-sm sm:text-base md:text-lg lg:text-xl font-medium text-gray-600 mb-2">Nombre:</label>
+                    <div class="flex items-center">
+                        <input type="text" id="category" class="p-2 border rounded-md flex-1 mr-2">
+                        <button onclick="addCategory()" class="bg-[#48c774] text-white px-2 sm:px-3 md:px-4 lg:px-5 py-2 rounded-md">Agregar</button>
+                    </div>
+                </div>
+        
+                <div id="categoryList" class="mt-4">
+                    <!-- Aquí se mostrarán las categorías -->
+                </div>
+        
+            </div>
+        </section>
+<script src="./index.js"></script>
+</body>
+</html>
