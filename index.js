@@ -45,11 +45,26 @@ const toggleBtn = document.getElementById('toggleBtn');
     const fechaNuevaOperacion = document.getElementById("fecha-nueva-operacion");
     const botonAgregarNuevaOperacion = document.getElementById("boton-agregar-operacion");
     const operacionesRealizadas = document.getElementById("operaciones-realizadas");
-    console.log('operacionesRealizadas:', operacionesRealizadas);
-    
     const sinOperaciones = document.getElementById("sin-operaciones");
     const acciones=document.getElementById("acciones")
     
+// local storage
+const guardarDatosLocal = (array) => {
+    const datosGuardadosJSON = JSON.stringify(array);
+    localStorage.setItem('operaciones', datosGuardadosJSON);
+}
+
+// recupero datos del local
+const obtenerDatosLocal = () => {
+    const datosGuardadosEnElLocalStorage = localStorage.getItem('operaciones');
+    const datosGuardadosJSONaJS = JSON.parse(datosGuardadosEnElLocalStorage);
+    
+    if (datosGuardadosEnElLocalStorage === null) {
+        return [];
+    } else {
+        return datosGuardadosJSONaJS;
+    }
+}
 
     // Array de operaciones
     let arrayDeOperaciones = [];
@@ -104,12 +119,28 @@ const toggleBtn = document.getElementById('toggleBtn');
          
         });
      
-        console.log('Contenido de operacionesHTML:', operacionesHTML);
         operacionesRealizadas.innerHTML = operacionesHTML;
-        // Quitar la clase 'hidden' después de establecer el contenido
         operacionesRealizadas.classList.remove("hidden");
-        console.log('Clase "hidden" eliminada');
+
     };
+
+const inicializarPagina = () => {
+    arrayDeOperaciones = obtenerDatosLocal();
+
+    if (arrayDeOperaciones.length > 0) {
+        mostrarOperacionesEnHTML(arrayDeOperaciones);
+        operacionesRealizadas.classList.remove("hidden");
+        sinOperaciones.classList.add("hidden");
+    } else {
+        operacionesRealizadas.classList.add("hidden");
+        sinOperaciones.classList.remove("hidden");
+    }
+};
+
+    document.addEventListener("DOMContentLoaded", inicializarPagina);
+
+
+
     //boton agregar nueva operacion
     botonAgregarNuevaOperacion.addEventListener('click', () => {
         arrayDeOperaciones.push({
@@ -120,164 +151,172 @@ const toggleBtn = document.getElementById('toggleBtn');
             categoria: categoriaNuevaOperacion.value,
             fecha: fechaNuevaOperacion.value,    
         });
-
+        guardarDatosLocal(arrayDeOperaciones);
         mostrarOperacionesEnHTML(arrayDeOperaciones);
         seccionAgregarOperacion.classList.add("hidden");
         seccionBalances.classList.remove("hidden")
         operacionesRealizadas.classList.remove("hidden")
         sinOperaciones.classList.add("hidden")
         
-       
+
     });
 
-//boton eliminar elementos
-    const eliminarElemento = (id) => {
-        arrayDeOperaciones = arrayDeOperaciones.filter((elemento) => {
-            return elemento.id !== parseInt(id);
-        });
-        mostrarOperacionesEnHTML(arrayDeOperaciones);
-    };
-    mostrarOperacionesEnHTML(arrayDeOperaciones);
 
-//boton editar
 
-const editarElemento = (id)=> {
-    const operacionSeleccionada = arrayDeOperaciones.find(elemento => elemento.id === id);
-    const seccionEditarOperacionHTML = `
-    <!-- Barra de navegación -->
-        <nav class="bg-[#00d1b2] p-4">
-          <div class="container mx-auto flex justify-between items-center">
-            <!-- Logo -->
-            <a href="#" class="text-white text-2xl font-semibold hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-wallet p-2 "></i>AhorrADAS</a>
+
+
+
+
+
+
+// //boton eliminar elementos
+//     const eliminarElemento = (id) => {
+//         arrayDeOperaciones = arrayDeOperaciones.filter((elemento) => {
+//             return elemento.id !== parseInt(id);
+//         });
+//         mostrarOperacionesEnHTML(arrayDeOperaciones);
+//     };
+//     mostrarOperacionesEnHTML(arrayDeOperaciones);
+
+// //boton editar
+
+// const editarElemento = (id)=> {
+//     const operacionSeleccionada = arrayDeOperaciones.find(elemento => elemento.id === id);
+//     const seccionEditarOperacionHTML = `
+//     <!-- Barra de navegación -->
+//         <nav class="bg-[#00d1b2] p-4">
+//           <div class="container mx-auto flex justify-between items-center">
+//             <!-- Logo -->
+//             <a href="#" class="text-white text-2xl font-semibold hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-wallet p-2 "></i>AhorrADAS</a>
       
-            <!-- Botón de hamburguesa para pantallas pequeñas -->
-            <div class="block lg:hidden">
-                <button id="toggleBtn" class="text-white focus:outline-none ">
-                    <i id="hamburgerIcon" class="fa-solid fa-bars text-xl hover:bg-[#00947e]/[.36] p-2 rounded-lg "></i>
-                  </button>
-            </div>
+//             <!-- Botón de hamburguesa para pantallas pequeñas -->
+//             <div class="block lg:hidden">
+//                 <button id="toggleBtn" class="text-white focus:outline-none ">
+//                     <i id="hamburgerIcon" class="fa-solid fa-bars text-xl hover:bg-[#00947e]/[.36] p-2 rounded-lg "></i>
+//                   </button>
+//             </div>
       
-            <!-- Menú de navegación -->
-            <div class="hidden lg:flex space-x-4">
-              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-line p-2"></i>Balance</a>
-              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-tag p-2 "></i>Categorías</a>
-              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
-            </div>
-          </div>
-        </nav>
+//             <!-- Menú de navegación -->
+//             <div class="hidden lg:flex space-x-4">
+//               <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-line p-2"></i>Balance</a>
+//               <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-tag p-2 "></i>Categorías</a>
+//               <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
+//             </div>
+//           </div>
+//         </nav>
       
-        <!-- Menú desplegable para pantallas pequeñas -->
-        <div id="mobileMenu" class="lg:hidden hidden bg-white">
-          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-line p-2"></i>Balance</a>
-          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fa-solid fa-tag p-2"></i>Categorías</a>
-          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
-        </div>
-    <section class="hidden" id="seccionEditarOperacion">
-    <div class="ml-4 mt-20 mb-16 w-72 h-[40rem] rounded-lg bg-white md:w-[46rem] md:h-[40rem] lg:ml-36 shadow-2xl ">
-        <h2 class="text-4xl ml-5 mr-4 pt-6 pb-10 font-bold  ">Editar operación</h2>
-        <div>
-            <label class="ml-4 font-bold">Descripción</label>
-            <div class="ml-4 pt-2 pb-2">
-                <input type="text" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="input-descripcion-nueva-operacion">
-            </div>
-        </div>
-        <div>
-            <label class="ml-4 font-bold">Monto</label>
-            <div class="ml-4 pt-2 pb-2">
-                <input type="number" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="monto-nueva-operacion">
-            </div>
-        </div>
-        <div>
-            <label class="ml-4 font-bold">Tipo</label>
-            <div class="ml-4 pt-2 pb-2">
-                <select id="tipo-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
-                    <option value="ganancia">Ganancia</option>
-                    <option value="gasto">Gasto</option>
-                </select>
-            </div>
-        </div>
-        <div>
-            <label class="ml-4 font-bold">Categoría</label>
-            <div class="ml-4 pt-2 pb-2">
-                <select id="categoria-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
-                    <option value="servicios">Servicios</option>
-                    <option value="salidas">Salidas</option>
-                    <option value="educacion">Educación</option>
-                    <option value="transporte">Transporte</option>
-                    <option value="trabajo">Trabajo</option>
-                </select>
-            </div>
-        </div>
-        <div>
-            <label class="ml-4 font-bold " for="date">Fecha</label>
-            <div class="ml-4 pt-2 pb-2">
-                <input class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="fecha-nueva-operacion" type="date" value="2023-12-22">
+//         <!-- Menú desplegable para pantallas pequeñas -->
+//         <div id="mobileMenu" class="lg:hidden hidden bg-white">
+//           <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-line p-2"></i>Balance</a>
+//           <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fa-solid fa-tag p-2"></i>Categorías</a>
+//           <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
+//         </div>
+//     <section class="hidden" id="seccionEditarOperacion">
+//     <div class="ml-4 mt-20 mb-16 w-72 h-[40rem] rounded-lg bg-white md:w-[46rem] md:h-[40rem] lg:ml-36 shadow-2xl ">
+//         <h2 class="text-4xl ml-5 mr-4 pt-6 pb-10 font-bold  ">Editar operación</h2>
+//         <div>
+//             <label class="ml-4 font-bold">Descripción</label>
+//             <div class="ml-4 pt-2 pb-2">
+//                 <input type="text" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="input-descripcion-nueva-operacion">
+//             </div>
+//         </div>
+//         <div>
+//             <label class="ml-4 font-bold">Monto</label>
+//             <div class="ml-4 pt-2 pb-2">
+//                 <input type="number" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="monto-nueva-operacion">
+//             </div>
+//         </div>
+//         <div>
+//             <label class="ml-4 font-bold">Tipo</label>
+//             <div class="ml-4 pt-2 pb-2">
+//                 <select id="tipo-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
+//                     <option value="ganancia">Ganancia</option>
+//                     <option value="gasto">Gasto</option>
+//                 </select>
+//             </div>
+//         </div>
+//         <div>
+//             <label class="ml-4 font-bold">Categoría</label>
+//             <div class="ml-4 pt-2 pb-2">
+//                 <select id="categoria-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
+//                     <option value="servicios">Servicios</option>
+//                     <option value="salidas">Salidas</option>
+//                     <option value="educacion">Educación</option>
+//                     <option value="transporte">Transporte</option>
+//                     <option value="trabajo">Trabajo</option>
+//                 </select>
+//             </div>
+//         </div>
+//         <div>
+//             <label class="ml-4 font-bold " for="date">Fecha</label>
+//             <div class="ml-4 pt-2 pb-2">
+//                 <input class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="fecha-nueva-operacion" type="date" value="2023-12-22">
 
-            </div>
-        </div>
-        <div class="flex justify-end mt-6 mr-4">
-        <button class="bg-[#f5f5f5] w-20 h-10 text-black rounded mr-2" id="boton-cancelar-edicion">Cancelar</button>
-        <button class="bg-[#48c774] w-20 h-10 text-white rounded" id="boton-guardar-edicion">Editar</button>        
-        </div>
-    </div>
+//             </div>
+//         </div>
+//         <div class="flex justify-end mt-6 mr-4">
+//         <button class="bg-[#f5f5f5] w-20 h-10 text-black rounded mr-2" id="boton-cancelar-edicion">Cancelar</button>
+//         <button class="bg-[#48c774] w-20 h-10 text-white rounded" id="boton-guardar-edicion">Editar</button>        
+//         </div>
+//     </div>
       
-</section>`
+// </section>`
 
-    document.body.innerHTML = seccionEditarOperacionHTML;
+//     document.body.innerHTML = seccionEditarOperacionHTML;
 
-    const seccionEditarOperacion = document.getElementById('seccionEditarOperacion');
+//     const seccionEditarOperacion = document.getElementById('seccionEditarOperacion');
 
-    if (seccionEditarOperacion) {
-        document.getElementById("input-descripcion-nueva-operacion").value = operacionSeleccionada.descripcion;
-        document.getElementById("monto-nueva-operacion").value = operacionSeleccionada.monto;
-        document.getElementById("tipo-nueva-operacion").value = operacionSeleccionada.tipo;
-        document.getElementById("categoria-nueva-operacion").value = operacionSeleccionada.categoria;
-        document.getElementById("fecha-nueva-operacion").value = operacionSeleccionada.fecha;
+//     if (seccionEditarOperacion) {
+//         document.getElementById("input-descripcion-nueva-operacion").value = operacionSeleccionada.descripcion;
+//         document.getElementById("monto-nueva-operacion").value = operacionSeleccionada.monto;
+//         document.getElementById("tipo-nueva-operacion").value = operacionSeleccionada.tipo;
+//         document.getElementById("categoria-nueva-operacion").value = operacionSeleccionada.categoria;
+//         document.getElementById("fecha-nueva-operacion").value = operacionSeleccionada.fecha;
 
-        seccionEditarOperacion.classList.remove("hidden");
+//         seccionEditarOperacion.classList.remove("hidden");
 
-    const botonGuardarEdicion = document.getElementById('boton-guardar-edicion');
-    if (botonGuardarEdicion) {
-    botonGuardarEdicion.addEventListener('click', () => {
-        guardarEdicion(id);
-    });
-    } else {
-    console.error('El botón de guardar edición no se encontró en el DOM.');
-    }   
-}
+//     const botonGuardarEdicion = document.getElementById('boton-guardar-edicion');
+//     if (botonGuardarEdicion) {
+//     botonGuardarEdicion.addEventListener('click', () => {
+//         guardarEdicion(id);
+//     });
+//     } else {
+//     console.error('El botón de guardar edición no se encontró en el DOM.');
+//     }   
+// }
 
-}
+// }
 
-const guardarEdicion = (id) => {
-    console.log('Array de operaciones antes de la edición:', arrayDeOperaciones);
-    console.log('Guardar edición ejecutado con éxito!')
-    const nuevaDescripcion = document.getElementById("input-descripcion-nueva-operacion").value;
-    const nuevoMonto = document.getElementById("monto-nueva-operacion").value;
-    const nuevoTipo = document.getElementById("tipo-nueva-operacion").value;
-    const nuevaCategoria = document.getElementById("categoria-nueva-operacion").value;
-    const nuevaFecha = document.getElementById("fecha-nueva-operacion").value;
-    console.log('Nueva descripción:', nuevaDescripcion);
-    console.log('Nuevo monto:', nuevoMonto);
-    console.log('Nuevo tipo:', nuevoTipo);
-    console.log('Nueva categoría:', nuevaCategoria);
-    console.log('Nueva fecha:', nuevaFecha);
+// const guardarEdicion = (id) => {
+//     console.log('Array de operaciones antes de la edición:', arrayDeOperaciones);
+//     console.log('Guardar edición ejecutado con éxito!')
+//     const nuevaDescripcion = document.getElementById("input-descripcion-nueva-operacion").value;
+//     const nuevoMonto = document.getElementById("monto-nueva-operacion").value;
+//     const nuevoTipo = document.getElementById("tipo-nueva-operacion").value;
+//     const nuevaCategoria = document.getElementById("categoria-nueva-operacion").value;
+//     const nuevaFecha = document.getElementById("fecha-nueva-operacion").value;
+//     console.log('Nueva descripción:', nuevaDescripcion);
+//     console.log('Nuevo monto:', nuevoMonto);
+//     console.log('Nuevo tipo:', nuevoTipo);
+//     console.log('Nueva categoría:', nuevaCategoria);
+//     console.log('Nueva fecha:', nuevaFecha);
 
-    const operacionAEditar = arrayDeOperaciones.find(elemento => elemento.id === id);
+//     const operacionAEditar = arrayDeOperaciones.find(elemento => elemento.id === id);
 
-    operacionAEditar.descripcion = nuevaDescripcion;
-    operacionAEditar.monto = nuevoMonto;
-    operacionAEditar.tipo = nuevoTipo;
-    operacionAEditar.categoria = nuevaCategoria;
-    operacionAEditar.fecha = nuevaFecha;
+//     operacionAEditar.descripcion = nuevaDescripcion;
+//     operacionAEditar.monto = nuevoMonto;
+//     operacionAEditar.tipo = nuevoTipo;
+//     operacionAEditar.categoria = nuevaCategoria;
+//     operacionAEditar.fecha = nuevaFecha;
 
-    // Guardar el array actualizado en localStorage
-    localStorage.setItem('arrayDeOperaciones', JSON.stringify(arrayDeOperaciones));
+  
+//     localStorage.setItem('arrayDeOperaciones', JSON.stringify(arrayDeOperaciones));
  
-    console.log('Array de operaciones después de la edición:', arrayDeOperaciones);
+//     console.log('Array de operaciones después de la edición:', arrayDeOperaciones);
 
-    // Volver a mostrar las operaciones en HTML con la función mostrarOperacionesEnHTML
-    mostrarOperacionesEnHTML(arrayDeOperaciones);
-};
+   
+//     mostrarOperacionesEnHTML(arrayDeOperaciones);
+// };
 
 
 
@@ -297,108 +336,94 @@ const guardarEdicion = (id) => {
 
 
 
-//filtros
+// //filtros
 
-// boton mostrar filtros
-const ocultarFiltro = document.getElementById("ocultarFiltro")
-const listaFiltro = document.getElementById("listaFiltro")
-const filtroConteiner = document.getElementById("filtroConteiner")
+// // boton mostrar filtros
+// const ocultarFiltro = document.getElementById("ocultarFiltro")
+// const listaFiltro = document.getElementById("listaFiltro")
+// const filtroConteiner = document.getElementById("filtroConteiner")
 
-ocultarFiltro.addEventListener("click", (e) => {
-  listaFiltro.classList.toggle("hidden")
+// ocultarFiltro.addEventListener("click", (e) => {
+//   listaFiltro.classList.toggle("hidden")
 
-  if (listaFiltro.classList.contains("hidden")) {
-    ocultarFiltro.innerText = "Mostrar filtros"
-    filtroConteiner.style.height = "80px"
-    filtroConteiner.style.marginBottom = "0"
-  } else {
-    ocultarFiltro.innerText = "Ocultar filtros"
-    filtroConteiner.style.marginBottom = "300px"
-  }
-})
+//   if (listaFiltro.classList.contains("hidden")) {
+//     ocultarFiltro.innerText = "Mostrar filtros"
+//     filtroConteiner.style.height = "80px"
+//     filtroConteiner.style.marginBottom = "0"
+//   } else {
+//     ocultarFiltro.innerText = "Ocultar filtros"
+//     filtroConteiner.style.marginBottom = "300px"
+//   }
+// })
 
-//segun tipo de filtro
-const filtroTipo = document.getElementById("filtro-tipo")
-const filtroCategoria = document.getElementById("filtro-categoria")
-const filtroFecha = document.getElementById("filtro-fecha")
-const ordenar = document.getElementById("filtro-ordenar")
+// //Clases de filtros
+
+// const filtroTipo = document.getElementById("filtro-tipo")
+// const filtroCategoria = document.getElementById("filtro-categoria")
+// const filtroFecha = document.getElementById("filtro-fecha")
+// const ordenar = document.getElementById("filtro-ordenar")
 
 // //filtro tipo
-const aplicarFiltrosTipo = () => {
-    const tipo = filtroTipo.value;
-    const filtradoPorTipo = arrayDeOperaciones.filter((elemento) => {
-        if (tipo === "todos") {
-            return true;  
-        }
-        const resultadoFiltro = elemento.tipo === tipo;
-        console.log("funciona filtro tipo", resultadoFiltro);
-        return resultadoFiltro;
-    });
+// const aplicarFiltrosTipo = () => {
+//     const tipo = filtroTipo.value;
+//     const filtradoPorTipo = arrayDeOperaciones.filter((elemento) => {
+//         if (tipo === "todos") {
+//             return true;  
+//         }
+//         const resultadoFiltro = elemento.tipo === tipo;
+//         console.log("funciona filtro tipo", resultadoFiltro);
+//         return resultadoFiltro;
+//     });
 
-    return filtradoPorTipo; 
-};
+//     return filtradoPorTipo; 
+// };
 
 
-    filtroTipo.onchange = () => {
-        const arrayFiltrado = aplicarFiltrosTipo()
-        mostrarOperacionesEnHTML(arrayFiltrado);
+//     filtroTipo.onchange = () => {
+//         const arrayFiltrado = aplicarFiltrosTipo()
+//         mostrarOperacionesEnHTML(arrayFiltrado);
 
-    }
+//     }
 
 
 // //filtro categoria
-    const aplicarFiltrosCategoria = () => {
-    const categoria = filtroCategoria.value
-    const filtradoPorCategoria = arrayDeOperaciones.filter((elemento) => {
-        if (categoria === "todas") {
-            return true; 
-        }
-        const resultadoFiltro = elemento.categoria === categoria;
-        console.log("funciona filtro categoria", resultadoFiltro);
-        return resultadoFiltro;
-    });
+//     const aplicarFiltrosCategoria = () => {
+//     const categoria = filtroCategoria.value
+//     const filtradoPorCategoria = arrayDeOperaciones.filter((elemento) => {
+//         if (categoria === "todas") {
+//             return true; 
+//         }
+//         const resultadoFiltro = elemento.categoria === categoria;
+//         console.log("funciona filtro categoria", resultadoFiltro);
+//         return resultadoFiltro;
+//     });
 
-    return filtradoPorCategoria; 
-    }
+//     return filtradoPorCategoria; 
+//     }
 
-    filtroCategoria.onchange = () => {
-        const arrayFiltrado = aplicarFiltrosCategoria()
-        mostrarOperacionesEnHTML(arrayFiltrado);
-    }
+//     filtroCategoria.onchange = () => {
+//         const arrayFiltrado = aplicarFiltrosCategoria()
+//         mostrarOperacionesEnHTML(arrayFiltrado);
+//     }
 
 
     //filtro fecha
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const aplicarFiltrosFecha = () => {
-            const fechaDesdeString = filtroFecha.value;
-            console.log('fechaDesdeString:', fechaDesdeString);
     
-            // Convierte la fecha desde el input a un objeto Date
-            const fechaDesde = fechaDesdeString ? new Date(fechaDesdeString) : null;
-            console.log('fechaDesde:', fechaDesde);
+//     const fechaDesde = filtroFecha.value
+//     filtradoPorFecha = filtradoPorCategoria.filter((elemento) => {
+
+//             if (fechaDesde === 0) {
+//                 return elemento
+//             }
+//             return elemento.fecha >= fechaDesde
+//         })
+
     
-            const filtradoPorFecha = arrayDeOperaciones.filter((elemento) => {
-                // Convierte la fecha del elemento a un objeto Date
-                const fechaElemento = new Date(elemento.fecha);
-    
-                // Compara las fechas sin tener en cuenta la hora
-                return !fechaDesde || fechaElemento >= fechaDesde;
-            });
-    
-            return filtradoPorFecha;
-        };
-    
-        if (filtroFecha) {
-            filtroFecha.onchange = () => {
-                console.log('filtroFecha:', filtroFecha);
-                const arrayFiltrado = aplicarFiltrosFecha();
-                mostrarOperacionesEnHTML(arrayFiltrado);
-            };
-        }
-    });
-    
-    
+//    filtroFecha.onchange = () => {
+//         const arrayFiltrado = aplicarFiltros()
+//         boxOperaciones.innerHTML = mostrarOperacionesEnHTML(arrayFiltrado)
+//     }
 
 
 
