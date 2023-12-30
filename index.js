@@ -37,14 +37,16 @@ const toggleBtn = document.getElementById('toggleBtn');
 
     
     
-//boton
-const descripcionNuevaOperacion = document.getElementById("input-descripcion-nueva-operacion");
+ // array inicial
+    const descripcionNuevaOperacion = document.getElementById("input-descripcion-nueva-operacion");
     const montoNuevaOperacion = document.getElementById("monto-nueva-operacion");
     const tipoNuevaOperacion = document.getElementById("tipo-nueva-operacion");
     const categoriaNuevaOperacion = document.getElementById("categoria-nueva-operacion");
     const fechaNuevaOperacion = document.getElementById("fecha-nueva-operacion");
     const botonAgregarNuevaOperacion = document.getElementById("boton-agregar-operacion");
     const operacionesRealizadas = document.getElementById("operaciones-realizadas");
+    console.log('operacionesRealizadas:', operacionesRealizadas);
+    
     const sinOperaciones = document.getElementById("sin-operaciones");
     const acciones=document.getElementById("acciones")
     
@@ -55,6 +57,7 @@ const descripcionNuevaOperacion = document.getElementById("input-descripcion-nue
     const mostrarOperacionesEnHTML = (array) => {
         let operacionesHTML = "";
         array.forEach((elemento) => {
+            console.log('Elemento actual:', elemento);
             const dateArray = elemento.fecha.split("-");
             const fechaIntefaz = dateArray[2] + "-" + dateArray[1] + '-' + dateArray[0];
             operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
@@ -97,10 +100,15 @@ const descripcionNuevaOperacion = document.getElementById("input-descripcion-nue
                                     </h3>
                                 </div>
                                 </div>`;
+                                console.log('Fecha interfaz:', fechaIntefaz);
+         
         });
-
-       
+     
+        console.log('Contenido de operacionesHTML:', operacionesHTML);
         operacionesRealizadas.innerHTML = operacionesHTML;
+        // Quitar la clase 'hidden' después de establecer el contenido
+        operacionesRealizadas.classList.remove("hidden");
+        console.log('Clase "hidden" eliminada');
     };
     //boton agregar nueva operacion
     botonAgregarNuevaOperacion.addEventListener('click', () => {
@@ -122,9 +130,6 @@ const descripcionNuevaOperacion = document.getElementById("input-descripcion-nue
        
     });
 
-
-
-
 //boton eliminar elementos
     const eliminarElemento = (id) => {
         arrayDeOperaciones = arrayDeOperaciones.filter((elemento) => {
@@ -134,18 +139,39 @@ const descripcionNuevaOperacion = document.getElementById("input-descripcion-nue
     };
     mostrarOperacionesEnHTML(arrayDeOperaciones);
 
+//boton editar
 
-
-
-
-
-// En la página actual donde se ejecuta la función editarElemento
-function editarElemento(id) {
-    // Buscar la operación correspondiente en el arrayDeOperaciones
+const editarElemento = (id)=> {
     const operacionSeleccionada = arrayDeOperaciones.find(elemento => elemento.id === id);
-
-    // Obtener la sección de editar operación como HTML
     const seccionEditarOperacionHTML = `
+    <!-- Barra de navegación -->
+        <nav class="bg-[#00d1b2] p-4">
+          <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-white text-2xl font-semibold hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-wallet p-2 "></i>AhorrADAS</a>
+      
+            <!-- Botón de hamburguesa para pantallas pequeñas -->
+            <div class="block lg:hidden">
+                <button id="toggleBtn" class="text-white focus:outline-none ">
+                    <i id="hamburgerIcon" class="fa-solid fa-bars text-xl hover:bg-[#00947e]/[.36] p-2 rounded-lg "></i>
+                  </button>
+            </div>
+      
+            <!-- Menú de navegación -->
+            <div class="hidden lg:flex space-x-4">
+              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-line p-2"></i>Balance</a>
+              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-tag p-2 "></i>Categorías</a>
+              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
+            </div>
+          </div>
+        </nav>
+      
+        <!-- Menú desplegable para pantallas pequeñas -->
+        <div id="mobileMenu" class="lg:hidden hidden bg-white">
+          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-line p-2"></i>Balance</a>
+          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fa-solid fa-tag p-2"></i>Categorías</a>
+          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
+        </div>
     <section class="hidden" id="seccionEditarOperacion">
     <div class="ml-4 mt-20 mb-16 w-72 h-[40rem] rounded-lg bg-white md:w-[46rem] md:h-[40rem] lg:ml-36 shadow-2xl ">
         <h2 class="text-4xl ml-5 mr-4 pt-6 pb-10 font-bold  ">Editar operación</h2>
@@ -197,49 +223,73 @@ function editarElemento(id) {
       
 </section>`
 
-    // Reemplazar el contenido de la página actual con la sección de editar operación
     document.body.innerHTML = seccionEditarOperacionHTML;
 
-    // Obtener la sección de editar operación del DOM
     const seccionEditarOperacion = document.getElementById('seccionEditarOperacion');
 
-    // Verificar si la sección existe
     if (seccionEditarOperacion) {
-        // Llenar los campos con la información correspondiente
         document.getElementById("input-descripcion-nueva-operacion").value = operacionSeleccionada.descripcion;
         document.getElementById("monto-nueva-operacion").value = operacionSeleccionada.monto;
         document.getElementById("tipo-nueva-operacion").value = operacionSeleccionada.tipo;
         document.getElementById("categoria-nueva-operacion").value = operacionSeleccionada.categoria;
         document.getElementById("fecha-nueva-operacion").value = operacionSeleccionada.fecha;
 
-        // Mostrar la sección de editar operación
         seccionEditarOperacion.classList.remove("hidden");
 
-        // Volver a cargar el array de operaciones desde localStorage
-        const operacionesDesdeLocalStorage = JSON.parse(localStorage.getItem('arrayDeOperaciones'));
-
-        // Verificar si se cargó correctamente el array desde localStorage
-        if (operacionesDesdeLocalStorage) {
-            // Actualizar el arrayDeOperaciones con los datos cargados desde localStorage
-            arrayDeOperaciones = operacionesDesdeLocalStorage;
-
-            // Volver a mostrar las operaciones en HTML con la función mostrarOperacionesEnHTML
-            mostrarOperacionesEnHTML(arrayDeOperaciones);
-        } else {
-            console.error('Error al cargar el arrayDeOperaciones desde localStorage.');
-        }
+    const botonGuardarEdicion = document.getElementById('boton-guardar-edicion');
+    if (botonGuardarEdicion) {
+    botonGuardarEdicion.addEventListener('click', () => {
+        guardarEdicion(id);
+    });
     } else {
-        console.error('La sección de editar operación no se encontró en el DOM.');
-    }
+    console.error('El botón de guardar edición no se encontró en el DOM.');
+    }   
 }
 
+}
 
+const guardarEdicion = (id) => {
+    console.log('Array de operaciones antes de la edición:', arrayDeOperaciones);
+    console.log('Guardar edición ejecutado con éxito!')
+    const nuevaDescripcion = document.getElementById("input-descripcion-nueva-operacion").value;
+    const nuevoMonto = document.getElementById("monto-nueva-operacion").value;
+    const nuevoTipo = document.getElementById("tipo-nueva-operacion").value;
+    const nuevaCategoria = document.getElementById("categoria-nueva-operacion").value;
+    const nuevaFecha = document.getElementById("fecha-nueva-operacion").value;
+    console.log('Nueva descripción:', nuevaDescripcion);
+    console.log('Nuevo monto:', nuevoMonto);
+    console.log('Nuevo tipo:', nuevoTipo);
+    console.log('Nueva categoría:', nuevaCategoria);
+    console.log('Nueva fecha:', nuevaFecha);
 
+    const operacionAEditar = arrayDeOperaciones.find(elemento => elemento.id === id);
+
+    operacionAEditar.descripcion = nuevaDescripcion;
+    operacionAEditar.monto = nuevoMonto;
+    operacionAEditar.tipo = nuevoTipo;
+    operacionAEditar.categoria = nuevaCategoria;
+    operacionAEditar.fecha = nuevaFecha;
+
+    // Guardar el array actualizado en localStorage
+    localStorage.setItem('arrayDeOperaciones', JSON.stringify(arrayDeOperaciones));
+ 
+    console.log('Array de operaciones después de la edición:', arrayDeOperaciones);
+
+    // Volver a mostrar las operaciones en HTML con la función mostrarOperacionesEnHTML
+    mostrarOperacionesEnHTML(arrayDeOperaciones);
+};
 
 
 
 
   
+
+
+
+
+
+
+
 
 
 
@@ -268,39 +318,101 @@ ocultarFiltro.addEventListener("click", (e) => {
 })
 
 //segun tipo de filtro
-// const filtroTipo = document.getElementById("filtro-tipo")
-// const filtroCategoria = document.getElementById("filtro-categoria")
-// const filtroFecha = document.getElementById("filtro-fecha")
-// const ordenar = document.getElementById("filtro-ordenar")
+const filtroTipo = document.getElementById("filtro-tipo")
+const filtroCategoria = document.getElementById("filtro-categoria")
+const filtroFecha = document.getElementById("filtro-fecha")
+const ordenar = document.getElementById("filtro-ordenar")
 
 // //filtro tipo
-// const aplicarFiltros = () => {
-//     const tipo = filtroTipo.value
-//     const filtradoPorTipo = arrayDeOperaciones.filter((elemento) => {
-//         if (tipo === "todos") {
-//             return elemento
-//         }
-//         return elemento.tipo === tipo
-//     })
+const aplicarFiltrosTipo = () => {
+    const tipo = filtroTipo.value;
+    const filtradoPorTipo = arrayDeOperaciones.filter((elemento) => {
+        if (tipo === "todos") {
+            return true;  
+        }
+        const resultadoFiltro = elemento.tipo === tipo;
+        console.log("funciona filtro tipo", resultadoFiltro);
+        return resultadoFiltro;
+    });
 
-//filtro categoria
-//     const categoria = filtroCategoria.value
-//     const filtradoPorCategoria = filtradoPorTipo.filter((elemento) => {
-//         if (categoria === "todos") {
-//             return elemento
-//         }
-//         return elemento.categoria === categoria
-//     })
+    return filtradoPorTipo; 
+};
 
-// //fitro fecha
-//     const fechaDesde = filtroFecha.value
-//     filtradoPorFecha = filtradoPorCategoria.filter((elemento) => {
 
-//             if (fechaDesde === 0) {
-//                 return elemento
-//             }
-//             return elemento.fecha >= fechaDesde
-//         })
+    filtroTipo.onchange = () => {
+        const arrayFiltrado = aplicarFiltrosTipo()
+        mostrarOperacionesEnHTML(arrayFiltrado);
+
+    }
+
+
+// //filtro categoria
+    const aplicarFiltrosCategoria = () => {
+    const categoria = filtroCategoria.value
+    const filtradoPorCategoria = arrayDeOperaciones.filter((elemento) => {
+        if (categoria === "todas") {
+            return true; 
+        }
+        const resultadoFiltro = elemento.categoria === categoria;
+        console.log("funciona filtro categoria", resultadoFiltro);
+        return resultadoFiltro;
+    });
+
+    return filtradoPorCategoria; 
+    }
+
+    filtroCategoria.onchange = () => {
+        const arrayFiltrado = aplicarFiltrosCategoria()
+        mostrarOperacionesEnHTML(arrayFiltrado);
+    }
+
+
+    //filtro fecha
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const aplicarFiltrosFecha = () => {
+            const fechaDesdeString = filtroFecha.value;
+            console.log('fechaDesdeString:', fechaDesdeString);
+    
+            // Convierte la fecha desde el input a un objeto Date
+            const fechaDesde = fechaDesdeString ? new Date(fechaDesdeString) : null;
+            console.log('fechaDesde:', fechaDesde);
+    
+            const filtradoPorFecha = arrayDeOperaciones.filter((elemento) => {
+                // Convierte la fecha del elemento a un objeto Date
+                const fechaElemento = new Date(elemento.fecha);
+    
+                // Compara las fechas sin tener en cuenta la hora
+                return !fechaDesde || fechaElemento >= fechaDesde;
+            });
+    
+            return filtradoPorFecha;
+        };
+    
+        if (filtroFecha) {
+            filtroFecha.onchange = () => {
+                console.log('filtroFecha:', filtroFecha);
+                const arrayFiltrado = aplicarFiltrosFecha();
+                mostrarOperacionesEnHTML(arrayFiltrado);
+            };
+        }
+    });
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // //filtro oredenar por
 //     console.log(ordenar.value)
@@ -376,20 +488,7 @@ ocultarFiltro.addEventListener("click", (e) => {
 
 //mostrar filtros
 
-    // filtroTipo.onchange = () => {
-    //     const arrayFiltrado = aplicarFiltros()
-    //     operacionesRealizadas.innerHTML = mostrarOperacionesEnHTML(arrayFiltrado)
-    // }
 
-    // filtroCategoria.onchange = () => {
-    //     const arrayFiltrado = aplicarFiltros()
-    //     operacionesRealizadas.innerHTML = mostrarOperacionesEnHTML(arrayFiltrado)
-    // }
-
-    // filtroFecha.onchange = () => {
-    //         const arrayFiltrado = aplicarFiltros()
-    //         operacionesRealizadas.innerHTML = mostrarOperacionesEnHTML(arrayFiltrado)
-    //     }
 
 
     // ordenar.onchange = () => {
