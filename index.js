@@ -161,6 +161,23 @@ const inicializarPagina = () => {
 
     });
 
+    // boton eliminar
+    const eliminarElemento = (id) => {
+        arrayDeOperaciones = arrayDeOperaciones.filter((elemento) => {
+            return elemento.id !== parseInt(id);
+        });
+
+        mostrarOperacionesEnHTML(arrayDeOperaciones);
+
+        guardarDatosLocal(arrayDeOperaciones);
+        // Check if there are remaining operations
+        if (arrayDeOperaciones.length === 0) {
+        // If no operations are left, display the "sin operaciones" section
+            operacionesRealizadas.classList.add("hidden");
+            sinOperaciones.classList.remove("hidden");
+    }
+
+    };
 
 
 
@@ -169,14 +186,10 @@ const inicializarPagina = () => {
 
 
 
-// //boton eliminar elementos
-//     const eliminarElemento = (id) => {
-//         arrayDeOperaciones = arrayDeOperaciones.filter((elemento) => {
-//             return elemento.id !== parseInt(id);
-//         });
-//         mostrarOperacionesEnHTML(arrayDeOperaciones);
-//     };
-//     mostrarOperacionesEnHTML(arrayDeOperaciones);
+
+
+
+
 
 // //boton editar
 
