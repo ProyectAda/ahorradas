@@ -180,156 +180,138 @@ const inicializarPagina = () => {
     };
 
 
+//boton editar
 
-
-
-
-
-
-
-
-
-
-
-// //boton editar
-
-// const editarElemento = (id)=> {
-//     const operacionSeleccionada = arrayDeOperaciones.find(elemento => elemento.id === id);
-//     const seccionEditarOperacionHTML = `
-//     <!-- Barra de navegación -->
-//         <nav class="bg-[#00d1b2] p-4">
-//           <div class="container mx-auto flex justify-between items-center">
-//             <!-- Logo -->
-//             <a href="#" class="text-white text-2xl font-semibold hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-wallet p-2 "></i>AhorrADAS</a>
+const editarElemento = (id)=> {
+    const operacionSeleccionada = arrayDeOperaciones.find(elemento => elemento.id === id);
+    const seccionEditarOperacionHTML = `
+    <!-- Barra de navegación -->
+        <nav class="bg-[#00d1b2] p-4">
+          <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-white text-2xl font-semibold hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-wallet p-2 "></i>AhorrADAS</a>
       
-//             <!-- Botón de hamburguesa para pantallas pequeñas -->
-//             <div class="block lg:hidden">
-//                 <button id="toggleBtn" class="text-white focus:outline-none ">
-//                     <i id="hamburgerIcon" class="fa-solid fa-bars text-xl hover:bg-[#00947e]/[.36] p-2 rounded-lg "></i>
-//                   </button>
-//             </div>
+            <!-- Botón de hamburguesa para pantallas pequeñas -->
+            <div class="block lg:hidden">
+                <button id="toggleBtn" class="text-white focus:outline-none ">
+                    <i id="hamburgerIcon" class="fa-solid fa-bars text-xl hover:bg-[#00947e]/[.36] p-2 rounded-lg "></i>
+                  </button>
+            </div>
       
-//             <!-- Menú de navegación -->
-//             <div class="hidden lg:flex space-x-4">
-//               <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-line p-2"></i>Balance</a>
-//               <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-tag p-2 "></i>Categorías</a>
-//               <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
-//             </div>
-//           </div>
-//         </nav>
+            <!-- Menú de navegación -->
+            <div class="hidden lg:flex space-x-4">
+              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-line p-2"></i>Balance</a>
+              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-tag p-2 "></i>Categorías</a>
+              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
+            </div>
+          </div>
+        </nav>
       
-//         <!-- Menú desplegable para pantallas pequeñas -->
-//         <div id="mobileMenu" class="lg:hidden hidden bg-white">
-//           <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-line p-2"></i>Balance</a>
-//           <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fa-solid fa-tag p-2"></i>Categorías</a>
-//           <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
-//         </div>
-//     <section class="hidden" id="seccionEditarOperacion">
-//     <div class="ml-4 mt-20 mb-16 w-72 h-[40rem] rounded-lg bg-white md:w-[46rem] md:h-[40rem] lg:ml-36 shadow-2xl ">
-//         <h2 class="text-4xl ml-5 mr-4 pt-6 pb-10 font-bold  ">Editar operación</h2>
-//         <div>
-//             <label class="ml-4 font-bold">Descripción</label>
-//             <div class="ml-4 pt-2 pb-2">
-//                 <input type="text" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="input-descripcion-nueva-operacion">
-//             </div>
-//         </div>
-//         <div>
-//             <label class="ml-4 font-bold">Monto</label>
-//             <div class="ml-4 pt-2 pb-2">
-//                 <input type="number" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="monto-nueva-operacion">
-//             </div>
-//         </div>
-//         <div>
-//             <label class="ml-4 font-bold">Tipo</label>
-//             <div class="ml-4 pt-2 pb-2">
-//                 <select id="tipo-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
-//                     <option value="ganancia">Ganancia</option>
-//                     <option value="gasto">Gasto</option>
-//                 </select>
-//             </div>
-//         </div>
-//         <div>
-//             <label class="ml-4 font-bold">Categoría</label>
-//             <div class="ml-4 pt-2 pb-2">
-//                 <select id="categoria-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
-//                     <option value="servicios">Servicios</option>
-//                     <option value="salidas">Salidas</option>
-//                     <option value="educacion">Educación</option>
-//                     <option value="transporte">Transporte</option>
-//                     <option value="trabajo">Trabajo</option>
-//                 </select>
-//             </div>
-//         </div>
-//         <div>
-//             <label class="ml-4 font-bold " for="date">Fecha</label>
-//             <div class="ml-4 pt-2 pb-2">
-//                 <input class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="fecha-nueva-operacion" type="date" value="2023-12-22">
+        <!-- Menú desplegable para pantallas pequeñas -->
+        <div id="mobileMenu" class="lg:hidden hidden bg-white">
+          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-line p-2"></i>Balance</a>
+          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fa-solid fa-tag p-2"></i>Categorías</a>
+          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
+        </div>
+    <section class="hidden" id="seccionEditarOperacion">
+    <div class="ml-4 mt-20 mb-16 w-72 h-[40rem] rounded-lg bg-white md:w-[46rem] md:h-[40rem] lg:ml-36 shadow-2xl ">
+        <h2 class="text-4xl ml-5 mr-4 pt-6 pb-10 font-bold  ">Editar operación</h2>
+        <div>
+            <label class="ml-4 font-bold">Descripción</label>
+            <div class="ml-4 pt-2 pb-2">
+                <input type="text" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="input-descripcion-nueva-operacion">
+            </div>
+        </div>
+        <div>
+            <label class="ml-4 font-bold">Monto</label>
+            <div class="ml-4 pt-2 pb-2">
+                <input type="number" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="monto-nueva-operacion">
+            </div>
+        </div>
+        <div>
+            <label class="ml-4 font-bold">Tipo</label>
+            <div class="ml-4 pt-2 pb-2">
+                <select id="tipo-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
+                    <option value="ganancia">Ganancia</option>
+                    <option value="gasto">Gasto</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <label class="ml-4 font-bold">Categoría</label>
+            <div class="ml-4 pt-2 pb-2">
+                <select id="categoria-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
+                    <option value="servicios">Servicios</option>
+                    <option value="salidas">Salidas</option>
+                    <option value="educacion">Educación</option>
+                    <option value="transporte">Transporte</option>
+                    <option value="trabajo">Trabajo</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <label class="ml-4 font-bold " for="date">Fecha</label>
+            <div class="ml-4 pt-2 pb-2">
+                <input class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="fecha-nueva-operacion" type="date" value="2023-12-22">
 
-//             </div>
-//         </div>
-//         <div class="flex justify-end mt-6 mr-4">
-//         <button class="bg-[#f5f5f5] w-20 h-10 text-black rounded mr-2" id="boton-cancelar-edicion">Cancelar</button>
-//         <button class="bg-[#48c774] w-20 h-10 text-white rounded" id="boton-guardar-edicion">Editar</button>        
-//         </div>
-//     </div>
+            </div>
+        </div>
+        <div class="flex justify-end mt-6 mr-4">
+        <button class="bg-[#f5f5f5] w-20 h-10 text-black rounded mr-2" id="boton-cancelar-edicion">Cancelar</button>
+        <button class="bg-[#48c774] w-20 h-10 text-white rounded" id="boton-guardar-edicion">Editar</button>        
+        </div>
+    </div>
       
-// </section>`
+</section>`
 
-//     document.body.innerHTML = seccionEditarOperacionHTML;
+    document.body.innerHTML = seccionEditarOperacionHTML;
 
-//     const seccionEditarOperacion = document.getElementById('seccionEditarOperacion');
+    const seccionEditarOperacion = document.getElementById('seccionEditarOperacion');
 
-//     if (seccionEditarOperacion) {
-//         document.getElementById("input-descripcion-nueva-operacion").value = operacionSeleccionada.descripcion;
-//         document.getElementById("monto-nueva-operacion").value = operacionSeleccionada.monto;
-//         document.getElementById("tipo-nueva-operacion").value = operacionSeleccionada.tipo;
-//         document.getElementById("categoria-nueva-operacion").value = operacionSeleccionada.categoria;
-//         document.getElementById("fecha-nueva-operacion").value = operacionSeleccionada.fecha;
+    if (seccionEditarOperacion) {
+        document.getElementById("input-descripcion-nueva-operacion").value = operacionSeleccionada.descripcion;
+        document.getElementById("monto-nueva-operacion").value = operacionSeleccionada.monto;
+        document.getElementById("tipo-nueva-operacion").value = operacionSeleccionada.tipo;
+        document.getElementById("categoria-nueva-operacion").value = operacionSeleccionada.categoria;
+        document.getElementById("fecha-nueva-operacion").value = operacionSeleccionada.fecha;
 
-//         seccionEditarOperacion.classList.remove("hidden");
+        seccionEditarOperacion.classList.remove("hidden");
 
-//     const botonGuardarEdicion = document.getElementById('boton-guardar-edicion');
-//     if (botonGuardarEdicion) {
-//     botonGuardarEdicion.addEventListener('click', () => {
-//         guardarEdicion(id);
-//     });
-//     } else {
-//     console.error('El botón de guardar edición no se encontró en el DOM.');
-//     }   
-// }
+    const botonGuardarEdicion = document.getElementById('boton-guardar-edicion');
+    if (botonGuardarEdicion) {
+    botonGuardarEdicion.addEventListener('click', () => {
+        guardarEdicion(id);
+    });
+    } else {
+    console.error('El botón de guardar edición no se encontró en el DOM.');
+    }   
+}
 
-// }
+}
 
-// const guardarEdicion = (id) => {
-//     console.log('Array de operaciones antes de la edición:', arrayDeOperaciones);
-//     console.log('Guardar edición ejecutado con éxito!')
-//     const nuevaDescripcion = document.getElementById("input-descripcion-nueva-operacion").value;
-//     const nuevoMonto = document.getElementById("monto-nueva-operacion").value;
-//     const nuevoTipo = document.getElementById("tipo-nueva-operacion").value;
-//     const nuevaCategoria = document.getElementById("categoria-nueva-operacion").value;
-//     const nuevaFecha = document.getElementById("fecha-nueva-operacion").value;
-//     console.log('Nueva descripción:', nuevaDescripcion);
-//     console.log('Nuevo monto:', nuevoMonto);
-//     console.log('Nuevo tipo:', nuevoTipo);
-//     console.log('Nueva categoría:', nuevaCategoria);
-//     console.log('Nueva fecha:', nuevaFecha);
+const guardarEdicion = (id) => {
+    const nuevaDescripcion = document.getElementById("input-descripcion-nueva-operacion").value;
+    const nuevoMonto = document.getElementById("monto-nueva-operacion").value;
+    const nuevoTipo = document.getElementById("tipo-nueva-operacion").value;
+    const nuevaCategoria = document.getElementById("categoria-nueva-operacion").value;
+    const nuevaFecha = document.getElementById("fecha-nueva-operacion").value;
 
-//     const operacionAEditar = arrayDeOperaciones.find(elemento => elemento.id === id);
+    const index = arrayDeOperaciones.findIndex(elemento => elemento.id === id);
 
-//     operacionAEditar.descripcion = nuevaDescripcion;
-//     operacionAEditar.monto = nuevoMonto;
-//     operacionAEditar.tipo = nuevoTipo;
-//     operacionAEditar.categoria = nuevaCategoria;
-//     operacionAEditar.fecha = nuevaFecha;
+    arrayDeOperaciones[index].descripcion = nuevaDescripcion;
+    arrayDeOperaciones[index].monto = nuevoMonto;
+    arrayDeOperaciones[index].tipo = nuevoTipo;
+    arrayDeOperaciones[index].categoria = nuevaCategoria;
+    arrayDeOperaciones[index].fecha = nuevaFecha;
 
-  
-//     localStorage.setItem('arrayDeOperaciones', JSON.stringify(arrayDeOperaciones));
- 
-//     console.log('Array de operaciones después de la edición:', arrayDeOperaciones);
+     localStorage.setItem('operaciones', JSON.stringify(arrayDeOperaciones));
+     
+    mostrarOperacionesEnHTML(arrayDeOperaciones);
+    
+};
 
-   
-//     mostrarOperacionesEnHTML(arrayDeOperaciones);
-// };
+
+
 
 
 
