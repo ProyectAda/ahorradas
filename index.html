@@ -24,7 +24,7 @@
       
             <!-- Menú de navegación -->
             <div class="hidden lg:flex space-x-4">
-              <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-line p-2"></i>Balance</a>
+              <a href="#balance" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-line p-2"></i>Balance</a>
               <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fa-solid fa-tag p-2 "></i>Categorías</a>
               <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
             </div>
@@ -33,17 +33,17 @@
       
         <!-- Menú desplegable para pantallas pequeñas -->
         <div id="mobileMenu" class="lg:hidden hidden bg-white">
-          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-line p-2"></i>Balance</a>
-          <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fa-solid fa-tag p-2"></i>Categorías</a>
+          <a href="#balance" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-line p-2"></i>Balance</a>
+          <a href="#categoria" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fa-solid fa-tag p-2"></i>Categorías</a>
           <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
         </div>
     </header>
     <!-- -----------------------BALANCE--------------- -->
      <!---------------------section balance--------------->
-    <section id="seccionBalances">
-            <div class="lg:grid grid-cols-3 gap-3">
+    <section id="seccionBalances" >
+            <div class="lg:grid grid-cols-3 gap-3 "id="balance">
                 <div class="pt-12 lg:p-4 lg:pt-10 ">
-                    <div class="m-5 w-70 h-30 rounded-lg bg-white lg:w-72">
+                    <div class="m-5 w-70 h-30 rounded-lg bg-white lg:w-72  shadow-2xl ">
                         <h3 class=" p-4 text-[30px] font-sans font-bold">Balance</h3>
                         <div class=" p-4 text-[20px] font-sans grid grid-cols-2 gap-2">
                             <div>
@@ -71,21 +71,21 @@
                         </div>
                     </div>
                     <!-- ------------------------filtros-------------- -->
-                    <div class=" m-5 w-70 h-80 rounded-lg bg-white md:w-70 h-96 lg:w-72">
+                    <div class=" m-5 w-70 h-80 rounded-lg bg-white md:w-70 h-96 lg:w-72 shadow-2xl" id="filtroConteiner">
                         <div class="grid grid-cols-2 gap-2">
                             <div>
                                 <h4 class="p-4 text-[25px] font-sans font-bold">Filtros</h4>
                             </div>
                             <div class="pt-6 md:text-right pr-8 ">
-                                <a href="#" class="text-base ">Ocultar filtros</a>
+                                <a href="#" class="text-base" id="ocultarFiltro">Ocultar filtros</a>
                             </div>
                         </div>
-                        <div id="despliege-filtro">
+                        <div id="listaFiltro">
                             <div class="pl-4">
                                 <label for="label" class="font-bold">Tipo</label>
                                 <div>
                                     <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60 ">
-                                        <select name="tipo" id="" class="w-52 md:w-[42rem] p-2 lg:w-56">
+                                        <select name="tipo" id="filtro-tipo" class="w-52 md:w-[42rem] p-2 lg:w-56">
                                             <option value="todos">Todos</option>
                                             <option value="gasto">Gastos</option>
                                             <option value="ganancia">Ganancias</option>                     
@@ -97,8 +97,8 @@
                                 <label for="label" class="font-bold">Categoría</label>
                                 <div>
                                     <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60 ">
-                                        <select name="categoria" id="" class="w-52 md:w-[42rem] p-2 lg:w-56">
-                                            <option value="todos">Todas</option>
+                                        <select name="categoria" id="filtro-categoria" class="w-52 md:w-[42rem] p-2 lg:w-56">
+                                            <option value="todas">Todas</option>
                                             <option value="comida">Comida</option>
                                             <option value="servicios">Servicios</option> 
                                             <option value="salidas">Salidas</option> 
@@ -110,16 +110,16 @@
                                 </div>
                             </div>
                             <div class="pl-4">
-                                <label for="date" class="font-bold">Desde</label>
+                                <label for="fecha" class="font-bold">Desde</label>
                                 <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60 ">
-                                    <input type="date" id="" class="w-52 md:w-[42.5rem] p-2 lg:w-56 ">
+                                    <input type="date" id="fecha" class="w-52 md:w-[42.5rem] p-2 lg:w-56 ">
                                 </div>
                             </div>
                             <div class="pl-4" >
                                 <label for="label" class="font-bold">Ordenar por</label>
                                 <div>
                                     <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60 ">
-                                        <select name="fitroOrdenar" id="" class="w-52 md:w-[42rem] p-2 lg:w-56">
+                                        <select name="fitroOrdenar" id="filtro-ordenar" class="w-52 md:w-[42rem] p-2 lg:w-56">
                                             <option value="recientes">Mas reciente</option>
                                             <option value="antiguas">Menos reciente</option>
                                             <option value="monto_mayor">Mayor monto</option>  
@@ -135,7 +135,7 @@
                 </div>
                 <!-- -------------------box operaciones--------------- -->
                 <div class="lg:p-10">
-                    <div class="m-5 w-70 h-[40rem] rounded-lg bg-white md:w-70 md:h-[48rem] lg:w-[38rem] lg:h-[38rem] lg:ml-0">
+                    <div class="m-5 w-70 h-[40rem] rounded-lg bg-white md:w-70 md:h-[48rem] lg:w-[38rem] lg:h-[38rem] lg:ml-0 shadow-2xl">
                             <div class="lg:grid grid-cols-2 gap-2">
                                 <div>
                                     <h4 class="p-4 text-[25px] font-sans font-bold">Operaciones</h4>
@@ -145,76 +145,72 @@
                                 </div>
                             </div>
                             <!-- ----------------SIN OPERACIONES------------ -->
-                            <div>
-                                <div>
-                                    <div>
-                                        <div class="m-5">
-                                            <img src="/img/undraw_wallet_aym5.svg"class=" pt-20 md:pl-28 md:pr-28 md:py-0 lg:pt-20">
-                                        </div>
-                                        <h4  class="flex justify-center text-2xl font-sans font-medium pt-8 pb-5 ">Sin resultados</h4>
-                                        <p class="pl-3 text-center">Cambia los filtros o agrega operaciones</p>
-                                    </div>
+                            <div id="sin-operaciones">
+                                <div class="m-5">
+                                    <img src="/img/undraw_wallet_aym5.svg"class=" pt-20 md:pl-28 md:pr-28 md:py-0 lg:pt-20">
                                 </div>
+                                <h4  class="flex justify-center text-2xl font-sans font-medium pt-8 pb-5 ">Sin resultados</h4>
+                                <p class="pl-3 text-center">Cambia los filtros o agrega operaciones</p>
+                            </div>  
+                            <div class="">
+                                <div class="hidden" id="operaciones-realizadas"></div> 
                             </div>
-                        </div>
+                    </div>
                 </div>
             </div>
     </section>    
-    <!-- ----------------------box nueva operacion------------ -->
+
+<!-- Sección de Nueva Operación -->
     <section class="hidden" id="seccionAgregarOperacion">
-                    <div class="ml-4 mt-20 mb-16 w-72 h-[40rem] rounded-lg bg-white md:w-[46rem] md:h-[40rem] lg:ml-36 " >
-                        <h2 class="text-4xl ml-5 mr-4 pt-6 pb-10 font-bold  ">Nueva operación</h2>
-                        <div>
-                            <label class="ml-4 font-bold">Descripción</label>
-                            <div class="ml-4 pt-2 pb-2">
-                                <input type="text" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem] " id="input-descripcion-nueva-operacion">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="ml-4 font-bold">Monto</label>
-                            <div class="ml-4 pt-2 pb-2">
-                                <input type="number" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="monto-nueva-operacion">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="ml-4 font-bold">Tipo</label>
-                                <div class="ml-4 pt-2 pb-2">
-                                    <select id="tipo-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]"   >
-                                        <option value="ganancia">Ganancia</option>
-                                        <option value="gasto">Gasto</option>             
-                                    </select>
-                                </div>
-                        </div>
-                        <div>
-                            <label class="ml-4 font-bold">Categoría</label>
-                                <div class="ml-4 pt-2 pb-2">
-                                    <select id="categoria-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]"   >
-                                        <option value="servicios">Servicios</option> 
-                                        <option value="salidas">Salidas</option> 
-                                        <option value="educacion">Educación</option>
-                                        <option value="transporte">Transporte</option>
-                                        <option value="trabajo">Trabajo</option>                        
-                                    </select>
-                                </div> 
-                        </div>
-                        <div>
-                            <label class="ml-4 font-bold " for="date">Fecha</label>
-                            <div class="ml-4 pt-2 pb-2">
-                                <input class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="fecha-nueva-operacion" type="date" value="fecha">
-                            </div>
-                        </div>
-                        <div class="flex justify-end mt-6 mr-4">
-                            <button class="bg-[#f5f5f5] w-20 h-10 text-black rounded mr-2" id="boton-cancelar-agregar-operacion">Cancelar</button>
-                            <button class="bg-[#48c774]  w-20 h-10 text-white rounded " id="boton-agregar-operacion">Agregar</button>
-                        </div>
-                    </div>
+        <div class="ml-4 mt-20 mb-16 w-72 h-[40rem] rounded-lg bg-white md:w-[46rem] md:h-[40rem] lg:ml-36 shadow-2xl ">
+            <h2 class="text-4xl ml-5 mr-4 pt-6 pb-10 font-bold  ">Nueva operación</h2>
+            <div>
+                <label class="ml-4 font-bold">Descripción</label>
+                <div class="ml-4 pt-2 pb-2">
+                    <input type="text" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="input-descripcion-nueva-operacion">
+                </div>
+            </div>
+            <div>
+                <label class="ml-4 font-bold">Monto</label>
+                <div class="ml-4 pt-2 pb-2">
+                    <input type="number" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="monto-nueva-operacion">
+                </div>
+            </div>
+            <div>
+                <label class="ml-4 font-bold">Tipo</label>
+                <div class="ml-4 pt-2 pb-2">
+                    <select id="tipo-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
+                        <option value="ganancia">Ganancia</option>
+                        <option value="gasto">Gasto</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="ml-4 font-bold">Categoría</label>
+                <div class="ml-4 pt-2 pb-2">
+                    <select id="categoria-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
+                        <option value="servicios">Servicios</option>
+                        <option value="salidas">Salidas</option>
+                        <option value="educacion">Educación</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="trabajo">Trabajo</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="ml-4 font-bold " for="date">Fecha</label>
+                <div class="ml-4 pt-2 pb-2">
+                    <input class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]" id="fecha-nueva-operacion" type="date" value="2023-12-22">
+
+                </div>
+            </div>
+            <div class="flex justify-end mt-6 mr-4">
+                <button class="bg-[#f5f5f5] w-20 h-10 text-black rounded mr-2" id="boton-cancelar-agregar-operacion">Cancelar</button>
+                <button class="bg-[#48c774] w-20 h-10 text-white rounded " id="boton-agregar-operacion">Agregar</button>
+            </div>
+        </div>
+          
     </section>
-
-
-
-
-
-
 
 
 
