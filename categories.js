@@ -1,24 +1,53 @@
 // Manejo de Categorías
 let categories = [];
 
-// Función para agregar una nueva categoría.
+//Guardar categorías en local
+const saveLocalCategories = (array) => {
+    const saveCategoriesJSON = JSON.stringify(array);
+    localStorage.setItem('categories', saveCategoriesJSON);
+}
+//Obtener datos de categorías
+const getCategoryData = () => {
+    const dataSavedLocalStorage = localStorage.getItem('categories');
+    const dataSaveJSONtoJS = JSON.parse(dataSavedLocalStorage);
+    
+    if (dataSavedLocalStorage === null) {
+        return [];
+    } else {
+        return dataSaveJSONtoJS;
+    }
+}
+
+categories = getCategoryData()
+console.log("categories desde local", categories)
+
+
+// Función para agregar una nueva categoría
 const addCategory = () => {
     const inputCategory = document.getElementById('category');
     const newCategory = inputCategory.value.trim();
 
     if (newCategory !== '') {
-        categories.push({ name: newCategory });
-        updateCategoryList();
+        categories.push({
+            id: Date.now(),
+            name: newCategory
+        });
+        saveLocalCategories(categories)
+        updateCategoryList(categories);
         inputCategory.value = ''; // Borrar el campo de entrada
     }
+  
 };
 
+
 // Función de lista de categorías
-const updateCategoryList = () => {
+const updateCategoryList = (arrCategories) => {
+    console.log("desde la funcion update", arrCategories)
     const categoryList = document.getElementById('categoryList');
     categoryList.innerHTML = ''; // Borre la lista antes de volver a mostrarla
 
-    categories.forEach((category, index) => {
+    arrCategories.forEach((category, index) => {
+        console.log(category)
         const categoryElement = document.createElement('div');
         categoryElement.classList.add('flex', 'items-center', 'justify-between', 'mb-2');
 
@@ -53,4 +82,47 @@ const updateCategoryList = () => {
 
         categoryList.appendChild(categoryElement);
     });
+};
+updateCategoryList(categories)
+
+// Función para comenzar a editar una categoría.
+const startCategoryEdit = (index) => {
+    const categoryName = document.querySelector(`#category-${index} span`);
+    
+    // Crear una entrada para editar
+    const editInput = document.createElement('input');
+    editInput.value = categoryName.textContent;
+    
+    // Reemplazar el texto con la entrada para editar
+    categoryName.replaceWith(editInput);
+    
+    // Centrarse en la entrada para editar
+    editInput.focus();
+    
+    // Controlador para finalizar la edición
+    editInput.addEventListener('blur', () => finishCategoryEdit(index));
+    editInput.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            finishCategoryEdit(index);
+        }
+    });
+};
+
+// Función para terminar de editar una categoría
+const finishCategoryEdit = (index) => {
+    const editInput = document.querySelector(`#category-${index} input`);
+    const newName = editInput.value.trim();
+
+    // Actualizar el nombre en la lista de categorías
+    categories[index].name = newName;
+    updateCategoryList();
+};
+
+// Función para eliminar una categoría
+const deleteCategory = (index) => {
+    const confirmation = confirm(`¿Estás seguro de que deseas eliminar la categoría: "${categories[index].name}"?`);
+    if (confirmation) {
+        categories.splice(index, 1);
+        updateCategoryList();
+    }
 };
