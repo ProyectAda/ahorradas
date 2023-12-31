@@ -281,6 +281,7 @@ const editarElemento = (id)=> {
     if (botonGuardarEdicion) {
     botonGuardarEdicion.addEventListener('click', () => {
         guardarEdicion(id);
+        location.reload();
     });
     } else {
     console.error('El botón de guardar edición no se encontró en el DOM.');
