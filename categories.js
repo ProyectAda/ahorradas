@@ -54,3 +54,45 @@ const updateCategoryList = () => {
         categoryList.appendChild(categoryElement);
     });
 };
+
+// Función para comenzar a editar una categoría.
+const startCategoryEdit = (index) => {
+    const categoryName = document.querySelector(`#category-${index} span`);
+    
+    // Crear una entrada para editar
+    const editInput = document.createElement('input');
+    editInput.value = categoryName.textContent;
+    
+    // Reemplazar el texto con la entrada para editar
+    categoryName.replaceWith(editInput);
+    
+    // Centrarse en la entrada para editar
+    editInput.focus();
+    
+    // Controlador para finalizar la edición
+    editInput.addEventListener('blur', () => finishCategoryEdit(index));
+    editInput.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            finishCategoryEdit(index);
+        }
+    });
+};
+
+// Función para terminar de editar una categoría
+const finishCategoryEdit = (index) => {
+    const editInput = document.querySelector(`#category-${index} input`);
+    const newName = editInput.value.trim();
+
+    // Actualizar el nombre en la lista de categorías
+    categories[index].name = newName;
+    updateCategoryList();
+};
+
+// Función para eliminar una categoría
+const deleteCategory = (index) => {
+    const confirmation = confirm(`¿Estás seguro de que deseas eliminar la categoría: "${categories[index].name}"?`);
+    if (confirmation) {
+        categories.splice(index, 1);
+        updateCategoryList();
+    }
+};
