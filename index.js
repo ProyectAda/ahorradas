@@ -305,101 +305,89 @@ const guardarEdicion = (id) => {
     arrayDeOperaciones[index].fecha = nuevaFecha;
 
      localStorage.setItem('operaciones', JSON.stringify(arrayDeOperaciones));
-     
+
     mostrarOperacionesEnHTML(arrayDeOperaciones);
     
 };
 
 
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // //filtros
 
-// // boton mostrar filtros
-// const ocultarFiltro = document.getElementById("ocultarFiltro")
-// const listaFiltro = document.getElementById("listaFiltro")
-// const filtroConteiner = document.getElementById("filtroConteiner")
+// boton mostrar filtros
+const ocultarFiltro = document.getElementById("ocultarFiltro")
+const listaFiltro = document.getElementById("listaFiltro")
+const filtroConteiner = document.getElementById("filtroConteiner")
 
-// ocultarFiltro.addEventListener("click", (e) => {
-//   listaFiltro.classList.toggle("hidden")
+ocultarFiltro.addEventListener("click", (e) => {
+  listaFiltro.classList.toggle("hidden")
 
-//   if (listaFiltro.classList.contains("hidden")) {
-//     ocultarFiltro.innerText = "Mostrar filtros"
-//     filtroConteiner.style.height = "80px"
-//     filtroConteiner.style.marginBottom = "0"
-//   } else {
-//     ocultarFiltro.innerText = "Ocultar filtros"
-//     filtroConteiner.style.marginBottom = "300px"
-//   }
-// })
+  if (listaFiltro.classList.contains("hidden")) {
+    ocultarFiltro.innerText = "Mostrar filtros"
+    filtroConteiner.style.height = "80px"
+    filtroConteiner.style.marginBottom = "0"
+  } else {
+    ocultarFiltro.innerText = "Ocultar filtros"
+    filtroConteiner.style.marginBottom = "300px"
+  }
+})
 
-// //Clases de filtros
+//Clases de filtros
 
-// const filtroTipo = document.getElementById("filtro-tipo")
-// const filtroCategoria = document.getElementById("filtro-categoria")
-// const filtroFecha = document.getElementById("filtro-fecha")
-// const ordenar = document.getElementById("filtro-ordenar")
+const filtroTipo = document.getElementById("filtro-tipo")
+const filtroCategoria = document.getElementById("filtro-categoria")
+const filtroFecha = document.getElementById("filtro-fecha")
+const ordenar = document.getElementById("filtro-ordenar")
 
-// //filtro tipo
-// const aplicarFiltrosTipo = () => {
-//     const tipo = filtroTipo.value;
-//     const filtradoPorTipo = arrayDeOperaciones.filter((elemento) => {
-//         if (tipo === "todos") {
-//             return true;  
-//         }
-//         const resultadoFiltro = elemento.tipo === tipo;
-//         console.log("funciona filtro tipo", resultadoFiltro);
-//         return resultadoFiltro;
-//     });
+//filtro tipo
+const aplicarFiltrosTipo = () => {
+    const tipo = filtroTipo.value;
+    const filtradoPorTipo = arrayDeOperaciones.filter((elemento) => {
+        if (tipo === "todos") {
+            return true;  
+        }
+        const resultadoFiltro = elemento.tipo === tipo;
+        console.log("funciona filtro tipo", resultadoFiltro);
+        return resultadoFiltro;
+    });
 
-//     return filtradoPorTipo; 
-// };
-
-
-//     filtroTipo.onchange = () => {
-//         const arrayFiltrado = aplicarFiltrosTipo()
-//         mostrarOperacionesEnHTML(arrayFiltrado);
-
-//     }
+    return filtradoPorTipo; 
+};
 
 
-// //filtro categoria
-//     const aplicarFiltrosCategoria = () => {
-//     const categoria = filtroCategoria.value
-//     const filtradoPorCategoria = arrayDeOperaciones.filter((elemento) => {
-//         if (categoria === "todas") {
-//             return true; 
-//         }
-//         const resultadoFiltro = elemento.categoria === categoria;
-//         console.log("funciona filtro categoria", resultadoFiltro);
-//         return resultadoFiltro;
-//     });
+    filtroTipo.onchange = () => {
+        const arrayFiltrado = aplicarFiltrosTipo()
+        mostrarOperacionesEnHTML(arrayFiltrado);
 
-//     return filtradoPorCategoria; 
-//     }
+    }
 
-//     filtroCategoria.onchange = () => {
-//         const arrayFiltrado = aplicarFiltrosCategoria()
-//         mostrarOperacionesEnHTML(arrayFiltrado);
-//     }
+
+//filtro categoria
+    const aplicarFiltrosCategoria = () => {
+    const categoria = filtroCategoria.value
+    const filtradoPorCategoria = arrayDeOperaciones.filter((elemento) => {
+        if (categoria === "todas") {
+            return true; 
+        }
+        const resultadoFiltro = elemento.categoria === categoria;
+        console.log("funciona filtro categoria", resultadoFiltro);
+        return resultadoFiltro;
+    });
+
+    return filtradoPorCategoria; 
+    }
+
+    filtroCategoria.onchange = () => {
+        const arrayFiltrado = aplicarFiltrosCategoria()
+        mostrarOperacionesEnHTML(arrayFiltrado);
+    }
+
+
+
+
+
+
+
+
 
 
     //filtro fecha
