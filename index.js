@@ -69,21 +69,33 @@ const obtenerDatosLocal = () => {
   }
 };
 
+const obtenerColorMonto = (tipo) => {
+  if (tipo === "ganancia") {
+    return "text-green-500";
+  } else if (tipo === "gasto") {
+    return "text-red-500";
+  } else {
+    // Puedes manejar otros tipos o casos aquí
+    return "";
+  }
+};
+
+
+
 // Array de operaciones
 let arrayDeOperaciones = [];
 
 const mostrarOperacionesEnHTML = (array) => {
   let operacionesHTML = "";
   array.forEach((elemento) => {
-    // Check if elemento.fecha is defined before splitting
     const dateArray = elemento.fecha ? elemento.fecha.split("-") : [];
-
-    // Format date for display
     const fechaIntefaz =
       dateArray.length === 3
         ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
         : "";
-
+      // Obtener color y signo según el tipo de operación
+    const montoColor = obtenerColorMonto(elemento.tipo);
+    const signo = elemento.tipo === "ganancia" ? "+" : "-";
     operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
                                     <div class="">
                                         <h3 class="font-semibold">Descripcion
@@ -108,8 +120,8 @@ const mostrarOperacionesEnHTML = (array) => {
                                     </div>
                                     <div class="lg:ml-10">
                                         <h3 class="lg:mr-14 font-semibold">Monto
-                                            <span class="">
-                                                ${elemento.monto}
+                                            <span class="${montoColor}">
+                                                ${signo}$${elemento.monto}
                                             </span>
                                         </h3>
                                     </div>
@@ -164,6 +176,7 @@ botonAgregarNuevaOperacion.addEventListener("click", () => {
   mostrarGananciasEnHTML();
   mostrarGastosEnHTML();
   actualizarBalancesEnHTML();
+  filtrarOperacionesYBalances();
 });
 
 // boton eliminar
@@ -368,10 +381,61 @@ const aplicarFiltrosTipo = () => {
   return filtradoPorTipo;
 };
 
+const actualizarBalancesPorTipo = (tipo) => {
+  const operacionesFiltradas = arrayDeOperaciones.filter(
+    (elemento) => tipo === "todos" || elemento.tipo === tipo
+  );
+  const ganancias = operacionesFiltradas.filter(
+    (operacion) => operacion.tipo === "ganancia"
+  );
+  const gastos = operacionesFiltradas.filter(
+    (operacion) => operacion.tipo === "gasto"
+  );
+
+  const totalGanancias = ganancias.reduce(
+    (total, ganancia) => total + parseInt(ganancia.monto, 10),
+    0
+  );
+  const totalGastos = gastos.reduce(
+    (total, gasto) => total + parseInt(gasto.monto, 10),
+    0
+  );
+  const diferencia = totalGanancias - totalGastos;
+
+  document.getElementById("ganancias").textContent = `+$${totalGanancias}`;
+  document.getElementById("gastos").textContent = `-$${totalGastos}`;
+  const elementoDiferencia = document.getElementById("diferencia");
+  elementoDiferencia.textContent = `$${diferencia}`;
+  elementoDiferencia.style.color = diferencia >= 0 ? "green" : "red";
+};
+
 filtroTipo.onchange = () => {
+  const tipoSeleccionado = filtroTipo.value;
   const arrayFiltrado = aplicarFiltrosTipo();
   mostrarOperacionesEnHTML(arrayFiltrado);
+  actualizarBalancesPorTipo(tipoSeleccionado);
 };
+
+const filtrarOperacionesYBalances = () => {
+  const tipoSeleccionado = filtroTipo.value;
+  const arrayFiltrado = aplicarFiltrosTipo();
+  mostrarOperacionesEnHTML(arrayFiltrado);
+  actualizarBalancesPorTipo(tipoSeleccionado);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //filtro categoria
 const aplicarFiltrosCategoria = () => {
