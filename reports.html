@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/641b5da981.js" crossorigin="anonymous"></script>
+  <title>AhorrADAS</title>
+</head>
+
+<body class="bg-slate-50">
+  <header>
+    <!-- Barra de navegación -->
+    <nav class="bg-[#00d1b2] p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <!-- Logo -->
+        <a href="#" class="text-white text-2xl font-semibold hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i
+            class="fa-solid fa-wallet p-2 "></i>AhorrADAS</a>
+
+        <!-- Botón de hamburguesa para pantallas pequeñas -->
+        <div class="block lg:hidden">
+          <button id="toggleBtn" class="text-white focus:outline-none ">
+            <i id="hamburgerIcon" class="fa-solid fa-bars text-xl hover:bg-[#00947e]/[.36] p-2 rounded-lg "></i>
+          </button>
+        </div>
+
+        <!-- Menú de navegación -->
+        <div class="hidden lg:flex space-x-4">
+          <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i
+              class="fas fa-chart-line p-2"></i>Balance</a>
+          <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i
+              class="fa-solid fa-tag p-2 "></i>Categorías</a>
+          <a href="#" class="text-white  hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i
+              class="fas fa-chart-pie p-2"></i>Reportes</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Menú desplegable para pantallas pequeñas -->
+    <div id="mobileMenu" class="lg:hidden hidden bg-white">
+      <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i
+          class="fas fa-chart-line p-2"></i>Balance</a>
+      <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i
+          class="fa-solid fa-tag p-2"></i>Categorías</a>
+      <a href="#" class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"><i
+          class="fas fa-chart-pie p-2"></i>Reportes</a>
+    </div>
+  </header>
+  <!-- Contenedor de Reporte -->
+  <section class="p-4 md:p-8">
+    <div class="container mx-auto">
+      <div class="bg-white p-4 md:p-8 shadow-md">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold mb-4">Reportes</h2>
+        </div>
+        <!-- Contenedor Sin Reporte -->
+        <div class="flex flex-col md:flex-row items-center">
+          <img src="./img/imagewithoutreport.svg" alt="Persona y cuadro de graficos"
+            class="w-24 h-24 rounded-full mb-4 md:mr-4 md:mb-0">
+          <div>
+            <h4 class="text-lg md:text-xl font-bold mb-2">Operaciones insuficientes</h4>
+            <p class="text-gray-600">Prueba agregando más operaciones</p>
+          </div>
+        </div>
+        <!-- Contenedor con Reporte -->
+<div class="hidden" id="report-container">
+
+  <div class="mb-4">
+    <h4 class="text-lg font-bold">Resumen</h4>
+    <div id="con-reportes">
+      <!-- Contenido dinámico del resumen aquí -->
+    </div>
+    <div id="sin-reportes" class="is-hidden">
+      <!-- Mensaje o contenido cuando no hay suficientes operaciones -->
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <h4 class="text-lg font-bold">Total por Categorías</h4>
+    <div id="reporte-categorias">
+      <!-- Contenido dinámico del reporte por categorías aquí -->
+    </div>
+  </div>
+
+  <div>
+    <h4 class="text-lg font-bold">Total por mes</h4>
+    <div id="reporte-mes">
+      <!-- Contenido dinámico del reporte por mes aquí -->
+    </div>
+  </div>
+</div>
+
+      </div>
+    </div>
+  </section>
+
+  <script src="./index.js"></script>
+  <script src="./reports.js"></script>
+</body>
+
+</html>
