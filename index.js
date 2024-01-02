@@ -423,20 +423,6 @@ const filtrarOperacionesYBalances = () => {
   actualizarBalancesPorTipo(tipoSeleccionado);
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //filtro categoria
 const aplicarFiltrosCategoria = () => {
   const categoria = filtroCategoria.value;
@@ -455,6 +441,32 @@ filtroCategoria.onchange = () => {
   const arrayFiltrado = aplicarFiltrosCategoria();
   mostrarOperacionesEnHTML(arrayFiltrado);
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //CARD BALANCE
 //GANANCIAS
@@ -538,3 +550,4 @@ const actualizarBalancesEnHTML = () => {
 };
 
 actualizarBalancesEnHTML();
+
