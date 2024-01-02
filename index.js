@@ -382,7 +382,7 @@ const aplicarFiltrosTipo = () => {
         mostrarOperacionesEnHTML(arrayFiltrado);
     }
 
-
+//filtro fecha
 
 
 
