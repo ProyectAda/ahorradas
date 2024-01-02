@@ -64,25 +64,39 @@
           </div>
         </div>
         <!-- Contenedor con Reporte -->
-        <div class="hidden">
+<div class="hidden" id="report-container">
 
-          <div class="mb-4">
-            <h4 class="text-lg font-bold">Resumen</h4>
-          </div>
+  <div class="mb-4">
+    <h4 class="text-lg font-bold">Resumen</h4>
+    <div id="con-reportes">
+      <!-- Contenido dinámico del resumen aquí -->
+    </div>
+    <div id="sin-reportes" class="is-hidden">
+      <!-- Mensaje o contenido cuando no hay suficientes operaciones -->
+    </div>
+  </div>
 
-          <div class="mb-4">
-            <h4 class="text-lg font-bold">Total por Categorías</h4>
-          </div>
+  <div class="mb-4">
+    <h4 class="text-lg font-bold">Total por Categorías</h4>
+    <div id="reporte-categorias">
+      <!-- Contenido dinámico del reporte por categorías aquí -->
+    </div>
+  </div>
 
-          <div>
-            <h4 class="text-lg font-bold">Total por mes</h4>
-          </div>
-        </div>
+  <div>
+    <h4 class="text-lg font-bold">Total por mes</h4>
+    <div id="reporte-mes">
+      <!-- Contenido dinámico del reporte por mes aquí -->
+    </div>
+  </div>
+</div>
+
       </div>
     </div>
   </section>
 
   <script src="./index.js"></script>
+  <script src="./reports.js"></script>
 </body>
 
 </html>

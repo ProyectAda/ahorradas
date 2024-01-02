@@ -1,26 +1,26 @@
 // Manejo de Categorías
 let categories = [];
 
-//Guardar categorías en local
-const saveLocalCategories = (array) => {
-    const saveCategoriesJSON = JSON.stringify(array);
-    localStorage.setItem('categories', saveCategoriesJSON);
-}
-//Obtener datos de categorías
+// Obtener datos de categorías al inicio del script
 const getCategoryData = () => {
     const dataSavedLocalStorage = localStorage.getItem('categories');
     const dataSaveJSONtoJS = JSON.parse(dataSavedLocalStorage);
-    
+
     if (dataSavedLocalStorage === null) {
         return [];
     } else {
         return dataSaveJSONtoJS;
     }
-}
+};
 
-categories = getCategoryData()
-console.log("categories desde local", categories)
+// Guardar categorías en local
+const saveLocalCategories = (array) => {
+    const saveCategoriesJSON = JSON.stringify(array);
+    localStorage.setItem('categories', saveCategoriesJSON);
+};
 
+// Obtener datos de categorías
+categories = getCategoryData();
 
 // Función para agregar una nueva categoría
 const addCategory = () => {
@@ -28,26 +28,23 @@ const addCategory = () => {
     const newCategory = inputCategory.value.trim();
 
     if (newCategory !== '') {
+        const newCategoryId = Date.now(); // Generar un nuevo ID
         categories.push({
-            id: Date.now(),
-            name: newCategory
+            id: newCategoryId,
+            name: newCategory,
         });
-        saveLocalCategories(categories)
+        saveLocalCategories(categories);
         updateCategoryList(categories);
-        inputCategory.value = ''; // Borrar el campo de entrada
+        inputCategory.value = '';
     }
-  
 };
-
 
 // Función de lista de categorías
 const updateCategoryList = (arrCategories) => {
-    console.log("desde la funcion update", arrCategories)
     const categoryList = document.getElementById('categoryList');
-    categoryList.innerHTML = ''; // Borre la lista antes de volver a mostrarla
+    categoryList.innerHTML = '';
 
-    arrCategories.forEach((category, index) => {
-        console.log(category)
+    arrCategories.forEach((category) => {
         const categoryElement = document.createElement('div');
         categoryElement.classList.add('flex', 'items-center', 'justify-between', 'mb-2');
 
@@ -62,14 +59,13 @@ const updateCategoryList = (arrCategories) => {
         editButton.textContent = 'Editar';
         editButton.classList.add('text-blue-500', 'hover:underline', 'focus:outline-none');
         editButton.onclick = () => {
-            categories[index].isEditing = true;
-            startCategoryEdit(index);
+            startCategoryEdit(category.id);
         };
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Eliminar';
         deleteButton.classList.add('text-red-500', 'hover:underline', 'focus:outline-none');
-        deleteButton.onclick = () => deleteCategory(index);
+        deleteButton.onclick = () => deleteCategory(category.id, category.name);
 
         categoryButtons.appendChild(editButton);
         categoryButtons.appendChild(deleteButton);
@@ -77,52 +73,70 @@ const updateCategoryList = (arrCategories) => {
         categoryElement.appendChild(categoryName);
         categoryElement.appendChild(categoryButtons);
 
-        // Asigna id a cada elemento para una identificación más fácil
-        categoryElement.id = `category-${index}`;
+        // Asigna id a cada elemento
+        categoryElement.id = `category-${category.id}`;
 
         categoryList.appendChild(categoryElement);
     });
 };
-updateCategoryList(categories)
 
-// Función para comenzar a editar una categoría.
-const startCategoryEdit = (index) => {
-    const categoryName = document.querySelector(`#category-${index} span`);
-    
+updateCategoryList(categories);
+
+// Función para comenzar a editar una categoría
+const startCategoryEdit = (categoryId) => {
+    const categoryElement = document.getElementById(`category-${categoryId}`);
+    const categoryName = categoryElement.querySelector('span');
+
     // Crear una entrada para editar
     const editInput = document.createElement('input');
     editInput.value = categoryName.textContent;
-    
+
     // Reemplazar el texto con la entrada para editar
     categoryName.replaceWith(editInput);
-    
+
     // Centrarse en la entrada para editar
     editInput.focus();
-    
+
     // Controlador para finalizar la edición
-    editInput.addEventListener('blur', () => finishCategoryEdit(index));
+    editInput.addEventListener('blur', () => finishCategoryEdit(categoryId));
     editInput.addEventListener('keyup', (event) => {
         if (event.key === 'Enter') {
-            finishCategoryEdit(index);
+            finishCategoryEdit(categoryId);
         }
     });
 };
 
 // Función para terminar de editar una categoría
-const finishCategoryEdit = (index) => {
-    const editInput = document.querySelector(`#category-${index} input`);
+const finishCategoryEdit = (categoryId) => {
+    const editInput = document.getElementById(`category-${categoryId}`).querySelector('input');
     const newName = editInput.value.trim();
 
     // Actualizar el nombre en la lista de categorías
-    categories[index].name = newName;
-    updateCategoryList();
+    const categoryIndex = categories.findIndex((category) => category.id === categoryId);
+    if (categoryIndex !== -1) {
+        categories[categoryIndex].name = newName;
+
+        // Guardar categorías actualizadas en el almacenamiento local
+        saveLocalCategories(categories);
+
+        // Actualizar la lista de categorías en la interfaz
+        updateCategoryList(categories);
+    }
 };
 
 // Función para eliminar una categoría
-const deleteCategory = (index) => {
-    const confirmation = confirm(`¿Estás seguro de que deseas eliminar la categoría: "${categories[index].name}"?`);
+const deleteCategory = (categoryId, categoryName) => {
+    const confirmation = confirm(`¿Estás seguro de que deseas eliminar la categoría "${categoryName}"?`);
     if (confirmation) {
-        categories.splice(index, 1);
-        updateCategoryList();
+        const categoryIndex = categories.findIndex((category) => category.id === categoryId);
+        if (categoryIndex !== -1) {
+            categories.splice(categoryIndex, 1);
+
+            // Guardar categorías actualizadas en el almacenamiento local
+            saveLocalCategories(categories);
+
+            // Actualizar la lista de categorías en la interfaz
+            updateCategoryList(categories);
+        }
     }
 };
