@@ -98,7 +98,7 @@ const startCategoryEdit = (categoryId) => {
     const editInput = document.createElement('input');
     editInput.value = categoryName.textContent;
 
-    // Reemplazar el texto con la entrada para editar
+    // Reemplazar el contenido HTML con la entrada para editar
     categoryName.innerHTML = '';
     categoryName.appendChild(editInput);
 
@@ -130,10 +130,7 @@ const finishCategoryEdit = (categoryId, editInput) => {
 
     // Actualizar el contenido de span
     const categoryName = categoryElement.querySelector('span');
-    categoryName.innerText = newName;
-
-    // Eliminar la entrada de edición
-    editInput.remove();
+    categoryName.innerHTML = newName;
 
     // Obtener el botón y cambiar su texto a "Editar"
     const editButton = categoryElement.querySelector('button');
