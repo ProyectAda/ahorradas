@@ -99,7 +99,8 @@ const startCategoryEdit = (categoryId) => {
     editInput.value = categoryName.textContent;
 
     // Reemplazar el texto con la entrada para editar
-    categoryName.replaceWith(editInput);
+    categoryName.innerHTML = '';
+    categoryName.appendChild(editInput);
 
     // Centrarse en la entrada para editar
     editInput.focus();
@@ -126,16 +127,19 @@ const finishCategoryEdit = (categoryId, editInput) => {
 
     // Obtener el elemento span
     const categoryElement = document.getElementById(`category-${categoryId}`);
-    const newSpan = document.createElement('span');
-    newSpan.textContent = newName;
 
-    // Reemplazar la entrada con el span
-    editInput.replaceWith(newSpan);
+    // Actualizar el contenido de span
+    const categoryName = categoryElement.querySelector('span');
+    categoryName.innerText = newName;
+
+    // Eliminar la entrada de edición
+    editInput.remove();
 
     // Obtener el botón y cambiar su texto a "Editar"
     const editButton = categoryElement.querySelector('button');
     editButton.textContent = 'Editar';
 };
+
 
 // Función para eliminar una categoría
 const deleteCategory = (categoryId, categoryName) => {
