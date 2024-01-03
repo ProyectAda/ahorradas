@@ -140,6 +140,36 @@ const mostrarOperacionesEnHTML = (array) => {
 };
 
 const inicializarPagina = () => {
+  // Obtener el elemento select
+  const filtroCategoriaSelect = document.getElementById("filtroCategoria");
+
+  // Obtener las categorías del localStorage utilizando la función de categories.js
+  const categories = getCategoryData();
+
+  // Limpiar opciones actuales
+  filtroCategoriaSelect.innerHTML = "";
+
+  // Agregar opciones dinámicamente
+  categories.forEach((categoria) => {
+      const optionElement = document.createElement("option");
+      optionElement.value = categoria.name;
+      optionElement.text = categoria.name;
+      filtroCategoriaSelect.add(optionElement);
+  });
+
+    const categoriaNuevaOperacion = document.getElementById("categoria-nueva-operacion");
+
+    // Limpiar opciones actuales del select de nueva operación
+    categoriaNuevaOperacion.innerHTML = "";
+
+    // Agregar opciones dinámicamente al select de nueva operación
+    categories.forEach((categoria) => {
+        const optionElement = document.createElement("option");
+        optionElement.value = categoria.name;
+        optionElement.text = categoria.name;
+        categoriaNuevaOperacion.add(optionElement);
+    });
+  
   arrayDeOperaciones = obtenerDatosLocal();
 
   if (arrayDeOperaciones.length > 0) {
@@ -150,6 +180,7 @@ const inicializarPagina = () => {
     operacionesRealizadas.classList.add("hidden");
     sinOperaciones.classList.remove("hidden");
   }
+  mostrarOperacionesEnHTML(arrayDeOperaciones);
 };
 
 document.addEventListener("DOMContentLoaded", inicializarPagina);
@@ -360,7 +391,7 @@ ocultarFiltro.addEventListener("click", (e) => {
 //Clases de filtros
 
 const filtroTipo = document.getElementById("filtro-tipo");
-const filtroCategoria = document.getElementById("filtro-categoria");
+const filtroCategoria = document.getElementById("filtroCategoria");
 const filtroFecha = document.getElementById("filtro-fecha");
 const ordenar = document.getElementById("filtro-ordenar");
 
@@ -420,24 +451,28 @@ const filtrarOperacionesYBalances = () => {
   actualizarBalancesPorTipo(tipoSeleccionado);
 };
 
-//filtro categoria
-const aplicarFiltrosCategoria = () => {
-  const categoria = filtroCategoria.value;
-  const filtradoPorCategoria = arrayDeOperaciones.filter((elemento) => {
-    if (categoria === "todas") {
-      return true;
-    }
-    const resultadoFiltro = elemento.categoria === categoria;
-    return resultadoFiltro;
-  });
+// //filtro categoria
+// // ...
 
-  return filtradoPorCategoria;
-};
+// // Función para actualizar las opciones del filtro de categorías
+// const updateCategoriaSelectOptions = (categorias) => {
+//   const filtroCategoriaSelect = document.getElementById("filtroCategoria");
 
-filtroCategoria.onchange = () => {
-  const arrayFiltrado = aplicarFiltrosCategoria();
-  mostrarOperacionesEnHTML(arrayFiltrado);
-};
+//   // Limpiar opciones existentes
+//   filtroCategoriaSelect.innerHTML = "";
+
+//   // Agregar opciones dinámicamente
+//   categorias.forEach((categoria) => {
+//     const optionElement = document.createElement("option");
+//     optionElement.value = categoria.name; // Asigna el valor de la categoría
+//     optionElement.text = categoria.name;
+//     filtroCategoriaSelect.add(optionElement);
+//   });
+// };
+
+// // Actualizar las opciones del filtro de categorías al cargar la página
+// updateCategoriaSelectOptions(categories);
+
 
 //CARD BALANCE
 //GANANCIAS
@@ -521,4 +556,34 @@ const actualizarBalancesEnHTML = () => {
 };
 
 actualizarBalancesEnHTML();
+
+
+// // Código relacionado con operaciones
+
+// const updateCategoriaSelectOptions = (categorias) => {
+//   const filtroCategoriaSelect = document.getElementById("filtroCategoria");
+
+//   // Limpiar opciones existentes
+//   filtroCategoriaSelect.innerHTML = "";
+
+//   // Agregar opciones dinámicamente
+//   categorias.forEach((categoria) => {
+//       const optionElement = document.createElement("option");
+//       optionElement.value = categoria.name;
+//       optionElement.text = categoria.name;
+//       filtroCategoriaSelect.add(optionElement);
+//   });
+// };
+
+// // Otras funciones y lógica relacionada con operaciones
+
+// // Obtener datos de categorías al inicio del script
+// const categories = getCategoryData();; // Asegúrate de tener la función getCategoriesFromLocalStorage en tu archivo
+
+// // Actualizar opciones del filtro de categorías al inicializar la página
+// updateCategoriaSelectOptions(categories);
+
+// // Otras lógicas y eventos del archivo index.js
+
+
 
