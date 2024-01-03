@@ -75,12 +75,9 @@ const obtenerColorMonto = (tipo) => {
   } else if (tipo === "gasto") {
     return "text-red-500";
   } else {
-    // Puedes manejar otros tipos o casos aquí
     return "";
   }
 };
-
-
 
 // Array de operaciones
 let arrayDeOperaciones = [];
@@ -93,7 +90,7 @@ const mostrarOperacionesEnHTML = (array) => {
       dateArray.length === 3
         ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
         : "";
-      // Obtener color y signo según el tipo de operación
+    // Obtener color y signo según el tipo de operación
     const montoColor = obtenerColorMonto(elemento.tipo);
     const signo = elemento.tipo === "ganancia" ? "+" : "-";
     operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
@@ -442,32 +439,6 @@ filtroCategoria.onchange = () => {
   mostrarOperacionesEnHTML(arrayFiltrado);
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //CARD BALANCE
 //GANANCIAS
 const obtenerGananciasDesdeLocalStorage = () => {
@@ -485,7 +456,7 @@ const sumarGanancias = () => {
     return 0;
   }
   const suma = ganancias.reduce(
-    (total, ganancia) => total + parseInt(ganancia.monto, 10),
+    (total, ganancia) => total + parseInt(ganancia.monto),
     0
   );
 
@@ -518,7 +489,7 @@ const sumarGastos = () => {
   }
 
   const suma = gastos.reduce(
-    (total, gasto) => total + parseInt(gasto.monto, 10),
+    (total, gasto) => total + parseInt(gasto.monto),
     0
   );
   return suma;
