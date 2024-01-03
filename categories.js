@@ -82,33 +82,35 @@ const updateCategoryList = (arrCategories) => {
 
 updateCategoryList(categories);
 
+
 // Función para comenzar a editar una categoría
 const startCategoryEdit = (categoryId) => {
     const categoryElement = document.getElementById(`category-${categoryId}`);
     const categoryName = categoryElement.querySelector('span');
 
+    // Obtener el botón existente
+    const editButton = categoryElement.querySelector('button');
+
+    // Cambiar el texto del botón a "Guardar"
+    editButton.textContent = 'Guardar';
+
     // Crear una entrada para editar
     const editInput = document.createElement('input');
     editInput.value = categoryName.textContent;
 
-    // Reemplazar el texto con la entrada para editar
-    categoryName.replaceWith(editInput);
+    // Reemplazar el contenido HTML con la entrada para editar
+    categoryName.innerHTML = '';
+    categoryName.appendChild(editInput);
 
     // Centrarse en la entrada para editar
     editInput.focus();
 
-    // Controlador para finalizar la edición
-    editInput.addEventListener('blur', () => finishCategoryEdit(categoryId));
-    editInput.addEventListener('keyup', (event) => {
-        if (event.key === 'Enter') {
-            finishCategoryEdit(categoryId);
-        }
-    });
+    // Controlador para finalizar la edición al perder el foco
+    editInput.addEventListener('blur', () => finishCategoryEdit(categoryId, editInput));
 };
 
-// Función para terminar de editar una categoría
-const finishCategoryEdit = (categoryId) => {
-    const editInput = document.getElementById(`category-${categoryId}`).querySelector('input');
+// Función para finalizar la edición de una categoría
+const finishCategoryEdit = (categoryId, editInput) => {
     const newName = editInput.value.trim();
 
     // Actualizar el nombre en la lista de categorías
@@ -122,7 +124,19 @@ const finishCategoryEdit = (categoryId) => {
         // Actualizar la lista de categorías en la interfaz
         updateCategoryList(categories);
     }
+
+    // Obtener el elemento span
+    const categoryElement = document.getElementById(`category-${categoryId}`);
+
+    // Actualizar el contenido de span
+    const categoryName = categoryElement.querySelector('span');
+    categoryName.innerHTML = newName;
+
+    // Obtener el botón y cambiar su texto a "Editar"
+    const editButton = categoryElement.querySelector('button');
+    editButton.textContent = 'Editar';
 };
+
 
 // Función para eliminar una categoría
 const deleteCategory = (categoryId, categoryName) => {
