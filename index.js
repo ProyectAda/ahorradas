@@ -611,8 +611,6 @@ filtroCategoria.addEventListener("change", () => {
 });
 
 //filtro fecha 
-//filtroFecha
-
 document.addEventListener("DOMContentLoaded", () => {
   inicializarPagina(); // Llamamos a la función existente
 
@@ -649,65 +647,6 @@ const aplicarFiltrosFecha = (fecha) => {
     // Comparamos solo por la fecha (ignorando la hora)
     return elemento.fecha && elemento.fecha >= fecha;
   });
-
-  if (filtradoPorFecha.length === 0) {
-    // Mostrar la sección "Sin operaciones" si el array filtrado está vacío
-    operacionesRealizadas.classList.add("hidden");
-    sinOperaciones.classList.remove("hidden");
-
-    // Establecer los montos en cero en la sección de balance
-    document.getElementById("ganancias").textContent = "+$0";
-    document.getElementById("gastos").textContent = "-$0";
-    document.getElementById("diferencia").textContent = "$0";
-  } else {
-    operacionesRealizadas.classList.remove("hidden");
-    sinOperaciones.classList.add("hidden");
-
-    // Actualizar los montos en la sección de balance
-    actualizarBalancesPorTipo(filtroTipo.value, fecha);
-  }
-
-  return filtradoPorFecha;
-};
- mas reciente document.addEventListener("DOMContentLoaded", () => {
-  inicializarPagina(); // Llamamos a la función existente
-
-  // Obtén el elemento del campo de fecha
-  const filtroFecha = document.getElementById("filtro-fecha");
-
-  // Obtén la fecha actual en formato 'YYYY-MM-DD'
-  const fechaActual = new Date().toISOString().split("T")[0];
-
-  // Establece la fecha actual como valor en el campo de entrada
-  filtroFecha.value = fechaActual;
-
-  // Aplica el filtro de fecha al cargar la página
-  const arrayFiltrado = aplicarFiltrosFecha(fechaActual);
-  mostrarOperacionesEnHTML(arrayFiltrado);
-});
-
-// Actualiza la función del evento onchange para el campo de fecha
-
-filtroFecha.addEventListener("change", () => {
-  const fechaSeleccionada = filtroFecha.value;
-  const arrayFiltrado = aplicarFiltrosFecha(fechaSeleccionada);
-  mostrarOperacionesEnHTML(arrayFiltrado);
-});
-
-// Ajusta la función para aplicar el filtro de fecha
-const aplicarFiltrosFecha = (fecha) => {
-  const filtradoPorFecha = arrayDeOperaciones.filter((elemento) => {
-    // Si no hay fecha seleccionada, devolvemos todas las operaciones
-    if (!fecha) {
-      return true;
-    }
-
-    // Comparamos solo por la fecha (ignorando la hora)
-    return elemento.fecha && elemento.fecha >= fecha;
-  });
-
-  // Ordenar el array filtrado por fecha de forma descendente (de más reciente a más antigua)
-  filtradoPorFecha.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
   if (filtradoPorFecha.length === 0) {
     // Mostrar la sección "Sin operaciones" si el array filtrado está vacío
