@@ -545,93 +545,68 @@ cancelarAgregarOperacionBtn.addEventListener("click", () => {
   seccionBalances.classList.remove("hidden");
 });
 
-
-
 //filtro categoria
 
 let filtroCategoria;
 
-
 filtroCategoria = document.getElementById("filtroCategoria");
 
-
 filtroCategoria.addEventListener("change", () => {
-
   const categoriaFiltrada = filtroCategoria.value;
 
   const operacionesFiltradas = arrayDeOperaciones.filter((elemento) => {
- 
     if (categoriaFiltrada === "") {
       return true;
     }
 
-   
     return elemento.categoria === categoriaFiltrada;
   });
 
-
   mostrarOperacionesEnHTML(operacionesFiltradas);
 
-
   if (operacionesFiltradas.length === 0) {
-
     const sinOperaciones = document.getElementById("sin-operaciones");
     sinOperaciones.classList.remove("hidden");
   } else {
-  
     const sinOperaciones = document.getElementById("sin-operaciones");
     sinOperaciones.classList.add("hidden");
   }
 });
 
 //filtro fecha
-// Función para filtrar y mostrar operaciones desde una fecha específica
+
 const filtrarYMostrarOperaciones = (fechaDesde) => {
-  // Convierte la fechaDesde a un objeto Date
   const fechaFiltro = new Date(fechaDesde);
 
-  // Filtra las operaciones desde la fecha especificada
   const operacionesFiltradas = arrayDeOperaciones.filter((operacion) => {
     const fechaOperacion = new Date(operacion.fecha);
     return fechaOperacion >= fechaFiltro;
   });
 
-  // Muestra las operaciones filtradas en HTML
   mostrarOperacionesEnHTML(operacionesFiltradas);
 };
 
-// Esta función podría ser llamada cuando el valor del input de fecha cambie
 const inputFecha = document.getElementById("filtro-fecha");
 inputFecha.addEventListener("change", () => {
   const fechaSeleccionada = inputFecha.value;
   filtrarYMostrarOperaciones(fechaSeleccionada);
 });
 
-// También puedes llamar a la función directamente con una fecha específica
-// filtrarYMostrarOperaciones("2023-01-15");
-// Obtener el elemento input por su ID
-
-
-// Expresión de función anónima para establecer la fecha actual en un input
-const establecerFechaHoyEnInput = function() {
-  // Obtener el elemento input por su ID
+const establecerFechaHoyEnInput = function () {
   const inputFecha = document.getElementById("filtro-fecha");
 
   // Obtener la fecha actual
   const fechaHoy = new Date();
 
-  // Obtener componentes de fecha (día, mes, año)
   const dia = fechaHoy.getDate();
-  const mes = fechaHoy.getMonth() + 1; // Se suma 1 ya que los meses se cuentan desde 0
+  const mes = fechaHoy.getMonth() + 1;
   const anio = fechaHoy.getFullYear();
 
-  // Formatear la fecha en el formato dd/mm/aaaa
-  const formatoFecha = `${anio}-${mes < 10 ? '0' : ''}${mes}-${dia < 10 ? '0' : ''}${dia}`;
+  const formatoFecha = `${anio}-${mes < 10 ? "0" : ""}${mes}-${
+    dia < 10 ? "0" : ""
+  }${dia}`;
 
-  // Establecer el valor del input con la fecha actual
   inputFecha.value = formatoFecha;
 };
 
-// Llamar a la función para establecer la fecha al cargar la página
 document.addEventListener("DOMContentLoaded", establecerFechaHoyEnInput);
-
