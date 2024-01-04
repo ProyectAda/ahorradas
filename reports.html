@@ -53,48 +53,68 @@
     <div class="container mx-auto">
       <div class="bg-white p-4 md:p-8 shadow-md">
         <div>
-          <h2 class="text-2xl md:text-3xl font-bold mb-4">Reportes</h2>
+          <h1 class="text-2xl md:text-3xl font-bold mb-4">Reportes</h1>
         </div>
         <!-- Contenedor Sin Reporte -->
-        <div class="flex flex-col md:flex-row items-center">
-          <img src="./assets/imagen/reportes.svg" alt="Persona y cuadro de graficos"
-            class="w-24 h-24 rounded-full mb-4 md:mr-4 md:mb-0">
+        <div class="flex flex-col items-center" id="sin-reportes">
+          <img src="./assets/imagen/reportes.svg" alt="Persona y cuadro de gráficos"
+               class="w-full md:w-1/2 lg:w-2/3 xl:w-1/2 2xl:w-1/3 h-auto md:h-auto lg:h-auto xl:h-auto 2xl:h-auto md:mr-4 md:mb-0">
           <div>
-            <h4 class="text-lg md:text-xl font-bold mb-2">Operaciones insuficientes</h4>
-            <p class="text-gray-600">Prueba agregando más operaciones</p>
+              <h4 class="text-lg md:text-xl font-bold mb-2">Operaciones insuficientes</h4>
+              <p class="text-gray-600">Prueba agregando más operaciones</p>
+          </div>
+      </div>
+      
+        <!-- Contenedor con Reporte -->
+        <div class="hidden" id="report-container">
+          <div class="mb-4">
+            <h2 class="text-lg font-bold px-4 py-4">Resumen</h2>
+            <table class="w-full mb-4">
+              <tbody class="space-y-4">
+                <tr>
+                  <td class="font-semibold">Categoría con mayor ganancia:</td>
+                  <td class="px-4 py-2"><span id="max-profit-category"></span></td>
+                  <td class="px-4 py-2"><span id="max-profit-amount"></span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Categoría con mayor gasto:</td>
+                  <td class="px-4 py-2"><span id="max-expense-category"></span></td>
+                  <td class="px-4 py-2"><span id="max-expense-amount"></span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Categoría con mayor balance:</td>
+                  <td class="px-4 py-2"><span id="max-balance-category"></span></td>
+                  <td class="px-4 py-2"><span id="max-balance-amount"></span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Mes con mayor ganancia:</td>
+                  <td class="px-4 py-2"><span id="max-profit-month"></span></td>
+                  <td class="px-4 py-2"><span id="max-profit-month-amount"></span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Mes con mayor gasto:</td>
+                  <td class="px-4 py-2"><span id="max-expense-month"></span></td>
+                  <td class="px-4 py-2"><span id="max-expense-month-amount"></span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2 class="text-lg font-bold px-4 py-6">Totales por categorías</h2>
+
+            <div class="w-full mb-4" id="tabla-categorias"></div>
+
+            <h2 class="text-lg font-bold px-4 py-6">Totales por categorías</h2>
+
+            <div class="w-full mb-4" id="resumen-por-mes"></div>
+
           </div>
         </div>
-        <!-- Contenedor con Reporte -->
-<div class="hidden" id="report-container">
 
-  <div class="mb-4">
-    <h4 class="text-lg font-bold">Resumen</h4>
-    <div id="con-reportes">
-      <!-- Contenido dinámico del resumen aquí -->
-    </div>
-    <div id="sin-reportes" class="is-hidden">
-      <!-- Mensaje o contenido cuando no hay suficientes operaciones -->
-    </div>
-  </div>
-
-  <div class="mb-4">
-    <h4 class="text-lg font-bold">Total por Categorías</h4>
-    <div id="reporte-categorias">
-      <!-- Contenido dinámico del reporte por categorías aquí -->
-    </div>
-  </div>
-
-  <div>
-    <h4 class="text-lg font-bold">Total por mes</h4>
-    <div id="reporte-mes">
-      <!-- Contenido dinámico del reporte por mes aquí -->
-    </div>
-  </div>
-</div>
 
       </div>
     </div>
   </section>
+
 
   <script src="index.js"></script>
   <script src="reports.js"></script>
