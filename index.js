@@ -19,8 +19,6 @@ toggleBtn.addEventListener("click", function () {
 //nueva operacion
 
 const seccionBalances = document.getElementById("seccionBalances");
-// const seccionCategorias = document.getElementById("seccionCategorias");
-// const seccionReportes = document.getElementById("seccionReportes");
 const botonNuevaOperacion = document.getElementById("botonNuevaOperacion");
 const seccionAgregarOperacion = document.getElementById(
   "seccionAgregarOperacion"
@@ -28,8 +26,6 @@ const seccionAgregarOperacion = document.getElementById(
 
 botonNuevaOperacion.addEventListener("click", (e) => {
   seccionBalances.classList.add("hidden");
-  // seccionCategorias.classList.add("hidden");
-  // seccionReportes.classList.add("hidden");
   seccionAgregarOperacion.classList.remove("hidden");
   sinOperaciones.classList.add("hidden");
 });
@@ -90,7 +86,6 @@ const mostrarOperacionesEnHTML = (array) => {
       dateArray.length === 3
         ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
         : "";
-    // Obtener color y signo según el tipo de operación
     const montoColor = obtenerColorMonto(elemento.tipo);
     const signo = elemento.tipo === "ganancia" ? "+" : "-";
     operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
@@ -140,36 +135,30 @@ const mostrarOperacionesEnHTML = (array) => {
 };
 
 const inicializarPagina = () => {
-  // Obtener el elemento select
   const filtroCategoriaSelect = document.getElementById("filtroCategoria");
-
-  // Obtener las categorías del localStorage utilizando la función de categories.js
   const categories = getCategoryData();
-
-  // Limpiar opciones actuales
   filtroCategoriaSelect.innerHTML = "";
 
-  // Agregar opciones dinámicamente
   categories.forEach((categoria) => {
-      const optionElement = document.createElement("option");
-      optionElement.value = categoria.name;
-      optionElement.text = categoria.name;
-      filtroCategoriaSelect.add(optionElement);
+    const optionElement = document.createElement("option");
+    optionElement.value = categoria.name;
+    optionElement.text = categoria.name;
+    filtroCategoriaSelect.add(optionElement);
   });
 
-    const categoriaNuevaOperacion = document.getElementById("categoria-nueva-operacion");
+  const categoriaNuevaOperacion = document.getElementById(
+    "categoria-nueva-operacion"
+  );
 
-    // Limpiar opciones actuales del select de nueva operación
-    categoriaNuevaOperacion.innerHTML = "";
+  categoriaNuevaOperacion.innerHTML = "";
 
-    // Agregar opciones dinámicamente al select de nueva operación
-    categories.forEach((categoria) => {
-        const optionElement = document.createElement("option");
-        optionElement.value = categoria.name;
-        optionElement.text = categoria.name;
-        categoriaNuevaOperacion.add(optionElement);
-    });
-  
+  categories.forEach((categoria) => {
+    const optionElement = document.createElement("option");
+    optionElement.value = categoria.name;
+    optionElement.text = categoria.name;
+    categoriaNuevaOperacion.add(optionElement);
+  });
+
   arrayDeOperaciones = obtenerDatosLocal();
 
   if (arrayDeOperaciones.length > 0) {
@@ -216,9 +205,7 @@ const eliminarElemento = (id) => {
   mostrarOperacionesEnHTML(arrayDeOperaciones);
 
   guardarDatosLocal(arrayDeOperaciones);
-  // Check if there are remaining operations
   if (arrayDeOperaciones.length === 0) {
-    // If no operations are left, display the "sin operaciones" section
     operacionesRealizadas.classList.add("hidden");
     sinOperaciones.classList.remove("hidden");
   }
@@ -309,26 +296,23 @@ const editarElemento = (id) => {
   document.body.innerHTML = seccionEditarOperacionHTML;
   const cancelarEdicionBtn = document.getElementById("boton-cancelar-edicion");
 
-if (cancelarEdicionBtn) {
-    cancelarEdicionBtn.addEventListener("click", () => window.location.reload());
-}
+  if (cancelarEdicionBtn) {
+    cancelarEdicionBtn.addEventListener("click", () =>
+      window.location.reload()
+    );
+  }
 
   const selectCategoria = document.getElementById("categoria-nueva-operacion");
 
-  // Limpiar opciones actuales
   selectCategoria.innerHTML = "";
-
-  // Obtener las categorías del localStorage utilizando la función de categories.js
   const categories = getCategoryData();
 
-  // Agregar opciones dinámicamente al select de editar operación
   categories.forEach((categoria) => {
     const optionElement = document.createElement("option");
     optionElement.value = categoria.name;
     optionElement.text = categoria.name;
     selectCategoria.add(optionElement);
   });
-
 
   const seccionEditarOperacion = document.getElementById(
     "seccionEditarOperacion"
@@ -409,7 +393,7 @@ ocultarFiltro.addEventListener("click", (e) => {
 //Clases de filtros
 
 const filtroTipo = document.getElementById("filtro-tipo");
-const filtroFecha = document.getElementById("filtro-fecha");
+
 const ordenar = document.getElementById("filtro-ordenar");
 
 //filtro tipo
@@ -551,122 +535,78 @@ const actualizarBalancesEnHTML = () => {
 
 actualizarBalancesEnHTML();
 
+// referencia al botón de cancelar
+const cancelarAgregarOperacionBtn = document.getElementById(
+  "boton-cancelar-agregar-operacion"
+);
 
-
-// Obtén referencia al botón de cancelar
-const cancelarAgregarOperacionBtn = document.getElementById("boton-cancelar-agregar-operacion");
-
-// Agrega un evento click al botón de cancelar
 cancelarAgregarOperacionBtn.addEventListener("click", () => {
-  // Oculta la sección de nueva operación
   seccionAgregarOperacion.classList.add("hidden");
-
-  // Muestra la sección de balances
   seccionBalances.classList.remove("hidden");
-
-  // También puedes realizar otras acciones necesarias al cancelar
 });
 
 
 
+//filtro categoria
 
-
-
-
-// Declara filtroCategoria en un ámbito más amplio
 let filtroCategoria;
 
-// Inicializa el filtroCategoria y configura el evento change
+
 filtroCategoria = document.getElementById("filtroCategoria");
 
-// Agrega un evento de cambio al menú desplegable para actualizar el filtro de categoría
+
 filtroCategoria.addEventListener("change", () => {
-  // Obtén el valor seleccionado en el menú desplegable (categoría filtrada)
+
   const categoriaFiltrada = filtroCategoria.value;
 
-  // Filtra las operaciones según la categoría seleccionada (puedes modificar esto según tus necesidades)
-  const operacionesFiltradas = arrayDeOperaciones.filter(elemento => {
-    // Si no se selecciona ninguna categoría (valor vacío), mostrar todas las operaciones
+  const operacionesFiltradas = arrayDeOperaciones.filter((elemento) => {
+ 
     if (categoriaFiltrada === "") {
       return true;
     }
 
-    // Filtra por la categoría seleccionada
+   
     return elemento.categoria === categoriaFiltrada;
   });
 
-  // Muestra las operaciones filtradas
+
   mostrarOperacionesEnHTML(operacionesFiltradas);
 
-  // Verifica si no hay operaciones para la categoría seleccionada
+
   if (operacionesFiltradas.length === 0) {
-    // Muestra la sección "sin-operaciones"
+
     const sinOperaciones = document.getElementById("sin-operaciones");
     sinOperaciones.classList.remove("hidden");
   } else {
-    // Oculta la sección "sin-operaciones" si hay operaciones
+  
     const sinOperaciones = document.getElementById("sin-operaciones");
     sinOperaciones.classList.add("hidden");
   }
 });
 
-//filtro fecha 
-document.addEventListener("DOMContentLoaded", () => {
-  inicializarPagina(); // Llamamos a la función existente
+//filtro fecha
+// Función para filtrar y mostrar operaciones desde una fecha específica
+const filtrarYMostrarOperaciones = (fechaDesde) => {
+  // Convierte la fechaDesde a un objeto Date
+  const fechaFiltro = new Date(fechaDesde);
 
-  // Obtén el elemento del campo de fecha
-  const filtroFecha = document.getElementById("filtro-fecha");
-
-  // Obtén la fecha actual en formato 'YYYY-MM-DD'
-  const fechaActual = new Date().toISOString().split("T")[0];
-
-  // Establece la fecha actual como valor en el campo de entrada
-  filtroFecha.value = fechaActual;
-
-  // Aplica el filtro de fecha al cargar la página
-  const arrayFiltrado = aplicarFiltrosFecha(fechaActual);
-  mostrarOperacionesEnHTML(arrayFiltrado);
-});
-
-// Actualiza la función del evento onchange para el campo de fecha
-
-filtroFecha.addEventListener("change", () => {
-  const fechaSeleccionada = filtroFecha.value;
-  const arrayFiltrado = aplicarFiltrosFecha(fechaSeleccionada);
-  mostrarOperacionesEnHTML(arrayFiltrado);
-});
-
-// Ajusta la función para aplicar el filtro de fecha
-const aplicarFiltrosFecha = (fecha) => {
-  const filtradoPorFecha = arrayDeOperaciones.filter((elemento) => {
-    // Si no hay fecha seleccionada, devolvemos todas las operaciones
-    if (!fecha) {
-      return true;
-    }
-
-    // Comparamos solo por la fecha (ignorando la hora)
-    return elemento.fecha && elemento.fecha >= fecha;
+  // Filtra las operaciones desde la fecha especificada
+  const operacionesFiltradas = arrayDeOperaciones.filter((operacion) => {
+    const fechaOperacion = new Date(operacion.fecha);
+    return fechaOperacion >= fechaFiltro;
   });
 
-  if (filtradoPorFecha.length === 0) {
-    // Mostrar la sección "Sin operaciones" si el array filtrado está vacío
-    operacionesRealizadas.classList.add("hidden");
-    sinOperaciones.classList.remove("hidden");
-
-    // Establecer los montos en cero en la sección de balance
-    document.getElementById("ganancias").textContent = "+$0";
-    document.getElementById("gastos").textContent = "-$0";
-    document.getElementById("diferencia").textContent = "$0";
-  } else {
-    operacionesRealizadas.classList.remove("hidden");
-    sinOperaciones.classList.add("hidden");
-
-    // Actualizar los montos en la sección de balance
-    actualizarBalancesPorTipo(filtroTipo.value, fecha);
-  }
-
-  return filtradoPorFecha;
+  // Muestra las operaciones filtradas en HTML
+  mostrarOperacionesEnHTML(operacionesFiltradas);
 };
 
+// Esta función podría ser llamada cuando el valor del input de fecha cambie
+const inputFecha = document.getElementById("filtro-fecha");
+inputFecha.addEventListener("change", () => {
+  const fechaSeleccionada = inputFecha.value;
+  filtrarYMostrarOperaciones(fechaSeleccionada);
+});
 
+// También puedes llamar a la función directamente con una fecha específica
+// filtrarYMostrarOperaciones("2023-01-15");
 
