@@ -19,8 +19,6 @@ toggleBtn.addEventListener("click", function () {
 //nueva operacion
 
 const seccionBalances = document.getElementById("seccionBalances");
-// const seccionCategorias = document.getElementById("seccionCategorias");
-// const seccionReportes = document.getElementById("seccionReportes");
 const botonNuevaOperacion = document.getElementById("botonNuevaOperacion");
 const seccionAgregarOperacion = document.getElementById(
   "seccionAgregarOperacion"
@@ -28,8 +26,6 @@ const seccionAgregarOperacion = document.getElementById(
 
 botonNuevaOperacion.addEventListener("click", (e) => {
   seccionBalances.classList.add("hidden");
-  // seccionCategorias.classList.add("hidden");
-  // seccionReportes.classList.add("hidden");
   seccionAgregarOperacion.classList.remove("hidden");
   sinOperaciones.classList.add("hidden");
 });
@@ -90,7 +86,6 @@ const mostrarOperacionesEnHTML = (array) => {
       dateArray.length === 3
         ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
         : "";
-    // Obtener color y signo según el tipo de operación
     const montoColor = obtenerColorMonto(elemento.tipo);
     const signo = elemento.tipo === "ganancia" ? "+" : "-";
     operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
@@ -140,6 +135,30 @@ const mostrarOperacionesEnHTML = (array) => {
 };
 
 const inicializarPagina = () => {
+  const filtroCategoriaSelect = document.getElementById("filtroCategoria");
+  const categories = getCategoryData();
+  filtroCategoriaSelect.innerHTML = "";
+
+  categories.forEach((categoria) => {
+    const optionElement = document.createElement("option");
+    optionElement.value = categoria.name;
+    optionElement.text = categoria.name;
+    filtroCategoriaSelect.add(optionElement);
+  });
+
+  const categoriaNuevaOperacion = document.getElementById(
+    "categoria-nueva-operacion"
+  );
+
+  categoriaNuevaOperacion.innerHTML = "";
+
+  categories.forEach((categoria) => {
+    const optionElement = document.createElement("option");
+    optionElement.value = categoria.name;
+    optionElement.text = categoria.name;
+    categoriaNuevaOperacion.add(optionElement);
+  });
+
   arrayDeOperaciones = obtenerDatosLocal();
 
   if (arrayDeOperaciones.length > 0) {
@@ -150,6 +169,7 @@ const inicializarPagina = () => {
     operacionesRealizadas.classList.add("hidden");
     sinOperaciones.classList.remove("hidden");
   }
+  mostrarOperacionesEnHTML(arrayDeOperaciones);
 };
 
 document.addEventListener("DOMContentLoaded", inicializarPagina);
@@ -185,9 +205,7 @@ const eliminarElemento = (id) => {
   mostrarOperacionesEnHTML(arrayDeOperaciones);
 
   guardarDatosLocal(arrayDeOperaciones);
-  // Check if there are remaining operations
   if (arrayDeOperaciones.length === 0) {
-    // If no operations are left, display the "sin operaciones" section
     operacionesRealizadas.classList.add("hidden");
     sinOperaciones.classList.remove("hidden");
   }
@@ -256,11 +274,7 @@ const editarElemento = (id) => {
             <label class="ml-4 font-bold">Categoría</label>
             <div class="ml-4 pt-2 pb-2">
                 <select id="categoria-nueva-operacion" class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
-                    <option value="servicios">Servicios</option>
-                    <option value="salidas">Salidas</option>
-                    <option value="educacion">Educación</option>
-                    <option value="transporte">Transporte</option>
-                    <option value="trabajo">Trabajo</option>
+                  
                 </select>
             </div>
         </div>
@@ -280,6 +294,25 @@ const editarElemento = (id) => {
 </section>`;
 
   document.body.innerHTML = seccionEditarOperacionHTML;
+  const cancelarEdicionBtn = document.getElementById("boton-cancelar-edicion");
+
+  if (cancelarEdicionBtn) {
+    cancelarEdicionBtn.addEventListener("click", () =>
+      window.location.reload()
+    );
+  }
+
+  const selectCategoria = document.getElementById("categoria-nueva-operacion");
+
+  selectCategoria.innerHTML = "";
+  const categories = getCategoryData();
+
+  categories.forEach((categoria) => {
+    const optionElement = document.createElement("option");
+    optionElement.value = categoria.name;
+    optionElement.text = categoria.name;
+    selectCategoria.add(optionElement);
+  });
 
   const seccionEditarOperacion = document.getElementById(
     "seccionEditarOperacion"
@@ -360,8 +393,7 @@ ocultarFiltro.addEventListener("click", (e) => {
 //Clases de filtros
 
 const filtroTipo = document.getElementById("filtro-tipo");
-const filtroCategoria = document.getElementById("filtro-categoria");
-const filtroFecha = document.getElementById("filtro-fecha");
+
 const ordenar = document.getElementById("filtro-ordenar");
 
 //filtro tipo
@@ -418,25 +450,6 @@ const filtrarOperacionesYBalances = () => {
   const arrayFiltrado = aplicarFiltrosTipo();
   mostrarOperacionesEnHTML(arrayFiltrado);
   actualizarBalancesPorTipo(tipoSeleccionado);
-};
-
-//filtro categoria
-const aplicarFiltrosCategoria = () => {
-  const categoria = filtroCategoria.value;
-  const filtradoPorCategoria = arrayDeOperaciones.filter((elemento) => {
-    if (categoria === "todas") {
-      return true;
-    }
-    const resultadoFiltro = elemento.categoria === categoria;
-    return resultadoFiltro;
-  });
-
-  return filtradoPorCategoria;
-};
-
-filtroCategoria.onchange = () => {
-  const arrayFiltrado = aplicarFiltrosCategoria();
-  mostrarOperacionesEnHTML(arrayFiltrado);
 };
 
 //CARD BALANCE
@@ -522,3 +535,78 @@ const actualizarBalancesEnHTML = () => {
 
 actualizarBalancesEnHTML();
 
+// referencia al botón de cancelar
+const cancelarAgregarOperacionBtn = document.getElementById(
+  "boton-cancelar-agregar-operacion"
+);
+
+cancelarAgregarOperacionBtn.addEventListener("click", () => {
+  seccionAgregarOperacion.classList.add("hidden");
+  seccionBalances.classList.remove("hidden");
+});
+
+//filtro categoria
+
+let filtroCategoria;
+
+filtroCategoria = document.getElementById("filtroCategoria");
+
+filtroCategoria.addEventListener("change", () => {
+  const categoriaFiltrada = filtroCategoria.value;
+
+  const operacionesFiltradas = arrayDeOperaciones.filter((elemento) => {
+    if (categoriaFiltrada === "") {
+      return true;
+    }
+
+    return elemento.categoria === categoriaFiltrada;
+  });
+
+  mostrarOperacionesEnHTML(operacionesFiltradas);
+
+  if (operacionesFiltradas.length === 0) {
+    const sinOperaciones = document.getElementById("sin-operaciones");
+    sinOperaciones.classList.remove("hidden");
+  } else {
+    const sinOperaciones = document.getElementById("sin-operaciones");
+    sinOperaciones.classList.add("hidden");
+  }
+});
+
+//filtro fecha
+
+const filtrarYMostrarOperaciones = (fechaDesde) => {
+  const fechaFiltro = new Date(fechaDesde);
+
+  const operacionesFiltradas = arrayDeOperaciones.filter((operacion) => {
+    const fechaOperacion = new Date(operacion.fecha);
+    return fechaOperacion >= fechaFiltro;
+  });
+
+  mostrarOperacionesEnHTML(operacionesFiltradas);
+};
+
+const inputFecha = document.getElementById("filtro-fecha");
+inputFecha.addEventListener("change", () => {
+  const fechaSeleccionada = inputFecha.value;
+  filtrarYMostrarOperaciones(fechaSeleccionada);
+});
+
+const establecerFechaHoyEnInput = function () {
+  const inputFecha = document.getElementById("filtro-fecha");
+
+  // Obtener la fecha actual
+  const fechaHoy = new Date();
+
+  const dia = fechaHoy.getDate();
+  const mes = fechaHoy.getMonth() + 1;
+  const anio = fechaHoy.getFullYear();
+
+  const formatoFecha = `${anio}-${mes < 10 ? "0" : ""}${mes}-${
+    dia < 10 ? "0" : ""
+  }${dia}`;
+
+  inputFecha.value = formatoFecha;
+};
+
+document.addEventListener("DOMContentLoaded", establecerFechaHoyEnInput);
