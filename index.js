@@ -609,4 +609,29 @@ inputFecha.addEventListener("change", () => {
 
 // También puedes llamar a la función directamente con una fecha específica
 // filtrarYMostrarOperaciones("2023-01-15");
+// Obtener el elemento input por su ID
+
+
+// Expresión de función anónima para establecer la fecha actual en un input
+const establecerFechaHoyEnInput = function() {
+  // Obtener el elemento input por su ID
+  const inputFecha = document.getElementById("filtro-fecha");
+
+  // Obtener la fecha actual
+  const fechaHoy = new Date();
+
+  // Obtener componentes de fecha (día, mes, año)
+  const dia = fechaHoy.getDate();
+  const mes = fechaHoy.getMonth() + 1; // Se suma 1 ya que los meses se cuentan desde 0
+  const anio = fechaHoy.getFullYear();
+
+  // Formatear la fecha en el formato dd/mm/aaaa
+  const formatoFecha = `${anio}-${mes < 10 ? '0' : ''}${mes}-${dia < 10 ? '0' : ''}${dia}`;
+
+  // Establecer el valor del input con la fecha actual
+  inputFecha.value = formatoFecha;
+};
+
+// Llamar a la función para establecer la fecha al cargar la página
+document.addEventListener("DOMContentLoaded", establecerFechaHoyEnInput);
 
