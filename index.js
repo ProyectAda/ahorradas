@@ -610,3 +610,9 @@ const establecerFechaHoyEnInput = function () {
 };
 
 document.addEventListener("DOMContentLoaded", establecerFechaHoyEnInput);
+
+
+
+
+
+
