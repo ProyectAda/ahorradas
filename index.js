@@ -137,7 +137,7 @@ const mostrarOperacionesEnHTML = (array) => {
 const inicializarPagina = () => {
   const filtroCategoriaSelect = document.getElementById("filtroCategoria");
   const categories = getCategoryData();
-  filtroCategoriaSelect.innerHTML = "";
+ // filtroCategoriaSelect.innerHTML = "";
 
   categories.forEach((categoria) => {
     const optionElement = document.createElement("option");
@@ -555,7 +555,7 @@ filtroCategoria.addEventListener("change", () => {
   const categoriaFiltrada = filtroCategoria.value;
 
   const operacionesFiltradas = arrayDeOperaciones.filter((elemento) => {
-    if (categoriaFiltrada === "") {
+    if (categoriaFiltrada === "todas") {
       return true;
     }
 
