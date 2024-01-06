@@ -90,35 +90,35 @@ const mostrarOperacionesEnHTML = (array) => {
     const signo = elemento.tipo === "ganancia" ? "+" : "-";
     operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
                                     <div class="">
-                                        <h3 class="font-semibold">Descripcion
+                                        <h3 class="font-semibold text-lg">Descripcion
                                             <span class="">
                                                 ${elemento.descripcion}
                                             </span>
                                         </h3>
                                     </div>
                                     <div class="">
-                                        <h3 class="font-semibold">Categoria
+                                        <h3 class="font-semibold text-lg">Categoria
                                             <span class="">
                                                 ${elemento.categoria}
                                             </span>
                                         </h3>
                                     </div>
                                     <div class=" ">
-                                        <h3 class="lg:mr-14 font-semibold">Fecha
+                                        <h3 class="font-semibold text-lg">Fecha
                                             <span class="text-xs">
                                                 ${fechaIntefaz}
                                             </span>
                                         </h3>
                                     </div>
                                     <div class="lg:ml-10">
-                                        <h3 class="lg:mr-14 font-semibold">Monto
+                                        <h3 class="font-semibold text-lg">Monto
                                             <span class="${montoColor}">
                                                 ${signo}$${elemento.monto}
                                             </span>
                                         </h3>
                                     </div>
                                     <div>
-                                    <h3 class="lg:mr-14 font-semibold">Acciones
+                                    <h3 class="font-semibold text-lg">Acciones
                                         <button class="text-blue-700" onclick="editarElemento(${elemento.id})">
                                             editar
                                         </button>
@@ -390,68 +390,6 @@ ocultarFiltro.addEventListener("click", (e) => {
   }
 });
 
-//Clases de filtros
-
-const filtroTipo = document.getElementById("filtro-tipo");
-
-const ordenar = document.getElementById("filtro-ordenar");
-
-//filtro tipo
-const aplicarFiltrosTipo = () => {
-  const tipo = filtroTipo.value;
-  const filtradoPorTipo = arrayDeOperaciones.filter((elemento) => {
-    if (tipo === "todos") {
-      return true;
-    }
-    const resultadoFiltro = elemento.tipo === tipo;
-    return resultadoFiltro;
-  });
-
-  return filtradoPorTipo;
-};
-
-const actualizarBalancesPorTipo = (tipo) => {
-  const operacionesFiltradas = arrayDeOperaciones.filter(
-    (elemento) => tipo === "todos" || elemento.tipo === tipo
-  );
-  const ganancias = operacionesFiltradas.filter(
-    (operacion) => operacion.tipo === "ganancia"
-  );
-  const gastos = operacionesFiltradas.filter(
-    (operacion) => operacion.tipo === "gasto"
-  );
-
-  const totalGanancias = ganancias.reduce(
-    (total, ganancia) => total + parseInt(ganancia.monto, 10),
-    0
-  );
-  const totalGastos = gastos.reduce(
-    (total, gasto) => total + parseInt(gasto.monto, 10),
-    0
-  );
-  const diferencia = totalGanancias - totalGastos;
-
-  document.getElementById("ganancias").textContent = `+$${totalGanancias}`;
-  document.getElementById("gastos").textContent = `-$${totalGastos}`;
-  const elementoDiferencia = document.getElementById("diferencia");
-  elementoDiferencia.textContent = `$${diferencia}`;
-  elementoDiferencia.style.color = diferencia >= 0 ? "green" : "red";
-};
-
-filtroTipo.onchange = () => {
-  const tipoSeleccionado = filtroTipo.value;
-  const arrayFiltrado = aplicarFiltrosTipo();
-  mostrarOperacionesEnHTML(arrayFiltrado);
-  actualizarBalancesPorTipo(tipoSeleccionado);
-};
-
-const filtrarOperacionesYBalances = () => {
-  const tipoSeleccionado = filtroTipo.value;
-  const arrayFiltrado = aplicarFiltrosTipo();
-  mostrarOperacionesEnHTML(arrayFiltrado);
-  actualizarBalancesPorTipo(tipoSeleccionado);
-};
-
 //CARD BALANCE
 //GANANCIAS
 const obtenerGananciasDesdeLocalStorage = () => {
@@ -545,6 +483,68 @@ cancelarAgregarOperacionBtn.addEventListener("click", () => {
   seccionBalances.classList.remove("hidden");
 });
 
+//Clases de filtros
+
+const filtroTipo = document.getElementById("filtro-tipo");
+
+const ordenar = document.getElementById("filtro-ordenar");
+
+//filtro tipo
+const aplicarFiltrosTipo = () => {
+  const tipo = filtroTipo.value;
+  const filtradoPorTipo = arrayDeOperaciones.filter((elemento) => {
+    if (tipo === "todos") {
+      return true;
+    }
+    const resultadoFiltro = elemento.tipo === tipo;
+    return resultadoFiltro;
+  });
+
+  return filtradoPorTipo;
+};
+
+const actualizarBalancesPorTipo = (tipo) => {
+  const operacionesFiltradas = arrayDeOperaciones.filter(
+    (elemento) => tipo === "todos" || elemento.tipo === tipo
+  );
+  const ganancias = operacionesFiltradas.filter(
+    (operacion) => operacion.tipo === "ganancia"
+  );
+  const gastos = operacionesFiltradas.filter(
+    (operacion) => operacion.tipo === "gasto"
+  );
+
+  const totalGanancias = ganancias.reduce(
+    (total, ganancia) => total + parseInt(ganancia.monto, 10),
+    0
+  );
+  const totalGastos = gastos.reduce(
+    (total, gasto) => total + parseInt(gasto.monto, 10),
+    0
+  );
+  const diferencia = totalGanancias - totalGastos;
+
+  document.getElementById("ganancias").textContent = `+$${totalGanancias}`;
+  document.getElementById("gastos").textContent = `-$${totalGastos}`;
+  const elementoDiferencia = document.getElementById("diferencia");
+  elementoDiferencia.textContent = `$${diferencia}`;
+  elementoDiferencia.style.color = diferencia >= 0 ? "green" : "red";
+};
+
+filtroTipo.onchange = () => {
+  const tipoSeleccionado = filtroTipo.value;
+  const arrayFiltrado = aplicarFiltrosTipo();
+  mostrarOperacionesEnHTML(arrayFiltrado);
+  actualizarBalancesPorTipo(tipoSeleccionado);
+};
+
+const filtrarOperacionesYBalances = () => {
+  const tipoSeleccionado = filtroTipo.value;
+  const arrayFiltrado = aplicarFiltrosTipo();
+  mostrarOperacionesEnHTML(arrayFiltrado);
+  actualizarBalancesPorTipo(tipoSeleccionado);
+};
+
 //filtro categoria
 
 let filtroCategoria;
@@ -559,7 +559,11 @@ filtroCategoria.addEventListener("change", () => {
       return true;
     }
 
-    return elemento.categoria === categoriaFiltrada;
+    return (
+      (elemento.categoria === categoriaFiltrada &&
+        elemento.tipo === filtroTipo.value) ||
+      (elemento.categoria === categoriaFiltrada && filtroTipo.value === "todos")
+    );
   });
 
   mostrarOperacionesEnHTML(operacionesFiltradas);
@@ -611,8 +615,4 @@ const establecerFechaHoyEnInput = function () {
 
 document.addEventListener("DOMContentLoaded", establecerFechaHoyEnInput);
 
-
-
-
-
-
+//array acumulado
