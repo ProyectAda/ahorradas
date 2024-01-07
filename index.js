@@ -43,7 +43,7 @@ const fechaNuevaOperacion = document.getElementById("fecha-nueva-operacion");
 const botonAgregarNuevaOperacion = document.getElementById(
   "boton-agregar-operacion"
 );
-const operacionesRealizadas = document.getElementById("operaciones-realizadas");
+const operacionesRealizadas = document.getElementById("operacionesRealizadas");
 const sinOperaciones = document.getElementById("sin-operaciones");
 const acciones = document.getElementById("acciones");
 
@@ -615,4 +615,192 @@ const establecerFechaHoyEnInput = function () {
 
 document.addEventListener("DOMContentLoaded", establecerFechaHoyEnInput);
 
-//array acumulado
+
+//mayor monto 
+
+const operaciones = obtenerDatosLocal();
+
+console.log('Array de operaciones:', operaciones);
+
+const encontrarMayorMonto = (operaciones) => {
+  if (operaciones.length === 0) {
+    return null;
+  }
+
+  const copiaOperaciones = operaciones.slice();
+  const operacionesOrdenadas = copiaOperaciones.sort((a, b) => parseFloat(b.monto) - parseFloat(a.monto));
+  const mayorMonto = operacionesOrdenadas[0];
+
+  return mayorMonto;
+}
+
+const resultado = encontrarMayorMonto(operaciones);
+ console.log('Operación con mayor monto:', resultado);
+
+ 
+
+const mostrarOperacionMayorMonto = (operacion) => {
+  const dateArray = operacion.fecha ? operacion.fecha.split("-") : [];
+  const fechaIntefaz =
+    dateArray.length === 3
+      ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+      : "";
+  const montoColor = obtenerColorMonto(operacion.tipo);
+  const signo = operacion.tipo === "ganancia" ? "+" : "-";
+
+  const operacionHTML = `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+                              <div class="">
+                                  <h3 class="font-semibold text-lg">Descripcion
+                                      <span class="">
+                                          ${operacion.descripcion}
+                                      </span>
+                                  </h3>
+                              </div>
+                              <div class="">
+                                  <h3 class="font-semibold text-lg">Categoria
+                                      <span class="">
+                                          ${operacion.categoria}
+                                      </span>
+                                  </h3>
+                              </div>
+                              <div class=" ">
+                                  <h3 class="font-semibold text-lg">Fecha
+                                      <span class="text-xs">
+                                          ${fechaIntefaz}
+                                      </span>
+                                  </h3>
+                              </div>
+                              <div class="lg:ml-10">
+                                  <h3 class="font-semibold text-lg">Monto
+                                      <span class="${montoColor}">
+                                          ${signo}$${operacion.monto}
+                                      </span>
+                                  </h3>
+                              </div>
+                              <div>
+                              <h3 class="font-semibold text-lg">Acciones
+                                  <button class="text-blue-700" onclick="editarElemento(${operacion.id})">
+                                      editar
+                                  </button>
+                                  <button class="text-blue-700" onclick="eliminarElemento(${operacion.id})">
+                                      eliminar
+                                  </button>
+                              </h3>
+                          </div>
+                          </div>`;
+
+  operacionesRealizadas.innerHTML = operacionHTML;
+  operacionesRealizadas.classList.remove("hidden");
+};
+
+document.getElementById("filtro-ordenar").addEventListener("change", function() {
+  const filtroSeleccionado = this.value;
+
+  if (filtroSeleccionado === "monto_mayor") {
+    const mayorMonto = encontrarMayorMonto(operaciones);
+    if (mayorMonto) {
+      mostrarOperacionMayorMonto(mayorMonto);
+    } else {
+      console.log('No hay operaciones para mostrar.');
+    }
+  } else {
+    // Mostrar todas las operaciones para otros filtros
+    mostrarOperacionesEnHTML(operaciones);
+  }
+});
+
+
+
+//menor monto
+const encontrarMenorMonto = (operaciones) => {
+  if (operaciones.length === 0) {
+    return null;
+  }
+
+  const copiaOperaciones = operaciones.slice();
+  const operacionesOrdenadas = copiaOperaciones.sort((a, b) => parseFloat(a.monto) - parseFloat(b.monto));
+  const menorMonto = operacionesOrdenadas[0];
+
+  return menorMonto;
+}
+
+const mostrarOperacionMenorMonto = (operacion) => {
+  const dateArray = operacion.fecha ? operacion.fecha.split("-") : [];
+  const fechaIntefaz =
+    dateArray.length === 3
+      ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+      : "";
+  const montoColor = obtenerColorMonto(operacion.tipo);
+  const signo = operacion.tipo === "ganancia" ? "+" : "-";
+
+  const operacionHTML = `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+                              <div class="">
+                                  <h3 class="font-semibold text-lg">Descripcion
+                                      <span class="">
+                                          ${operacion.descripcion}
+                                      </span>
+                                  </h3>
+                              </div>
+                              <div class="">
+                                  <h3 class="font-semibold text-lg">Categoria
+                                      <span class="">
+                                          ${operacion.categoria}
+                                      </span>
+                                  </h3>
+                              </div>
+                              <div class=" ">
+                                  <h3 class="font-semibold text-lg">Fecha
+                                      <span class="text-xs">
+                                          ${fechaIntefaz}
+                                      </span>
+                                  </h3>
+                              </div>
+                              <div class="lg:ml-10">
+                                  <h3 class="font-semibold text-lg">Monto
+                                      <span class="${montoColor}">
+                                          ${signo}$${operacion.monto}
+                                      </span>
+                                  </h3>
+                              </div>
+                              <div>
+                              <h3 class="font-semibold text-lg">Acciones
+                                  <button class="text-blue-700" onclick="editarElemento(${operacion.id})">
+                                      editar
+                                  </button>
+                                  <button class="text-blue-700" onclick="eliminarElemento(${operacion.id})">
+                                      eliminar
+                                  </button>
+                              </h3>
+                          </div>
+                          </div>`;
+
+  operacionesRealizadas.innerHTML = operacionHTML;
+  operacionesRealizadas.classList.remove("hidden");
+};
+
+document.getElementById("filtro-ordenar").addEventListener("change", function() {
+  const filtroSeleccionado = this.value;
+
+  if (filtroSeleccionado === "monto_mayor") {
+    const mayorMonto = encontrarMayorMonto(operaciones);
+    if (mayorMonto) {
+      mostrarOperacionMayorMonto(mayorMonto);
+    } else {
+      console.log('No hay operaciones para mostrar.');
+    }
+  } else if (filtroSeleccionado === "monto_menor") {
+    const menorMonto = encontrarMenorMonto(operaciones);
+    if (menorMonto) {
+      mostrarOperacionMenorMonto(menorMonto);
+    } else {
+      console.log('No hay operaciones para mostrar.');
+    }
+  } else {
+    // Mostrar todas las operaciones para otros filtros
+    mostrarOperacionesEnHTML(operaciones);
+  }
+});
+
+
+
+
