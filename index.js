@@ -46,7 +46,7 @@ const botonAgregarNuevaOperacion = document.getElementById(
 const operacionesRealizadas = document.getElementById("operacionesRealizadas");
 const sinOperaciones = document.getElementById("sin-operaciones");
 const acciones = document.getElementById("acciones");
-const formularioNuevaOperacion = seccionAgregarOperacion.querySelector('form');
+const formularioNuevaOperacion = seccionAgregarOperacion.querySelector("form");
 
 // local storage
 const guardarDatosLocal = (array) => {
@@ -137,7 +137,7 @@ const mostrarOperacionesEnHTML = (array) => {
 const inicializarPagina = () => {
   const filtroCategoriaSelect = document.getElementById("filtroCategoria");
   const categories = getCategoryData();
- 
+
   categories.forEach((categoria) => {
     const optionElement = document.createElement("option");
     optionElement.value = categoria.name;
@@ -172,10 +172,6 @@ const inicializarPagina = () => {
 };
 
 document.addEventListener("DOMContentLoaded", inicializarPagina);
-
-
-
-
 
 //boton agregar nueva operacion
 botonAgregarNuevaOperacion.addEventListener("click", () => {
@@ -619,100 +615,77 @@ const establecerFechaHoyEnInput = function () {
 
 document.addEventListener("DOMContentLoaded", establecerFechaHoyEnInput);
 
-
-//mayor monto 
+//mayor monto
 
 const operaciones = obtenerDatosLocal();
-
-console.log('Array de operaciones:', operaciones);
-
 const encontrarMayorMonto = (operaciones) => {
   if (operaciones.length === 0) {
     return null;
   }
 
   const copiaOperaciones = operaciones.slice();
-  const operacionesOrdenadas = copiaOperaciones.sort((a, b) => parseFloat(b.monto) - parseFloat(a.monto));
-  const mayorMonto = operacionesOrdenadas[0];
-
-  return mayorMonto;
-}
+  const operacionesOrdenadas = copiaOperaciones.sort(
+    (a, b) => parseFloat(b.monto) - parseFloat(a.monto)
+  );
+  return operacionesOrdenadas;
+};
 
 const resultado = encontrarMayorMonto(operaciones);
- console.log('Operación con mayor monto:', resultado);
-
- 
 
 const mostrarOperacionMayorMonto = (operacion) => {
-  const dateArray = operacion.fecha ? operacion.fecha.split("-") : [];
-  const fechaIntefaz =
-    dateArray.length === 3
-      ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
-      : "";
-  const montoColor = obtenerColorMonto(operacion.tipo);
-  const signo = operacion.tipo === "ganancia" ? "+" : "-";
-
-  const operacionHTML = `<div class="lg:grid grid-cols-5 lg:ml-4 ">
-                              <div class="">
-                                  <h3 class="font-semibold text-lg">Descripcion
-                                      <span class="">
-                                          ${operacion.descripcion}
-                                      </span>
-                                  </h3>
-                              </div>
-                              <div class="">
-                                  <h3 class="font-semibold text-lg">Categoria
-                                      <span class="">
-                                          ${operacion.categoria}
-                                      </span>
-                                  </h3>
-                              </div>
-                              <div class=" ">
-                                  <h3 class="font-semibold text-lg">Fecha
-                                      <span class="text-xs">
-                                          ${fechaIntefaz}
-                                      </span>
-                                  </h3>
-                              </div>
-                              <div class="lg:ml-10">
-                                  <h3 class="font-semibold text-lg">Monto
-                                      <span class="${montoColor}">
-                                          ${signo}$${operacion.monto}
-                                      </span>
-                                  </h3>
-                              </div>
-                              <div>
-                              <h3 class="font-semibold text-lg">Acciones
-                                  <button class="text-blue-700" onclick="editarElemento(${operacion.id})">
-                                      editar
-                                  </button>
-                                  <button class="text-blue-700" onclick="eliminarElemento(${operacion.id})">
-                                      eliminar
-                                  </button>
-                              </h3>
-                          </div>
-                          </div>`;
+  const operacionHTML = operacion.map((op) => {
+    const dateArray = op.fecha ? op.fecha.split("-") : [];
+    const fechaIntefaz =
+      dateArray.length === 3
+        ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+        : "";
+    const montoColor = obtenerColorMonto(op.tipo);
+    const signo = op.tipo === "ganancia" ? "+" : "-";
+    return `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+  <div class="">
+      <h3 class="font-semibold text-lg">Descripcion
+          <span class="">
+              ${op.descripcion}
+          </span>
+      </h3>
+  </div>
+  <div class="">
+      <h3 class="font-semibold text-lg">Categoria
+          <span class="">
+              ${op.categoria}
+          </span>
+      </h3>
+  </div>
+  <div class=" ">
+      <h3 class="font-semibold text-lg">Fecha
+          <span class="text-xs">
+              ${fechaIntefaz}
+          </span>
+      </h3>
+  </div>
+  <div class="lg:ml-10">
+      <h3 class="font-semibold text-lg">Monto
+          <span class="${montoColor}">
+              ${signo}$${op.monto}
+          </span>
+      </h3>
+  </div>
+  <div>
+  <h3 class="font-semibold text-lg">Acciones
+      <button class="text-blue-700" onclick="editarElemento(${op.id})">
+          editar
+      </button>
+      <button class="text-blue-700" onclick="eliminarElemento(${op.id})">
+          eliminar
+      </button>
+  </h3>
+</div>
+</div>`
+  })
 
   operacionesRealizadas.innerHTML = operacionHTML;
   operacionesRealizadas.classList.remove("hidden");
 };
-
-document.getElementById("filtro-ordenar").addEventListener("change", function() {
-  const filtroSeleccionado = this.value;
-
-  if (filtroSeleccionado === "monto_mayor") {
-    const mayorMonto = encontrarMayorMonto(operaciones);
-    if (mayorMonto) {
-      mostrarOperacionMayorMonto(mayorMonto);
-    } else {
-      console.log('No hay operaciones para mostrar.');
-    }
-  } else {
-   
-    mostrarOperacionesEnHTML(operaciones);
-  }
-});
-
 
 
 //menor monto
@@ -722,263 +695,258 @@ const encontrarMenorMonto = (operaciones) => {
   }
 
   const copiaOperaciones = operaciones.slice();
-  const operacionesOrdenadas = copiaOperaciones.sort((a, b) => parseFloat(a.monto) - parseFloat(b.monto));
-  const menorMonto = operacionesOrdenadas[0];
+  const operacionesOrdenadas = copiaOperaciones.sort(
+    (a, b) => parseFloat(a.monto) - parseFloat(b.monto)
+  );
+  
 
-  return menorMonto;
-}
+  return operacionesOrdenadas;
+};
 
 const mostrarOperacionMenorMonto = (operacion) => {
-  const dateArray = operacion.fecha ? operacion.fecha.split("-") : [];
+  
+  const operacionHTML = operacion.map((op)=>{
+    const dateArray = op.fecha ? op.fecha.split("-") : [];
   const fechaIntefaz =
     dateArray.length === 3
       ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
       : "";
-  const montoColor = obtenerColorMonto(operacion.tipo);
-  const signo = operacion.tipo === "ganancia" ? "+" : "-";
+  const montoColor = obtenerColorMonto(op.tipo);
+  const signo = op.tipo === "ganancia" ? "+" : "-";
 
-  const operacionHTML = `<div class="lg:grid grid-cols-5 lg:ml-4 ">
-                              <div class="">
-                                  <h3 class="font-semibold text-lg">Descripcion
-                                      <span class="">
-                                          ${operacion.descripcion}
-                                      </span>
-                                  </h3>
-                              </div>
-                              <div class="">
-                                  <h3 class="font-semibold text-lg">Categoria
-                                      <span class="">
-                                          ${operacion.categoria}
-                                      </span>
-                                  </h3>
-                              </div>
-                              <div class=" ">
-                                  <h3 class="font-semibold text-lg">Fecha
-                                      <span class="text-xs">
-                                          ${fechaIntefaz}
-                                      </span>
-                                  </h3>
-                              </div>
-                              <div class="lg:ml-10">
-                                  <h3 class="font-semibold text-lg">Monto
-                                      <span class="${montoColor}">
-                                          ${signo}$${operacion.monto}
-                                      </span>
-                                  </h3>
-                              </div>
-                              <div>
-                              <h3 class="font-semibold text-lg">Acciones
-                                  <button class="text-blue-700" onclick="editarElemento(${operacion.id})">
-                                      editar
-                                  </button>
-                                  <button class="text-blue-700" onclick="eliminarElemento(${operacion.id})">
-                                      eliminar
-                                  </button>
-                              </h3>
-                          </div>
-                          </div>`;
+    return  `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+    <div class="">
+        <h3 class="font-semibold text-lg">Descripcion
+            <span class="">
+                ${op.descripcion}
+            </span>
+        </h3>
+    </div>
+    <div class="">
+        <h3 class="font-semibold text-lg">Categoria
+            <span class="">
+                ${op.categoria}
+            </span>
+        </h3>
+    </div>
+    <div class=" ">
+        <h3 class="font-semibold text-lg">Fecha
+            <span class="text-xs">
+                ${fechaIntefaz}
+            </span>
+        </h3>
+    </div>
+    <div class="lg:ml-10">
+        <h3 class="font-semibold text-lg">Monto
+            <span class="${montoColor}">
+                ${signo}$${op.monto}
+            </span>
+        </h3>
+    </div>
+    <div>
+    <h3 class="font-semibold text-lg">Acciones
+        <button class="text-blue-700" onclick="editarElemento(${op.id})">
+            editar
+        </button>
+        <button class="text-blue-700" onclick="eliminarElemento(${op.id})">
+            eliminar
+        </button>
+    </h3>
+</div>
+</div>`;
 
+  })
   operacionesRealizadas.innerHTML = operacionHTML;
   operacionesRealizadas.classList.remove("hidden");
 };
 
-document.getElementById("filtro-ordenar").addEventListener("change", function() {
-  const filtroSeleccionado = this.value;
-
-  if (filtroSeleccionado === "monto_mayor") {
-    const mayorMonto = encontrarMayorMonto(operaciones);
-    if (mayorMonto) {
-      mostrarOperacionMayorMonto(mayorMonto);
-    } else {
-      console.log('No hay operaciones para mostrar.');
-    }
-  } else if (filtroSeleccionado === "monto_menor") {
-    const menorMonto = encontrarMenorMonto(operaciones);
-    if (menorMonto) {
-      mostrarOperacionMenorMonto(menorMonto);
-    } else {
-      console.log('No hay operaciones para mostrar.');
-    }
-  } else {
-    
-    mostrarOperacionesEnHTML(operaciones);
-  }
-});
-
 
 //ordenar de la a/z
 
-// const encontrarOrdenAlfabetico = (operaciones) => {
-//   if (operaciones.length === 0) {
-//     return null;
-//   }
+const encontrarOrdenAlfabetico = (operaciones) => {
+  if (operaciones.length === 0) {
+    return null;
+  }
 
-//   const copiaOperaciones = operaciones.slice();
-//   const operacionesOrdenadas = copiaOperaciones.sort((a, b) => {
-//     const descripcionA = a.descripcion.toUpperCase(); 
-//     const descripcionB = b.descripcion.toUpperCase();
-//     if (descripcionA < descripcionB) {
-//       return -1;
-//     }
-//     if (descripcionA > descripcionB) {
-//       return 1;
-//     }
-//     return 0;
-//   });
+  const copiaOperaciones = operaciones.slice();
+  const operacionesOrdenadas = copiaOperaciones.sort((a,b)=>{
+    return a.descripcion.localeCompare(b.descripcion)
+  })
+ 
+   
 
-//   return operacionesOrdenadas;
-// }
+  return operacionesOrdenadas;
+}
 
-// const mostrarOperacionesOrdenAlfabetico = (operaciones) => {
-//   let operacionesHTML = "";
-//   operaciones.forEach((elemento) => {
-//     const dateArray = elemento.fecha ? elemento.fecha.split("-") : [];
-//     const fechaIntefaz =
-//       dateArray.length === 3
-//         ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
-//         : "";
-//     const montoColor = obtenerColorMonto(elemento.tipo);
-//     const signo = elemento.tipo === "ganancia" ? "+" : "-";
-//     operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
-//                                 <div class="">
-//                                     <h3 class="font-semibold text-lg">Descripcion
-//                                         <span class="">
-//                                             ${elemento.descripcion}
-//                                         </span>
-//                                     </h3>
-//                                 </div>
-//                                 <div class="">
-//                                     <h3 class="font-semibold text-lg">Categoria
-//                                         <span class="">
-//                                             ${elemento.categoria}
-//                                         </span>
-//                                     </h3>
-//                                 </div>
-//                                 <div class=" ">
-//                                     <h3 class="font-semibold text-lg">Fecha
-//                                         <span class="text-xs">
-//                                             ${fechaIntefaz}
-//                                         </span>
-//                                     </h3>
-//                                 </div>
-//                                 <div class="lg:ml-10">
-//                                     <h3 class="font-semibold text-lg">Monto
-//                                         <span class="${montoColor}">
-//                                             ${signo}$${elemento.monto}
-//                                         </span>
-//                                     </h3>
-//                                 </div>
-//                                 <div>
-//                                 <h3 class="font-semibold text-lg">Acciones
-//                                     <button class="text-blue-700" onclick="editarElemento(${elemento.id})">
-//                                         editar
-//                                     </button>
-//                                     <button class="text-blue-700" onclick="eliminarElemento(${elemento.id})">
-//                                         eliminar
-//                                     </button>
-//                                 </h3>
-//                             </div>
-//                             </div>`;
-//   });
+const mostrarOperacionesOrdenAlfabetico = (operaciones) => {
+  let operacionesHTML = "";
+  operaciones.forEach((elemento) => {
+    const dateArray = elemento.fecha ? elemento.fecha.split("-") : [];
+    const fechaIntefaz =
+      dateArray.length === 3
+        ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+        : "";
+    const montoColor = obtenerColorMonto(elemento.tipo);
+    const signo = elemento.tipo === "ganancia" ? "+" : "-";
+    operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+                                <div class="">
+                                    <h3 class="font-semibold text-lg">Descripcion
+                                        <span class="">
+                                            ${elemento.descripcion}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="">
+                                    <h3 class="font-semibold text-lg">Categoria
+                                        <span class="">
+                                            ${elemento.categoria}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class=" ">
+                                    <h3 class="font-semibold text-lg">Fecha
+                                        <span class="text-xs">
+                                            ${fechaIntefaz}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="lg:ml-10">
+                                    <h3 class="font-semibold text-lg">Monto
+                                        <span class="${montoColor}">
+                                            ${signo}$${elemento.monto}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div>
+                                <h3 class="font-semibold text-lg">Acciones
+                                    <button class="text-blue-700" onclick="editarElemento(${elemento.id})">
+                                        editar
+                                    </button>
+                                    <button class="text-blue-700" onclick="eliminarElemento(${elemento.id})">
+                                        eliminar
+                                    </button>
+                                </h3>
+                            </div>
+                            </div>`;
+  });
 
-//   operacionesRealizadas.innerHTML = operacionesHTML;
-//   operacionesRealizadas.classList.remove("hidden");
-// };
-
-// document.getElementById("filtro-ordenar").addEventListener("change", function() {
-//   const filtroSeleccionado = this.value;
-
-//   if (filtroSeleccionado === "A/Z") {
-//     const operacionesOrdenadas = encontrarOrdenAlfabetico(operaciones);
-//     if (operacionesOrdenadas) {
-//       mostrarOperacionesOrdenAlfabetico(operacionesOrdenadas);
-//     } else {
-//       console.log('No hay operaciones para mostrar.');
-//     }
-//   } else {
-//    
-//     mostrarOperacionesEnHTML(operaciones);
-//   }
-// });
+  operacionesRealizadas.innerHTML = operacionesHTML;
+  operacionesRealizadas.classList.remove("hidden");
+};
 
 
+//ordenar z/a
+
+const encontrarOrdenAlfabeticoZA = (operaciones) => {
+  if (operaciones.length === 0) {
+    return null;
+  }
+
+  const copiaOperaciones = operaciones.slice();
+  const operacionesOrdenadas = copiaOperaciones.sort((a, b) => {
+    return b.descripcion.localeCompare(a.descripcion)
+  });
+
+  return operacionesOrdenadas;
+}
+
+const mostrarOperacionesOrdenAlfabeticoZA = (operaciones) => {
+  let operacionesHTML = "";
+  operaciones.forEach((elemento) => {
+    const dateArray = elemento.fecha ? elemento.fecha.split("-") : [];
+    const fechaIntefaz =
+      dateArray.length === 3
+        ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+        : "";
+    const montoColor = obtenerColorMonto(elemento.tipo);
+    const signo = elemento.tipo === "ganancia" ? "+" : "-";
+    operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+                                <div class="">
+                                    <h3 class="font-semibold text-lg">Descripcion
+                                        <span class="">
+                                            ${elemento.descripcion}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="">
+                                    <h3 class="font-semibold text-lg">Categoria
+                                        <span class="">
+                                            ${elemento.categoria}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class=" ">
+                                    <h3 class="font-semibold text-lg">Fecha
+                                        <span class="text-xs">
+                                            ${fechaIntefaz}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="lg:ml-10">
+                                    <h3 class="font-semibold text-lg">Monto
+                                        <span class="${montoColor}">
+                                            ${signo}$${elemento.monto}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div>
+                                <h3 class="font-semibold text-lg">Acciones
+                                    <button class="text-blue-700" onclick="editarElemento(${elemento.id})">
+                                        editar
+                                    </button>
+                                    <button class="text-blue-700" onclick="eliminarElemento(${elemento.id})">
+                                        eliminar
+                                    </button>
+                                </h3>
+                            </div>
+                            </div>`;
+  });
+
+  operacionesRealizadas.innerHTML = operacionesHTML;
+  operacionesRealizadas.classList.remove("hidden");
+};
+
+//filtros select
+document
+  .getElementById("filtro-ordenar")
+  .addEventListener("change", function () {
+    const filtroSeleccionado = this.value;
+
+    if (filtroSeleccionado === "monto_mayor") {
+      const mayorMonto = encontrarMayorMonto(operaciones);
+      if (mayorMonto) {
+        mostrarOperacionMayorMonto(mayorMonto);
+      } else {
+        console.log("No hay operaciones para mostrar.");
+      }
+    } else if (filtroSeleccionado === "monto_menor"){
+      const menorMonto = encontrarMenorMonto(operaciones);
+      if (menorMonto) {
+        mostrarOperacionMenorMonto(menorMonto);
+      } else {
+        console.log("No hay operaciones para mostrar.");
+      }
+    }else if (filtroSeleccionado === "A/Z"){
+     const operacionesOrdenadas = encontrarOrdenAlfabetico(operaciones);
+    if (operacionesOrdenadas) {
+      mostrarOperacionesOrdenAlfabetico(operacionesOrdenadas);
+    } else {
+      console.log('No hay operaciones para mostrar.');
+    }
+    }else if(filtroSeleccionado === "Z/A"){
+      const operacionesOrdenadas = encontrarOrdenAlfabeticoZA(operaciones);
+      if (operacionesOrdenadas) {
+        mostrarOperacionesOrdenAlfabeticoZA(operacionesOrdenadas);
+      } else {
+      console.log('No hay operaciones para mostrar.');
+          }
+    }else {
+      mostrarOperacionesEnHTML(operaciones);
+    }
+  });
 
 
-//ordenar z a a
 
 
 
-// // Función para encontrar orden alfabético ascendente
-// const encontrarOrdenAlfabetico = (operaciones) => {
-//   if (operaciones.length === 0) {
-//     return null;
-//   }
 
-//   const copiaOperaciones = operaciones.slice();
-//   const operacionesOrdenadas = copiaOperaciones.sort((a, b) => {
-//     const descripcionA = a.descripcion.toUpperCase();
-//     const descripcionB = b.descripcion.toUpperCase();
-//     if (descripcionA < descripcionB) {
-//       return -1;
-//     }
-//     if (descripcionA > descripcionB) {
-//       return 1;
-//     }
-//     return 0;
-//   });
-
-//   return operacionesOrdenadas;
-// }
-
-// // Función para encontrar orden alfabético descendente
-// const encontrarOrdenAlfabeticoInverso = (operaciones) => {
-//   if (operaciones.length === 0) {
-//     return null;
-//   }
-
-//   const copiaOperaciones = operaciones.slice();
-//   const operacionesOrdenadas = copiaOperaciones.sort((a, b) => {
-//     const descripcionA = a.descripcion.toUpperCase();
-//     const descripcionB = b.descripcion.toUpperCase();
-//     if (descripcionA > descripcionB) {
-//       return -1;
-//     }
-//     if (descripcionA < descripcionB) {
-//       return 1;
-//     }
-//     return 0;
-//   });
-
-//   return operacionesOrdenadas;
-// }
-
-// // Función para mostrar operaciones en la interfaz
-// const mostrarOperacionesOrdenAlfabetico = (operaciones) => {
-//   let operacionesHTML = "";
-//   operaciones.forEach((elemento) => {
-//     // ... (Código para construir la estructura HTML de cada operación)
-//   });
-
-//   operacionesRealizadas.innerHTML = operacionesHTML;
-//   operacionesRealizadas.classList.remove("hidden");
-// };
-
-// // Evento change en el elemento con ID "filtro-ordenar"
-// document.getElementById("filtro-ordenar").addEventListener("change", function() {
-//   const filtroSeleccionado = this.value;
-//   let operacionesOrdenadas;
-
-//   switch (filtroSeleccionado) {
-//     case 'Z/A':
-//       operacionesOrdenadas = encontrarOrdenAlfabeticoInverso(operaciones);
-//       break;
-  
-//   }
-
-//
-//   if (operacionesOrdenadas) {
-//     mostrarOperacionesOrdenAlfabetico(operacionesOrdenadas);
-//   } else {
-//     console.log('No hay operaciones para mostrar.');
-//   }
-// });
