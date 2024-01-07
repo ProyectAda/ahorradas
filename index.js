@@ -46,6 +46,7 @@ const botonAgregarNuevaOperacion = document.getElementById(
 const operacionesRealizadas = document.getElementById("operacionesRealizadas");
 const sinOperaciones = document.getElementById("sin-operaciones");
 const acciones = document.getElementById("acciones");
+const formularioNuevaOperacion = seccionAgregarOperacion.querySelector('form');
 
 // local storage
 const guardarDatosLocal = (array) => {
@@ -88,44 +89,43 @@ const mostrarOperacionesEnHTML = (array) => {
         : "";
     const montoColor = obtenerColorMonto(elemento.tipo);
     const signo = elemento.tipo === "ganancia" ? "+" : "-";
-    operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
-                                    <div class="">
-                                        <h3 class="font-semibold text-lg">Descripcion
-                                            <span class="">
+    operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 md:grid grid-cols-5 md:ml-4 grid grid-cols-3 ml-4 mr-4">
+                                    <div>
+                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Descripcion
+                                            <div>
                                                 ${elemento.descripcion}
-                                            </span>
-                                        </h3>
-                                    </div>
-                                    <div class="">
-                                        <h3 class="font-semibold text-lg">Categoria
-                                            <span class="">
-                                                ${elemento.categoria}
-                                            </span>
-                                        </h3>
-                                    </div>
-                                    <div class=" ">
-                                        <h3 class="font-semibold text-lg">Fecha
-                                            <span class="text-xs">
-                                                ${fechaIntefaz}
-                                            </span>
-                                        </h3>
-                                    </div>
-                                    <div class="lg:ml-10">
-                                        <h3 class="font-semibold text-lg">Monto
-                                            <span class="${montoColor}">
-                                                ${signo}$${elemento.monto}
-                                            </span>
+                                            </div>
                                         </h3>
                                     </div>
                                     <div>
-                                    <h3 class="font-semibold text-lg">Acciones
-                                        <button class="text-blue-700" onclick="editarElemento(${elemento.id})">
+                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Categoria
+                                            <div>
+                                                ${elemento.categoria}
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div>
+                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Fecha
+                                            <div class="lg:text-base xs">
+                                                ${fechaIntefaz}
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div>
+                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Monto
+                                            <div class="${montoColor}">
+                                                ${signo}$${elemento.monto}
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div>
+                                    <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Acciones</h3>
+                                        <button class="text-blue-700 font-semibold md:font-semibold md:text-lg text-xs" onclick="editarElemento(${elemento.id})">
                                             editar
                                         </button>
-                                        <button class="text-blue-700" onclick="eliminarElemento(${elemento.id})">
+                                        <button class="text-blue-700 font-semibold md:font-semibold md:text-lg text-xs" onclick="eliminarElemento(${elemento.id})">
                                             eliminar
                                         </button>
-                                    </h3>
                                 </div>
                                 </div>`;
   });
@@ -137,8 +137,7 @@ const mostrarOperacionesEnHTML = (array) => {
 const inicializarPagina = () => {
   const filtroCategoriaSelect = document.getElementById("filtroCategoria");
   const categories = getCategoryData();
- // filtroCategoriaSelect.innerHTML = "";
-
+ 
   categories.forEach((categoria) => {
     const optionElement = document.createElement("option");
     optionElement.value = categoria.name;
@@ -174,6 +173,10 @@ const inicializarPagina = () => {
 
 document.addEventListener("DOMContentLoaded", inicializarPagina);
 
+
+
+
+
 //boton agregar nueva operacion
 botonAgregarNuevaOperacion.addEventListener("click", () => {
   arrayDeOperaciones.push({
@@ -184,6 +187,7 @@ botonAgregarNuevaOperacion.addEventListener("click", () => {
     categoria: categoriaNuevaOperacion.value,
     fecha: fechaNuevaOperacion.value,
   });
+  formularioNuevaOperacion.reset();
   guardarDatosLocal(arrayDeOperaciones);
   mostrarOperacionesEnHTML(arrayDeOperaciones);
   seccionAgregarOperacion.classList.add("hidden");
@@ -704,7 +708,7 @@ document.getElementById("filtro-ordenar").addEventListener("change", function() 
       console.log('No hay operaciones para mostrar.');
     }
   } else {
-    // Mostrar todas las operaciones para otros filtros
+   
     mostrarOperacionesEnHTML(operaciones);
   }
 });
@@ -796,11 +800,185 @@ document.getElementById("filtro-ordenar").addEventListener("change", function() 
       console.log('No hay operaciones para mostrar.');
     }
   } else {
-    // Mostrar todas las operaciones para otros filtros
+    
     mostrarOperacionesEnHTML(operaciones);
   }
 });
 
 
+//ordenar de la a/z
+
+// const encontrarOrdenAlfabetico = (operaciones) => {
+//   if (operaciones.length === 0) {
+//     return null;
+//   }
+
+//   const copiaOperaciones = operaciones.slice();
+//   const operacionesOrdenadas = copiaOperaciones.sort((a, b) => {
+//     const descripcionA = a.descripcion.toUpperCase(); 
+//     const descripcionB = b.descripcion.toUpperCase();
+//     if (descripcionA < descripcionB) {
+//       return -1;
+//     }
+//     if (descripcionA > descripcionB) {
+//       return 1;
+//     }
+//     return 0;
+//   });
+
+//   return operacionesOrdenadas;
+// }
+
+// const mostrarOperacionesOrdenAlfabetico = (operaciones) => {
+//   let operacionesHTML = "";
+//   operaciones.forEach((elemento) => {
+//     const dateArray = elemento.fecha ? elemento.fecha.split("-") : [];
+//     const fechaIntefaz =
+//       dateArray.length === 3
+//         ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+//         : "";
+//     const montoColor = obtenerColorMonto(elemento.tipo);
+//     const signo = elemento.tipo === "ganancia" ? "+" : "-";
+//     operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+//                                 <div class="">
+//                                     <h3 class="font-semibold text-lg">Descripcion
+//                                         <span class="">
+//                                             ${elemento.descripcion}
+//                                         </span>
+//                                     </h3>
+//                                 </div>
+//                                 <div class="">
+//                                     <h3 class="font-semibold text-lg">Categoria
+//                                         <span class="">
+//                                             ${elemento.categoria}
+//                                         </span>
+//                                     </h3>
+//                                 </div>
+//                                 <div class=" ">
+//                                     <h3 class="font-semibold text-lg">Fecha
+//                                         <span class="text-xs">
+//                                             ${fechaIntefaz}
+//                                         </span>
+//                                     </h3>
+//                                 </div>
+//                                 <div class="lg:ml-10">
+//                                     <h3 class="font-semibold text-lg">Monto
+//                                         <span class="${montoColor}">
+//                                             ${signo}$${elemento.monto}
+//                                         </span>
+//                                     </h3>
+//                                 </div>
+//                                 <div>
+//                                 <h3 class="font-semibold text-lg">Acciones
+//                                     <button class="text-blue-700" onclick="editarElemento(${elemento.id})">
+//                                         editar
+//                                     </button>
+//                                     <button class="text-blue-700" onclick="eliminarElemento(${elemento.id})">
+//                                         eliminar
+//                                     </button>
+//                                 </h3>
+//                             </div>
+//                             </div>`;
+//   });
+
+//   operacionesRealizadas.innerHTML = operacionesHTML;
+//   operacionesRealizadas.classList.remove("hidden");
+// };
+
+// document.getElementById("filtro-ordenar").addEventListener("change", function() {
+//   const filtroSeleccionado = this.value;
+
+//   if (filtroSeleccionado === "A/Z") {
+//     const operacionesOrdenadas = encontrarOrdenAlfabetico(operaciones);
+//     if (operacionesOrdenadas) {
+//       mostrarOperacionesOrdenAlfabetico(operacionesOrdenadas);
+//     } else {
+//       console.log('No hay operaciones para mostrar.');
+//     }
+//   } else {
+//    
+//     mostrarOperacionesEnHTML(operaciones);
+//   }
+// });
 
 
+
+
+//ordenar z a a
+
+
+
+// // Función para encontrar orden alfabético ascendente
+// const encontrarOrdenAlfabetico = (operaciones) => {
+//   if (operaciones.length === 0) {
+//     return null;
+//   }
+
+//   const copiaOperaciones = operaciones.slice();
+//   const operacionesOrdenadas = copiaOperaciones.sort((a, b) => {
+//     const descripcionA = a.descripcion.toUpperCase();
+//     const descripcionB = b.descripcion.toUpperCase();
+//     if (descripcionA < descripcionB) {
+//       return -1;
+//     }
+//     if (descripcionA > descripcionB) {
+//       return 1;
+//     }
+//     return 0;
+//   });
+
+//   return operacionesOrdenadas;
+// }
+
+// // Función para encontrar orden alfabético descendente
+// const encontrarOrdenAlfabeticoInverso = (operaciones) => {
+//   if (operaciones.length === 0) {
+//     return null;
+//   }
+
+//   const copiaOperaciones = operaciones.slice();
+//   const operacionesOrdenadas = copiaOperaciones.sort((a, b) => {
+//     const descripcionA = a.descripcion.toUpperCase();
+//     const descripcionB = b.descripcion.toUpperCase();
+//     if (descripcionA > descripcionB) {
+//       return -1;
+//     }
+//     if (descripcionA < descripcionB) {
+//       return 1;
+//     }
+//     return 0;
+//   });
+
+//   return operacionesOrdenadas;
+// }
+
+// // Función para mostrar operaciones en la interfaz
+// const mostrarOperacionesOrdenAlfabetico = (operaciones) => {
+//   let operacionesHTML = "";
+//   operaciones.forEach((elemento) => {
+//     // ... (Código para construir la estructura HTML de cada operación)
+//   });
+
+//   operacionesRealizadas.innerHTML = operacionesHTML;
+//   operacionesRealizadas.classList.remove("hidden");
+// };
+
+// // Evento change en el elemento con ID "filtro-ordenar"
+// document.getElementById("filtro-ordenar").addEventListener("change", function() {
+//   const filtroSeleccionado = this.value;
+//   let operacionesOrdenadas;
+
+//   switch (filtroSeleccionado) {
+//     case 'Z/A':
+//       operacionesOrdenadas = encontrarOrdenAlfabeticoInverso(operaciones);
+//       break;
+  
+//   }
+
+//
+//   if (operacionesOrdenadas) {
+//     mostrarOperacionesOrdenAlfabetico(operacionesOrdenadas);
+//   } else {
+//     console.log('No hay operaciones para mostrar.');
+//   }
+// });

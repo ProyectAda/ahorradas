@@ -115,7 +115,7 @@
                 <h4 class="p-4 text-[25px] font-sans font-bold">Filtros</h4>
               </div>
               <div class="pt-6 md:text-right pr-8">
-                <a href="#" class="text-base" id="ocultarFiltro"
+                <a href="#" class="text-base text-blue-600" id="ocultarFiltro"
                   >Ocultar filtros</a
                 >
               </div>
@@ -179,8 +179,8 @@
                       <option value="recientes">Mas reciente</option>
                       <option value="antiguas">Menos reciente</option>
                       <option id="ordenarPorMonto" value="monto_mayor">Mayor monto</option>
-                      <option id="ordenarPorMenor"value="monto_menor">Menor monto</option>
-                      <option value="A/Z">A/Z</option>
+                      <option id="ordenarPorMenor" value="monto_menor">Menor monto</option>
+                      <option id="ordenarDeA/Z" value="A/Z">A/Z</option>
                       <option value="Z/A">Z/A</option>
                     </select>
                   </div>
@@ -237,6 +237,7 @@
 
     <!-- Sección de Nueva Operación -->
     <section class="hidden" id="seccionAgregarOperacion">
+      <form action="#">
       <div
         class="ml-4 mt-20 mb-16 w-72 h-[40rem] rounded-lg bg-white md:w-[46rem] md:h-[40rem] lg:ml-36 shadow-2xl"
       >
@@ -308,6 +309,7 @@
           </button>
         </div>
       </div>
+    </form>
     </section>
     <script src="categories.js"></script>
     <script src="index.js"></script>
