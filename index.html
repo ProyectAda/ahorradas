@@ -18,7 +18,7 @@
         <div class="container mx-auto flex justify-between items-center">
           <!-- Logo -->
           <a
-            href="#"
+            href="index.html"
             class="text-white text-2xl font-semibold hover:bg-[#00947e]/[.36] p-2 rounded-lg"
             ><i class="fa-solid fa-wallet p-2"></i>AhorrADAS</a
           >
@@ -76,15 +76,15 @@
     <!-- -----------------------BALANCE--------------- -->
     <!---------------------section balance--------------->
     <section id="seccionBalances">
-      <div class="lg:grid grid-cols-3 gap-3" id="balance">
-        <div class="pt-12 lg:p-4 lg:pt-10">
+      <div class="lg:grid grid-cols-4 gap-4" id="balance">
+        <div class="pt-12  lg:pt-10">
           <div class="m-5 w-70 h-30 rounded-lg bg-white lg:w-72 shadow-2xl">
             <h3 class="p-4 text-[30px] font-sans font-bold">Balance</h3>
             <div class="p-4 text-[20px] font-sans grid grid-cols-2 gap-2">
               <div>
                 <p>Ganancias</p>
               </div>
-              <div class="pl-20 text-lime-500 md:text-end">
+              <div class=" text-lime-500 md:text-end">
                 <p id="ganancias">+$0</p>
               </div>
             </div>
@@ -92,7 +92,7 @@
               <div>
                 <p>Gastos</p>
               </div>
-              <div class="pl-20 text-red-600 md:text-end">
+              <div class=" text-red-600 md:text-end">
                 <p id="gastos">-$0</p>
               </div>
             </div>
@@ -100,7 +100,7 @@
               <div class="text-[25px]">
                 <p>Total</p>
               </div>
-              <div class="pl-[85px] md:text-end">
+              <div class="md:text-end">
                 <p id="diferencia">$0</p>
               </div>
             </div>
@@ -115,7 +115,7 @@
                 <h4 class="p-4 text-[25px] font-sans font-bold">Filtros</h4>
               </div>
               <div class="pt-6 md:text-right pr-8">
-                <a href="#" class="text-base" id="ocultarFiltro"
+                <a href="#" class="text-base text-blue-600" id="ocultarFiltro"
                   >Ocultar filtros</a
                 >
               </div>
@@ -149,7 +149,7 @@
                       name="categoria"
                       id="filtroCategoria"
                       class="w-52 md:w-[42rem] p-2 lg:w-56"
-                    ></select>
+                    ><option value="todas">Todas</option></select>
                   </div>
                 </div>
               </div>
@@ -178,9 +178,9 @@
                     >
                       <option value="recientes">Mas reciente</option>
                       <option value="antiguas">Menos reciente</option>
-                      <option value="monto_mayor">Mayor monto</option>
-                      <option value="monto_menor">Menor monto</option>
-                      <option value="A/Z">A/Z</option>
+                      <option id="ordenarPorMayor" value="monto_mayor">Mayor monto</option>
+                      <option id="ordenarPorMenor" value="monto_menor">Menor monto</option>
+                      <option id="ordenarDeA/Z" value="A/Z">A/Z</option>
                       <option value="Z/A">Z/A</option>
                     </select>
                   </div>
@@ -190,9 +190,9 @@
           </div>
         </div>
         <!-- -------------------box operaciones--------------- -->
-        <div class="lg:p-10">
+        <div class="lg:pt-10">
           <div
-            class="m-5 w-70 h-[40rem] rounded-lg bg-white md:w-70 md:h-[48rem] lg:w-[38rem] lg:h-[38rem] lg:ml-0 shadow-2xl"
+            class="m-5 w-70 h-[40rem] rounded-lg bg-white md:w-70 md:h-[48rem] lg:w-[42rem] lg:h-[36rem] lg:mr-0 lg:ml-16 shadow-2xl"
           >
             <div class="lg:grid grid-cols-2 gap-2">
               <div>
@@ -228,7 +228,7 @@
               </p>
             </div>
             <div class="">
-              <div class="hidden" id="operaciones-realizadas"></div>
+              <div class="hidden" id="operacionesRealizadas"></div>
             </div>
           </div>
         </div>
@@ -237,6 +237,7 @@
 
     <!-- Sección de Nueva Operación -->
     <section class="hidden" id="seccionAgregarOperacion">
+      <form action="#">
       <div
         class="ml-4 mt-20 mb-16 w-72 h-[40rem] rounded-lg bg-white md:w-[46rem] md:h-[40rem] lg:ml-36 shadow-2xl"
       >
@@ -308,6 +309,7 @@
           </button>
         </div>
       </div>
+    </form>
     </section>
     <script src="categories.js"></script>
     <script src="index.js"></script>

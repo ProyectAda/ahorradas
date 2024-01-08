@@ -43,9 +43,10 @@ const fechaNuevaOperacion = document.getElementById("fecha-nueva-operacion");
 const botonAgregarNuevaOperacion = document.getElementById(
   "boton-agregar-operacion"
 );
-const operacionesRealizadas = document.getElementById("operaciones-realizadas");
+const operacionesRealizadas = document.getElementById("operacionesRealizadas");
 const sinOperaciones = document.getElementById("sin-operaciones");
 const acciones = document.getElementById("acciones");
+const formularioNuevaOperacion = seccionAgregarOperacion.querySelector("form");
 
 // local storage
 const guardarDatosLocal = (array) => {
@@ -88,44 +89,43 @@ const mostrarOperacionesEnHTML = (array) => {
         : "";
     const montoColor = obtenerColorMonto(elemento.tipo);
     const signo = elemento.tipo === "ganancia" ? "+" : "-";
-    operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
-                                    <div class="">
-                                        <h3 class="font-semibold">Descripcion
-                                            <span class="">
+    operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 md:grid grid-cols-5 md:ml-4 grid grid-cols-3 ml-4 mr-4">
+                                    <div>
+                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Descripcion
+                                            <div>
                                                 ${elemento.descripcion}
-                                            </span>
-                                        </h3>
-                                    </div>
-                                    <div class="">
-                                        <h3 class="font-semibold">Categoria
-                                            <span class="">
-                                                ${elemento.categoria}
-                                            </span>
-                                        </h3>
-                                    </div>
-                                    <div class=" ">
-                                        <h3 class="lg:mr-14 font-semibold">Fecha
-                                            <span class="text-xs">
-                                                ${fechaIntefaz}
-                                            </span>
-                                        </h3>
-                                    </div>
-                                    <div class="lg:ml-10">
-                                        <h3 class="lg:mr-14 font-semibold">Monto
-                                            <span class="${montoColor}">
-                                                ${signo}$${elemento.monto}
-                                            </span>
+                                            </div>
                                         </h3>
                                     </div>
                                     <div>
-                                    <h3 class="lg:mr-14 font-semibold">Acciones
-                                        <button class="text-blue-700" onclick="editarElemento(${elemento.id})">
+                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Categoria
+                                            <div>
+                                                ${elemento.categoria}
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div>
+                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Fecha
+                                            <div class="lg:text-base xs">
+                                                ${fechaIntefaz}
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div>
+                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Monto
+                                            <div class="${montoColor}">
+                                                ${signo}$${elemento.monto}
+                                            </div>
+                                        </h3>
+                                    </div>
+                                    <div>
+                                    <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Acciones</h3>
+                                        <button class="text-blue-700 font-semibold md:font-semibold md:text-lg text-xs" onclick="editarElemento(${elemento.id})">
                                             editar
                                         </button>
-                                        <button class="text-blue-700" onclick="eliminarElemento(${elemento.id})">
+                                        <button class="text-blue-700 font-semibold md:font-semibold md:text-lg text-xs" onclick="eliminarElemento(${elemento.id})">
                                             eliminar
                                         </button>
-                                    </h3>
                                 </div>
                                 </div>`;
   });
@@ -137,7 +137,6 @@ const mostrarOperacionesEnHTML = (array) => {
 const inicializarPagina = () => {
   const filtroCategoriaSelect = document.getElementById("filtroCategoria");
   const categories = getCategoryData();
-  filtroCategoriaSelect.innerHTML = "";
 
   categories.forEach((categoria) => {
     const optionElement = document.createElement("option");
@@ -184,6 +183,7 @@ botonAgregarNuevaOperacion.addEventListener("click", () => {
     categoria: categoriaNuevaOperacion.value,
     fecha: fechaNuevaOperacion.value,
   });
+  formularioNuevaOperacion.reset();
   guardarDatosLocal(arrayDeOperaciones);
   mostrarOperacionesEnHTML(arrayDeOperaciones);
   seccionAgregarOperacion.classList.add("hidden");
@@ -390,68 +390,6 @@ ocultarFiltro.addEventListener("click", (e) => {
   }
 });
 
-//Clases de filtros
-
-const filtroTipo = document.getElementById("filtro-tipo");
-
-const ordenar = document.getElementById("filtro-ordenar");
-
-//filtro tipo
-const aplicarFiltrosTipo = () => {
-  const tipo = filtroTipo.value;
-  const filtradoPorTipo = arrayDeOperaciones.filter((elemento) => {
-    if (tipo === "todos") {
-      return true;
-    }
-    const resultadoFiltro = elemento.tipo === tipo;
-    return resultadoFiltro;
-  });
-
-  return filtradoPorTipo;
-};
-
-const actualizarBalancesPorTipo = (tipo) => {
-  const operacionesFiltradas = arrayDeOperaciones.filter(
-    (elemento) => tipo === "todos" || elemento.tipo === tipo
-  );
-  const ganancias = operacionesFiltradas.filter(
-    (operacion) => operacion.tipo === "ganancia"
-  );
-  const gastos = operacionesFiltradas.filter(
-    (operacion) => operacion.tipo === "gasto"
-  );
-
-  const totalGanancias = ganancias.reduce(
-    (total, ganancia) => total + parseInt(ganancia.monto, 10),
-    0
-  );
-  const totalGastos = gastos.reduce(
-    (total, gasto) => total + parseInt(gasto.monto, 10),
-    0
-  );
-  const diferencia = totalGanancias - totalGastos;
-
-  document.getElementById("ganancias").textContent = `+$${totalGanancias}`;
-  document.getElementById("gastos").textContent = `-$${totalGastos}`;
-  const elementoDiferencia = document.getElementById("diferencia");
-  elementoDiferencia.textContent = `$${diferencia}`;
-  elementoDiferencia.style.color = diferencia >= 0 ? "green" : "red";
-};
-
-filtroTipo.onchange = () => {
-  const tipoSeleccionado = filtroTipo.value;
-  const arrayFiltrado = aplicarFiltrosTipo();
-  mostrarOperacionesEnHTML(arrayFiltrado);
-  actualizarBalancesPorTipo(tipoSeleccionado);
-};
-
-const filtrarOperacionesYBalances = () => {
-  const tipoSeleccionado = filtroTipo.value;
-  const arrayFiltrado = aplicarFiltrosTipo();
-  mostrarOperacionesEnHTML(arrayFiltrado);
-  actualizarBalancesPorTipo(tipoSeleccionado);
-};
-
 //CARD BALANCE
 //GANANCIAS
 const obtenerGananciasDesdeLocalStorage = () => {
@@ -545,6 +483,68 @@ cancelarAgregarOperacionBtn.addEventListener("click", () => {
   seccionBalances.classList.remove("hidden");
 });
 
+//Clases de filtros
+
+const filtroTipo = document.getElementById("filtro-tipo");
+
+const ordenar = document.getElementById("filtro-ordenar");
+
+//filtro tipo
+const aplicarFiltrosTipo = () => {
+  const tipo = filtroTipo.value;
+  const filtradoPorTipo = arrayDeOperaciones.filter((elemento) => {
+    if (tipo === "todos") {
+      return true;
+    }
+    const resultadoFiltro = elemento.tipo === tipo;
+    return resultadoFiltro;
+  });
+
+  return filtradoPorTipo;
+};
+
+const actualizarBalancesPorTipo = (tipo) => {
+  const operacionesFiltradas = arrayDeOperaciones.filter(
+    (elemento) => tipo === "todos" || elemento.tipo === tipo
+  );
+  const ganancias = operacionesFiltradas.filter(
+    (operacion) => operacion.tipo === "ganancia"
+  );
+  const gastos = operacionesFiltradas.filter(
+    (operacion) => operacion.tipo === "gasto"
+  );
+
+  const totalGanancias = ganancias.reduce(
+    (total, ganancia) => total + parseInt(ganancia.monto, 10),
+    0
+  );
+  const totalGastos = gastos.reduce(
+    (total, gasto) => total + parseInt(gasto.monto, 10),
+    0
+  );
+  const diferencia = totalGanancias - totalGastos;
+
+  document.getElementById("ganancias").textContent = `+$${totalGanancias}`;
+  document.getElementById("gastos").textContent = `-$${totalGastos}`;
+  const elementoDiferencia = document.getElementById("diferencia");
+  elementoDiferencia.textContent = `$${diferencia}`;
+  elementoDiferencia.style.color = diferencia >= 0 ? "green" : "red";
+};
+
+filtroTipo.onchange = () => {
+  const tipoSeleccionado = filtroTipo.value;
+  const arrayFiltrado = aplicarFiltrosTipo();
+  mostrarOperacionesEnHTML(arrayFiltrado);
+  actualizarBalancesPorTipo(tipoSeleccionado);
+};
+
+const filtrarOperacionesYBalances = () => {
+  const tipoSeleccionado = filtroTipo.value;
+  const arrayFiltrado = aplicarFiltrosTipo();
+  mostrarOperacionesEnHTML(arrayFiltrado);
+  actualizarBalancesPorTipo(tipoSeleccionado);
+};
+
 //filtro categoria
 
 let filtroCategoria;
@@ -555,11 +555,15 @@ filtroCategoria.addEventListener("change", () => {
   const categoriaFiltrada = filtroCategoria.value;
 
   const operacionesFiltradas = arrayDeOperaciones.filter((elemento) => {
-    if (categoriaFiltrada === "") {
+    if (categoriaFiltrada === "todas") {
       return true;
     }
 
-    return elemento.categoria === categoriaFiltrada;
+    return (
+      (elemento.categoria === categoriaFiltrada &&
+        elemento.tipo === filtroTipo.value) ||
+      (elemento.categoria === categoriaFiltrada && filtroTipo.value === "todos")
+    );
   });
 
   mostrarOperacionesEnHTML(operacionesFiltradas);
@@ -610,3 +614,339 @@ const establecerFechaHoyEnInput = function () {
 };
 
 document.addEventListener("DOMContentLoaded", establecerFechaHoyEnInput);
+
+//mayor monto
+
+const operaciones = obtenerDatosLocal();
+const encontrarMayorMonto = (operaciones) => {
+  if (operaciones.length === 0) {
+    return null;
+  }
+
+  const copiaOperaciones = operaciones.slice();
+  const operacionesOrdenadas = copiaOperaciones.sort(
+    (a, b) => parseFloat(b.monto) - parseFloat(a.monto)
+  );
+  return operacionesOrdenadas;
+};
+
+const resultado = encontrarMayorMonto(operaciones);
+
+const mostrarOperacionMayorMonto = (operacion) => {
+  const operacionHTML = operacion.map((op) => {
+    const dateArray = op.fecha ? op.fecha.split("-") : [];
+    const fechaIntefaz =
+      dateArray.length === 3
+        ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+        : "";
+    const montoColor = obtenerColorMonto(op.tipo);
+    const signo = op.tipo === "ganancia" ? "+" : "-";
+    return `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+  <div class="">
+      <h3 class="font-semibold text-lg">Descripcion
+          <span class="">
+              ${op.descripcion}
+          </span>
+      </h3>
+  </div>
+  <div class="">
+      <h3 class="font-semibold text-lg">Categoria
+          <span class="">
+              ${op.categoria}
+          </span>
+      </h3>
+  </div>
+  <div class=" ">
+      <h3 class="font-semibold text-lg">Fecha
+          <span class="text-xs">
+              ${fechaIntefaz}
+          </span>
+      </h3>
+  </div>
+  <div class="lg:ml-10">
+      <h3 class="font-semibold text-lg">Monto
+          <span class="${montoColor}">
+              ${signo}$${op.monto}
+          </span>
+      </h3>
+  </div>
+  <div>
+  <h3 class="font-semibold text-lg">Acciones
+      <button class="text-blue-700" onclick="editarElemento(${op.id})">
+          editar
+      </button>
+      <button class="text-blue-700" onclick="eliminarElemento(${op.id})">
+          eliminar
+      </button>
+  </h3>
+</div>
+</div>`
+  })
+
+  operacionesRealizadas.innerHTML = operacionHTML;
+  operacionesRealizadas.classList.remove("hidden");
+};
+
+
+//menor monto
+const encontrarMenorMonto = (operaciones) => {
+  if (operaciones.length === 0) {
+    return null;
+  }
+
+  const copiaOperaciones = operaciones.slice();
+  const operacionesOrdenadas = copiaOperaciones.sort(
+    (a, b) => parseFloat(a.monto) - parseFloat(b.monto)
+  );
+  
+
+  return operacionesOrdenadas;
+};
+
+const mostrarOperacionMenorMonto = (operacion) => {
+  
+  const operacionHTML = operacion.map((op)=>{
+    const dateArray = op.fecha ? op.fecha.split("-") : [];
+  const fechaIntefaz =
+    dateArray.length === 3
+      ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+      : "";
+  const montoColor = obtenerColorMonto(op.tipo);
+  const signo = op.tipo === "ganancia" ? "+" : "-";
+
+    return  `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+    <div class="">
+        <h3 class="font-semibold text-lg">Descripcion
+            <span class="">
+                ${op.descripcion}
+            </span>
+        </h3>
+    </div>
+    <div class="">
+        <h3 class="font-semibold text-lg">Categoria
+            <span class="">
+                ${op.categoria}
+            </span>
+        </h3>
+    </div>
+    <div class=" ">
+        <h3 class="font-semibold text-lg">Fecha
+            <span class="text-xs">
+                ${fechaIntefaz}
+            </span>
+        </h3>
+    </div>
+    <div class="lg:ml-10">
+        <h3 class="font-semibold text-lg">Monto
+            <span class="${montoColor}">
+                ${signo}$${op.monto}
+            </span>
+        </h3>
+    </div>
+    <div>
+    <h3 class="font-semibold text-lg">Acciones
+        <button class="text-blue-700" onclick="editarElemento(${op.id})">
+            editar
+        </button>
+        <button class="text-blue-700" onclick="eliminarElemento(${op.id})">
+            eliminar
+        </button>
+    </h3>
+</div>
+</div>`;
+
+  })
+  operacionesRealizadas.innerHTML = operacionHTML;
+  operacionesRealizadas.classList.remove("hidden");
+};
+
+
+//ordenar de la a/z
+
+const encontrarOrdenAlfabetico = (operaciones) => {
+  if (operaciones.length === 0) {
+    return null;
+  }
+
+  const copiaOperaciones = operaciones.slice();
+  const operacionesOrdenadas = copiaOperaciones.sort((a,b)=>{
+    return a.descripcion.localeCompare(b.descripcion)
+  })
+ 
+   
+
+  return operacionesOrdenadas;
+}
+
+const mostrarOperacionesOrdenAlfabetico = (operaciones) => {
+  let operacionesHTML = "";
+  operaciones.forEach((elemento) => {
+    const dateArray = elemento.fecha ? elemento.fecha.split("-") : [];
+    const fechaIntefaz =
+      dateArray.length === 3
+        ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+        : "";
+    const montoColor = obtenerColorMonto(elemento.tipo);
+    const signo = elemento.tipo === "ganancia" ? "+" : "-";
+    operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+                                <div class="">
+                                    <h3 class="font-semibold text-lg">Descripcion
+                                        <span class="">
+                                            ${elemento.descripcion}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="">
+                                    <h3 class="font-semibold text-lg">Categoria
+                                        <span class="">
+                                            ${elemento.categoria}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class=" ">
+                                    <h3 class="font-semibold text-lg">Fecha
+                                        <span class="text-xs">
+                                            ${fechaIntefaz}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="lg:ml-10">
+                                    <h3 class="font-semibold text-lg">Monto
+                                        <span class="${montoColor}">
+                                            ${signo}$${elemento.monto}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div>
+                                <h3 class="font-semibold text-lg">Acciones
+                                    <button class="text-blue-700" onclick="editarElemento(${elemento.id})">
+                                        editar
+                                    </button>
+                                    <button class="text-blue-700" onclick="eliminarElemento(${elemento.id})">
+                                        eliminar
+                                    </button>
+                                </h3>
+                            </div>
+                            </div>`;
+  });
+
+  operacionesRealizadas.innerHTML = operacionesHTML;
+  operacionesRealizadas.classList.remove("hidden");
+};
+
+
+//ordenar z/a
+
+const encontrarOrdenAlfabeticoZA = (operaciones) => {
+  if (operaciones.length === 0) {
+    return null;
+  }
+
+  const copiaOperaciones = operaciones.slice();
+  const operacionesOrdenadas = copiaOperaciones.sort((a, b) => {
+    return b.descripcion.localeCompare(a.descripcion)
+  });
+
+  return operacionesOrdenadas;
+}
+
+const mostrarOperacionesOrdenAlfabeticoZA = (operaciones) => {
+  let operacionesHTML = "";
+  operaciones.forEach((elemento) => {
+    const dateArray = elemento.fecha ? elemento.fecha.split("-") : [];
+    const fechaIntefaz =
+      dateArray.length === 3
+        ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+        : "";
+    const montoColor = obtenerColorMonto(elemento.tipo);
+    const signo = elemento.tipo === "ganancia" ? "+" : "-";
+    operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+                                <div class="">
+                                    <h3 class="font-semibold text-lg">Descripcion
+                                        <span class="">
+                                            ${elemento.descripcion}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="">
+                                    <h3 class="font-semibold text-lg">Categoria
+                                        <span class="">
+                                            ${elemento.categoria}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class=" ">
+                                    <h3 class="font-semibold text-lg">Fecha
+                                        <span class="text-xs">
+                                            ${fechaIntefaz}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="lg:ml-10">
+                                    <h3 class="font-semibold text-lg">Monto
+                                        <span class="${montoColor}">
+                                            ${signo}$${elemento.monto}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div>
+                                <h3 class="font-semibold text-lg">Acciones
+                                    <button class="text-blue-700" onclick="editarElemento(${elemento.id})">
+                                        editar
+                                    </button>
+                                    <button class="text-blue-700" onclick="eliminarElemento(${elemento.id})">
+                                        eliminar
+                                    </button>
+                                </h3>
+                            </div>
+                            </div>`;
+  });
+
+  operacionesRealizadas.innerHTML = operacionesHTML;
+  operacionesRealizadas.classList.remove("hidden");
+};
+
+//filtros select
+document
+  .getElementById("filtro-ordenar")
+  .addEventListener("change", function () {
+    const filtroSeleccionado = this.value;
+
+    if (filtroSeleccionado === "monto_mayor") {
+      const mayorMonto = encontrarMayorMonto(operaciones);
+      if (mayorMonto) {
+        mostrarOperacionMayorMonto(mayorMonto);
+      } else {
+        console.log("No hay operaciones para mostrar.");
+      }
+    } else if (filtroSeleccionado === "monto_menor"){
+      const menorMonto = encontrarMenorMonto(operaciones);
+      if (menorMonto) {
+        mostrarOperacionMenorMonto(menorMonto);
+      } else {
+        console.log("No hay operaciones para mostrar.");
+      }
+    }else if (filtroSeleccionado === "A/Z"){
+     const operacionesOrdenadas = encontrarOrdenAlfabetico(operaciones);
+    if (operacionesOrdenadas) {
+      mostrarOperacionesOrdenAlfabetico(operacionesOrdenadas);
+    } else {
+      console.log('No hay operaciones para mostrar.');
+    }
+    }else if(filtroSeleccionado === "Z/A"){
+      const operacionesOrdenadas = encontrarOrdenAlfabeticoZA(operaciones);
+      if (operacionesOrdenadas) {
+        mostrarOperacionesOrdenAlfabeticoZA(operacionesOrdenadas);
+      } else {
+      console.log('No hay operaciones para mostrar.');
+          }
+    }else {
+      mostrarOperacionesEnHTML(operaciones);
+    }
+  });
+
+
+
+
+
+
