@@ -1,14 +1,15 @@
 // Cargar datos desde localStorage
 
 const loadFromLocalStorage = () => {
-    categories = JSON.parse(localStorage.getItem('categories')) || [];
-    operaciones = JSON.parse(localStorage.getItem('operaciones')) || [];
+    const categories = JSON.parse(localStorage.getItem('categories')) || [];
+    const operaciones = JSON.parse(localStorage.getItem('operaciones')) || [];
+    return { categories, operaciones }
 };
 
 // Estilos a  montos Y nombres de categorías
 
 const formatAmountWithColor = (amount, tipo) => {
-    const signo = (tipo === 'gasto') ? '-' : '+'; 
+    const signo = (tipo === 'gasto') ? '-' : '+';
     const colorClass = (parseInt(amount, 10) === 0) ? 'text-gray-500' : (tipo === 'ganancia') ? 'text-green-500' : 'text-red-500';
 
     const formattedAmount = `${signo}$${Math.abs(parseInt(amount, 10))}`;
@@ -164,7 +165,7 @@ const getMonthWithMaxProfit = (operaciones) => {
         }
     }
 
-    return { fecha: maxProfitEntry .fecha, monto: formatAmountWithColor(maxProfitEntry.monto, 'ganancia') };
+    return { fecha: maxProfitEntry.fecha, monto: formatAmountWithColor(maxProfitEntry.monto, 'ganancia') };
 
 };
 
@@ -225,7 +226,7 @@ const getSummaryByMonth = (operaciones) => {
 
     for (const operacion of operaciones) {
         const { fecha, tipo, monto } = operacion;
-        const monthKey = fecha.slice(5, 7) + '/' + fecha.slice(0, 4); 
+        const monthKey = fecha.slice(5, 7) + '/' + fecha.slice(0, 4);
 
         if (!summaryByMonth[monthKey]) {
             summaryByMonth[monthKey] = { ganancia: 0, gasto: 0, balance: 0 };
@@ -246,7 +247,7 @@ const getSummaryByMonth = (operaciones) => {
 
 //mostrar reportes si hay operaciones o si no hay
 
-const mostrarReportes = () => {
+const mostrarReportes = (operaciones) => {
     const maxProfitCategory = getCategoryWithMaxProfit(operaciones);
     const maxExpenseCategory = getCategoryWithMaxExpense(operaciones);
     const maxBalanceCategory = getCategoryWithMaxBalance(operaciones);
@@ -261,7 +262,7 @@ const mostrarReportes = () => {
 
     if (operaciones.length > 0) {
         reportContainer.classList.remove("hidden");
-        sinReportesContainer.classList.add("hidden"); 
+        sinReportesContainer.classList.add("hidden");
 
         actualizarContenido(maxProfitCategory, maxExpenseCategory, maxBalanceCategory, maxProfitMonth, maxExpenseMonth, totalsByCategory);
 
@@ -291,10 +292,10 @@ const mostrarReportes = () => {
         `;
 
 
-// mostrar el resumen por cada mes
+        // mostrar el resumen por cada mes
 
-const resumenPorMesContainer = document.getElementById("resumen-por-mes");
-resumenPorMesContainer.innerHTML = `
+        const resumenPorMesContainer = document.getElementById("resumen-por-mes");
+        resumenPorMesContainer.innerHTML = `
 <div class="overflow-x-auto">
     <table class="w-full table-auto ">
         <thead>
@@ -320,9 +321,9 @@ resumenPorMesContainer.innerHTML = `
 `;
 
     } else {
-        
+
         sinReportesContainer.classList.remove("hidden");
-        reportContainer.classList.add("hidden"); 
+        reportContainer.classList.add("hidden");
     }
 };
 
@@ -344,8 +345,10 @@ const actualizarContenido = (maxProfitCategory, maxExpenseCategory, maxBalanceCa
 
 };
 
+let loadOperaciones = loadFromLocalStorage()
+
 
 document.addEventListener("DOMContentLoaded", () => {
     loadFromLocalStorage();
-    mostrarReportes();
+    mostrarReportes(loadOperaciones.operaciones);
 });
