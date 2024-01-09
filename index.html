@@ -78,7 +78,7 @@
     <section id="seccionBalances">
       <div class="lg:grid grid-cols-4 gap-4" id="balance">
         <div class="pt-12  lg:pt-10">
-          <div class="m-5 w-70 h-30 rounded-lg bg-white lg:w-72 shadow-2xl">
+          <div class="m-5 w-70 h-auto rounded-lg bg-white lg:w-72 shadow-2xl">
             <h3 class="p-4 text-[30px] font-sans font-bold">Balance</h3>
             <div class="p-4 text-[20px] font-sans grid grid-cols-2 gap-2">
               <div>
@@ -107,7 +107,7 @@
           </div>
           <!-- ------------------------filtros-------------- -->
           <div
-            class="m-5 w-70 h-80 rounded-lg bg-white md:w-70 h-96 lg:w-72 shadow-2xl"
+            class="m-5 w-70 h-auto rounded-lg bg-white md:w-70 pb-6 lg:w-72 shadow-2xl"
             id="filtroConteiner"
           >
             <div class="grid grid-cols-2 gap-2">
@@ -123,7 +123,7 @@
             <div id="listaFiltro">
               <div class="px-6">
                 <label for="label" class="font-bold">Tipo</label>
-                <div>
+                <div class="my-2">
                   <div
                     class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60"
                   >
@@ -141,33 +141,22 @@
               </div>
               <div class="px-6">
                 <label for="label" class="font-bold">Categoría</label>
-                <div>
-                  <div
-                    class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60"
-                  >
-                    <select
-                      name="categoria"
-                      id="filtroCategoria"
-                      class="w-52 md:w-[42rem] p-2 lg:w-56"
-                    ><option value="todas">Todas</option></select>
+                <div class="my-2">
+                  <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60">
+                    <select name="categoria" id="filtroCategoria" class="w-52 md:w-[42rem] p-2 lg:w-56"><option value="todas">Todas</option></select>
                   </div>
                 </div>
               </div>
               <div class="px-6">
                 <label for="fecha" class="font-bold">Desde</label>
-                <div
-                  class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60"
-                >
-                  <input
-                    type="date"
-                    id="filtro-fecha"
-                    class="w-52 md:w-[42.5rem] p-2 lg:w-56"
-                  />
+                <div class="my-2">
+                <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60"><input type="date" id="filtro-fecha" class="w-52 md:w-[42.5rem] p-2 lg:w-56"/>
                 </div>
               </div>
+            </div>
               <div class="px-6">
                 <label for="label" class="font-bold">Ordenar por</label>
-                <div>
+                <div class="my-2">
                   <div
                     class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60"
                   >
