@@ -112,7 +112,7 @@
           >
             <div class="grid grid-cols-2 gap-2">
               <div>
-                <h4 class="p-4 text-[25px] font-sans font-bold">Filtros</h4>
+                <h4 class="p-6  text-[25px] font-sans font-bold">Filtros</h4>
               </div>
               <div class="pt-6 md:text-right pr-8">
                 <a href="#" class="text-base text-blue-600" id="ocultarFiltro"
@@ -121,7 +121,7 @@
               </div>
             </div>
             <div id="listaFiltro">
-              <div class="pl-4">
+              <div class="px-6">
                 <label for="label" class="font-bold">Tipo</label>
                 <div>
                   <div
@@ -139,7 +139,7 @@
                   </div>
                 </div>
               </div>
-              <div class="pl-4">
+              <div class="px-6">
                 <label for="label" class="font-bold">Categoría</label>
                 <div>
                   <div
@@ -153,7 +153,7 @@
                   </div>
                 </div>
               </div>
-              <div class="pl-4">
+              <div class="px-6">
                 <label for="fecha" class="font-bold">Desde</label>
                 <div
                   class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60"
@@ -165,7 +165,7 @@
                   />
                 </div>
               </div>
-              <div class="pl-4">
+              <div class="px-6">
                 <label for="label" class="font-bold">Ordenar por</label>
                 <div>
                   <div
@@ -192,7 +192,7 @@
         <!-- -------------------box operaciones--------------- -->
         <div class="lg:pt-10">
           <div
-            class="m-5 w-70 h-[40rem] rounded-lg bg-white md:w-70 md:h-[48rem] lg:w-[42rem] lg:h-[36rem] lg:mr-0 lg:ml-16 shadow-2xl"
+            class="m-5 w-70 h-auto rounded-lg bg-white md:w-70 pb-6 lg:w-[42rem]  lg:mr-0 lg:ml-16 shadow-2xl"
           >
             <div class="lg:grid grid-cols-2 gap-2">
               <div>
@@ -227,8 +227,8 @@
                 Cambia los filtros o agrega operaciones
               </p>
             </div>
-            <div class="">
-              <div class="hidden" id="operacionesRealizadas"></div>
+            <div class="h-auto">
+              <div class="hidden container mx-auto " id="operacionesRealizadas"></div>
             </div>
           </div>
         </div>
@@ -313,6 +313,5 @@
     </section>
     <script src="categories.js"></script>
     <script src="index.js"></script>
-    
   </body>
 </html>

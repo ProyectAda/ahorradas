@@ -89,45 +89,44 @@ const mostrarOperacionesEnHTML = (array) => {
         : "";
     const montoColor = obtenerColorMonto(elemento.tipo);
     const signo = elemento.tipo === "ganancia" ? "+" : "-";
-    operacionesHTML += `<div class="lg:grid grid-cols-5 lg:ml-4 md:grid grid-cols-5 md:ml-4 grid grid-cols-3 ml-4 mr-4">
+    operacionesHTML += `<div class="grid grid-cols-2 sm:grid-cols-5 gap-1 mb-2 p-2 grid justify-center text-center">
                                     <div>
-                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Descripcion
-                                            <div>
+                                        <h3 class="min-[320px]:invisible lg:visible lg:font-semibold lg:text-base md:visible md:font-semibold md:text-base sm:text-xs sm:visible">Descripcion</h3>
+                                            <div class="min-[320px]:text-xs lg:font-semibold lg:text-base md:font-semibold md:text-base sm:text-xs">
                                                 ${elemento.descripcion}
                                             </div>
-                                        </h3>
                                     </div>
-                                    <div>
-                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Categoria
+                                    <div class="min-[320px]:hidden sm:block">
+                                        <h3 class="min-[320px]:invisible lg:visible lg:font-semibold lg:text-base md:visible md:font-semibold md:text-base sm:text-xs sm:visible">Fecha </h3>
+                                            <div class="min-[320px]:text-xs lg:font-semibold lg:text-base md:font-semibold md:text-base sm:text-xs">
+                                                ${fechaIntefaz}
+                                            </div>
+                                       
+                                    </div>
+                                    <div class="min-[320px]:block sm:block">
+                                        <h3 class="min-[320px]:invisible lg:visible lg:font-semibold lg:text-base md:visible md:font-semibold md:text-base sm:text-xs sm:visible">Monto</h3>
                                             <div>
                                                 ${elemento.categoria}
                                             </div>
-                                        </h3>
                                     </div>
                                     <div>
-                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Fecha
-                                            <div class="lg:text-base xs">
-                                                ${fechaIntefaz}
-                                            </div>
-                                        </h3>
-                                    </div>
-                                    <div>
-                                        <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Monto
+                                        <h3 class="min-[320px]:invisible lg:visible lg:font-semibold lg:text-base md:visible md:font-semibold md:text-base sm:text-xs sm:visible">Monto</h3>
                                             <div class="${montoColor}">
                                                 ${signo}$${elemento.monto}
-                                            </div>
-                                        </h3>
+                                            </div> 
                                     </div>
                                     <div>
-                                    <h3 class="lg:font-semibold lg:text-lg md:font-semibold md:text-lg text-xs">Acciones</h3>
-                                        <button class="text-blue-700 font-semibold md:font-semibold md:text-lg text-xs" onclick="editarElemento(${elemento.id})">
+                                        <h3 class="min-[320px]:invisible lg:visible lg:font-semibold lg:text-base md:visible md:font-semibold md:text-base sm:text-xs sm:visible">Acciones</h3>
+                                          <button class="text-blue-700 font-semibold md:font-semibold md:text-lg text-xs" onclick="editarElemento(${elemento.id})">
                                             editar
-                                        </button>
-                                        <button class="text-blue-700 font-semibold md:font-semibold md:text-lg text-xs" onclick="eliminarElemento(${elemento.id})">
+                                          </button>
+                                          <button class="text-blue-700 font-semibold md:font-semibold md:text-lg text-xs" onclick="eliminarElemento(${elemento.id})">
                                             eliminar
-                                        </button>
-                                </div>
-                                </div>`;
+                                          </button>
+                                    </div>
+                        </div>`;
+
+
   });
 
   operacionesRealizadas.innerHTML = operacionesHTML;
@@ -680,13 +679,12 @@ const mostrarOperacionMayorMonto = (operacion) => {
       </button>
   </h3>
 </div>
-</div>`
-  })
+</div>`;
+  });
 
   operacionesRealizadas.innerHTML = operacionHTML;
   operacionesRealizadas.classList.remove("hidden");
 };
-
 
 //menor monto
 const encontrarMenorMonto = (operaciones) => {
@@ -698,23 +696,21 @@ const encontrarMenorMonto = (operaciones) => {
   const operacionesOrdenadas = copiaOperaciones.sort(
     (a, b) => parseFloat(a.monto) - parseFloat(b.monto)
   );
-  
 
   return operacionesOrdenadas;
 };
 
 const mostrarOperacionMenorMonto = (operacion) => {
-  
-  const operacionHTML = operacion.map((op)=>{
+  const operacionHTML = operacion.map((op) => {
     const dateArray = op.fecha ? op.fecha.split("-") : [];
-  const fechaIntefaz =
-    dateArray.length === 3
-      ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
-      : "";
-  const montoColor = obtenerColorMonto(op.tipo);
-  const signo = op.tipo === "ganancia" ? "+" : "-";
+    const fechaIntefaz =
+      dateArray.length === 3
+        ? dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0]
+        : "";
+    const montoColor = obtenerColorMonto(op.tipo);
+    const signo = op.tipo === "ganancia" ? "+" : "-";
 
-    return  `<div class="lg:grid grid-cols-5 lg:ml-4 ">
+    return `<div class="lg:grid grid-cols-5 lg:ml-4 ">
     <div class="">
         <h3 class="font-semibold text-lg">Descripcion
             <span class="">
@@ -754,12 +750,10 @@ const mostrarOperacionMenorMonto = (operacion) => {
     </h3>
 </div>
 </div>`;
-
-  })
+  });
   operacionesRealizadas.innerHTML = operacionHTML;
   operacionesRealizadas.classList.remove("hidden");
 };
-
 
 //ordenar de la a/z
 
@@ -769,14 +763,12 @@ const encontrarOrdenAlfabetico = (operaciones) => {
   }
 
   const copiaOperaciones = operaciones.slice();
-  const operacionesOrdenadas = copiaOperaciones.sort((a,b)=>{
-    return a.descripcion.localeCompare(b.descripcion)
-  })
- 
-   
+  const operacionesOrdenadas = copiaOperaciones.sort((a, b) => {
+    return a.descripcion.localeCompare(b.descripcion);
+  });
 
   return operacionesOrdenadas;
-}
+};
 
 const mostrarOperacionesOrdenAlfabetico = (operaciones) => {
   let operacionesHTML = "";
@@ -834,7 +826,6 @@ const mostrarOperacionesOrdenAlfabetico = (operaciones) => {
   operacionesRealizadas.classList.remove("hidden");
 };
 
-
 //ordenar z/a
 
 const encontrarOrdenAlfabeticoZA = (operaciones) => {
@@ -844,11 +835,11 @@ const encontrarOrdenAlfabeticoZA = (operaciones) => {
 
   const copiaOperaciones = operaciones.slice();
   const operacionesOrdenadas = copiaOperaciones.sort((a, b) => {
-    return b.descripcion.localeCompare(a.descripcion)
+    return b.descripcion.localeCompare(a.descripcion);
   });
 
   return operacionesOrdenadas;
-}
+};
 
 const mostrarOperacionesOrdenAlfabeticoZA = (operaciones) => {
   let operacionesHTML = "";
@@ -919,34 +910,28 @@ document
       } else {
         console.log("No hay operaciones para mostrar.");
       }
-    } else if (filtroSeleccionado === "monto_menor"){
+    } else if (filtroSeleccionado === "monto_menor") {
       const menorMonto = encontrarMenorMonto(operaciones);
       if (menorMonto) {
         mostrarOperacionMenorMonto(menorMonto);
       } else {
         console.log("No hay operaciones para mostrar.");
       }
-    }else if (filtroSeleccionado === "A/Z"){
-     const operacionesOrdenadas = encontrarOrdenAlfabetico(operaciones);
-    if (operacionesOrdenadas) {
-      mostrarOperacionesOrdenAlfabetico(operacionesOrdenadas);
-    } else {
-      console.log('No hay operaciones para mostrar.');
-    }
-    }else if(filtroSeleccionado === "Z/A"){
+    } else if (filtroSeleccionado === "A/Z") {
+      const operacionesOrdenadas = encontrarOrdenAlfabetico(operaciones);
+      if (operacionesOrdenadas) {
+        mostrarOperacionesOrdenAlfabetico(operacionesOrdenadas);
+      } else {
+        console.log("No hay operaciones para mostrar.");
+      }
+    } else if (filtroSeleccionado === "Z/A") {
       const operacionesOrdenadas = encontrarOrdenAlfabeticoZA(operaciones);
       if (operacionesOrdenadas) {
         mostrarOperacionesOrdenAlfabeticoZA(operacionesOrdenadas);
       } else {
-      console.log('No hay operaciones para mostrar.');
-          }
-    }else {
+        console.log("No hay operaciones para mostrar.");
+      }
+    } else {
       mostrarOperacionesEnHTML(operaciones);
     }
   });
-
-
-
-
-
-
