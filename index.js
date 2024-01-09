@@ -105,7 +105,7 @@ const mostrarOperacionesEnHTML = (array) => {
                                     </div>
                                     <div class="min-[320px]:block sm:block">
                                         <h3 class="min-[320px]:invisible lg:visible lg:font-semibold lg:text-base md:visible md:font-semibold md:text-base sm:text-xs sm:visible">Monto</h3>
-                                            <div>
+                                            <div class="bg-[#d1fae5] text-[#00d1b2] px-4 rounded-md mr-[3.5rem] sm:mr-[1.5rem]">
                                                 ${elemento.categoria}
                                             </div>
                                     </div>
