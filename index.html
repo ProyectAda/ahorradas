@@ -1,263 +1,203 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="./assets/imagen/icon.svg" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script
-      src="https://kit.fontawesome.com/641b5da981.js"
-      crossorigin="anonymous"
-    ></script>
-    <title>AhorrADAS</title>
-  </head>
-  <body class="bg-slate-50">
-    <header>
-      <!-- Barra de navegación -->
-      <nav class="bg-[#00d1b2] p-4">
-        <div class="container mx-auto flex justify-between items-center">
-          <!-- Logo -->
-          <a
-            href="index.html"
-            class="text-white text-2xl font-semibold hover:bg-[#00947e]/[.36] p-2 rounded-lg"
-            ><i class="fa-solid fa-wallet p-2"></i>AhorrADAS</a
-          >
 
-          <!-- Botón de hamburguesa para pantallas pequeñas -->
-          <div class="block lg:hidden">
-            <button id="toggleBtn" class="text-white focus:outline-none">
-              <i
-                id="hamburgerIcon"
-                class="fa-solid fa-bars text-xl hover:bg-[#00947e]/[.36] p-2 rounded-lg"
-              ></i>
-            </button>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="./assets/imagen/icon.svg" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/641b5da981.js" crossorigin="anonymous"></script>
+  <title>AhorrADAS</title>
+</head>
 
-          <!-- Menú de navegación -->
-          <div class="hidden lg:flex space-x-4">
-            <a
-              href="index.html"
-              class="text-white hover:bg-[#00947e]/[.36] p-2 rounded-lg"
-              ><i class="fas fa-chart-line p-2"></i>Balance</a
-            >
-            <a
-              href="categories.html"
-              class="text-white hover:bg-[#00947e]/[.36] p-2 rounded-lg"
-              ><i class="fa-solid fa-tag p-2"></i>Categorías</a
-            >
-            <a
-              href="reports.html"
-              class="text-white hover:bg-[#00947e]/[.36] p-2 rounded-lg"
-              ><i class="fas fa-chart-pie p-2"></i>Reportes</a
-            >
-          </div>
+<body class="bg-slate-50">
+  <header>
+    <!-- Barra de navegación -->
+    <nav class="bg-[#00d1b2] p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <!-- Logo -->
+        <a href="index.html" class="text-white text-2xl font-semibold hover:bg-[#00947e]/[.36] p-2 rounded-lg"><i
+            class="fa-solid fa-wallet p-2"></i>AhorrADAS</a>
+
+        <!-- Botón de hamburguesa para pantallas pequeñas -->
+        <div class="block lg:hidden">
+          <button id="toggleBtn" class="text-white focus:outline-none">
+            <i id="hamburgerIcon" class="fa-solid fa-bars text-xl hover:bg-[#00947e]/[.36] p-2 rounded-lg"></i>
+          </button>
         </div>
-      </nav>
 
-      <!-- Menú desplegable para pantallas pequeñas -->
-      <div id="mobileMenu" class="lg:hidden hidden bg-white">
-        <a
-          href="index.html"
-          class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"
-          ><i class="fas fa-chart-line p-2"></i>Balance</a
-        >
-        <a
-          href="categories.html"
-          class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"
-          ><i class="fa-solid fa-tag p-2"></i>Categorías</a
-        >
-        <a
-          href="reports.html"
-          class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"
-          ><i class="fas fa-chart-pie p-2"></i>Reportes</a
-        >
+        <!-- Menú de navegación -->
+        <div class="hidden lg:flex space-x-4">
+          <a class="text-white hover:bg-[#00947e]/[.36] p-2 rounded-lg" id="toggleBtnHome"><i
+              class="fas fa-chart-line p-2"></i>Balance</a>
+          <a class="text-white hover:bg-[#00947e]/[.36] p-2 rounded-lg" id="toggleBtnCategory"><i
+              class="fa-solid fa-tag p-2"></i>Categorías</a>
+          <a class="text-white hover:bg-[#00947e]/[.36] p-2 rounded-lg" id="toggleBtnReport"><i
+              class="fas fa-chart-pie p-2"></i>Reportes</a>
+        </div>
       </div>
-    </header>
-    <!-- -----------------------BALANCE--------------- -->
-    <!---------------------section balance--------------->
-    <section id="seccionBalances">
-      <div class="lg:grid grid-cols-4 gap-4" id="balance">
-        <div class="pt-12  lg:pt-10">
-          <div class="m-5 w-70 h-auto rounded-lg bg-white lg:w-72 shadow-2xl">
-            <h3 class="p-4 text-[30px] font-sans font-bold">Balance</h3>
-            <div class="p-4 text-[20px] font-sans grid grid-cols-2 gap-2">
-              <div>
-                <p>Ganancias</p>
-              </div>
-              <div class=" text-lime-500 md:text-end">
-                <p id="ganancias">+$0</p>
-              </div>
+    </nav>
+
+    <!-- Menú desplegable para pantallas pequeñas -->
+    <div id="mobileMenu" class="lg:hidden hidden bg-white">
+      <a class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"
+        id="toggleBtnHomeLittle"><i class="fas fa-chart-line p-2"></i>Balance</a>
+      <a class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"
+        id="toggleBtnCategoryLittle"><i class="fa-solid fa-tag p-2"></i>Categorías</a>
+      <a class="block text-slate-700 p-2 hover:bg-slate-100 hover:text-[#3273dc]"
+        id="toggleBtnReportLittle"><i class="fas fa-chart-pie p-2"></i>Reportes</a>
+    </div>
+  </header>
+  <!-- -----------------------BALANCE--------------- -->
+  <!---------------------section balance--------------->
+  <section id="seccionBalances">
+    <div class="lg:grid grid-cols-4 gap-4" id="balance">
+      <div class="pt-12  lg:pt-10">
+        <div class="m-5 w-70 h-auto rounded-lg bg-white lg:w-72 shadow-2xl">
+          <h3 class="p-4 text-[30px] font-sans font-bold">Balance</h3>
+          <div class="p-4 text-[20px] font-sans grid grid-cols-2 gap-2">
+            <div>
+              <p>Ganancias</p>
             </div>
-            <div class="p-4 text-[20px] font-sans grid grid-cols-2 gap-2">
-              <div>
-                <p>Gastos</p>
-              </div>
-              <div class=" text-red-600 md:text-end">
-                <p id="gastos">-$0</p>
-              </div>
-            </div>
-            <div class="p-4 text-[20px] font-sans grid grid-cols-2 gap-2">
-              <div class="text-[25px]">
-                <p>Total</p>
-              </div>
-              <div class="md:text-end">
-                <p id="diferencia">$0</p>
-              </div>
+            <div class=" text-lime-500 md:text-end">
+              <p id="ganancias">+$0</p>
             </div>
           </div>
-          <!-- ------------------------filtros-------------- -->
-          <div
-            class="m-5 w-70 h-auto rounded-lg bg-white md:w-70 pb-6 lg:w-72 shadow-2xl"
-            id="filtroConteiner"
-          >
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <h4 class="p-6  text-[25px] font-sans font-bold">Filtros</h4>
-              </div>
-              <div class="pt-6 md:text-right pr-8">
-                <a href="#" class="text-base text-blue-600" id="ocultarFiltro"
-                  >Ocultar filtros</a
-                >
-              </div>
+          <div class="p-4 text-[20px] font-sans grid grid-cols-2 gap-2">
+            <div>
+              <p>Gastos</p>
             </div>
-            <div id="listaFiltro">
-              <div class="px-6">
-                <label for="label" class="font-bold">Tipo</label>
-                <div class="my-2">
-                  <div
-                    class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60"
-                  >
-                    <select
-                      name="tipo"
-                      id="filtro-tipo"
-                      class="w-52 md:w-[42rem] p-2 lg:w-56"
-                    >
-                      <option value="todos">Todos</option>
-                      <option value="gasto">Gastos</option>
-                      <option value="ganancia">Ganancias</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="px-6">
-                <label for="label" class="font-bold">Categoría</label>
-                <div class="my-2">
-                  <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60">
-                    <select name="categoria" id="filtroCategoria" class="w-52 md:w-[42rem] p-2 lg:w-56"><option value="todas">Todas</option></select>
-                  </div>
-                </div>
-              </div>
-              <div class="px-6">
-                <label for="fecha" class="font-bold">Desde</label>
-                <div class="my-2">
-                <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60"><input type="date" id="filtro-fecha" class="w-52 md:w-[42.5rem] p-2 lg:w-56"/>
-                </div>
-              </div>
+            <div class=" text-red-600 md:text-end">
+              <p id="gastos">-$0</p>
             </div>
-              <div class="px-6">
-                <label for="label" class="font-bold">Ordenar por</label>
-                <div class="my-2">
-                  <div
-                    class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60"
-                  >
-                    <select
-                      name="fitroOrdenar"
-                      id="filtro-ordenar"
-                      class="w-52 md:w-[42rem] p-2 lg:w-56"
-                    >
-                      <option value="recientes">Mas reciente</option>
-                      <option value="antiguas">Menos reciente</option>
-                      <option id="ordenarPorMayor" value="monto_mayor">Mayor monto</option>
-                      <option id="ordenarPorMenor" value="monto_menor">Menor monto</option>
-                      <option id="ordenarDeA/Z" value="A/Z">A/Z</option>
-                      <option value="Z/A">Z/A</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
+          </div>
+          <div class="p-4 text-[20px] font-sans grid grid-cols-2 gap-2">
+            <div class="text-[25px]">
+              <p>Total</p>
+            </div>
+            <div class="md:text-end">
+              <p id="diferencia">$0</p>
             </div>
           </div>
         </div>
-        <!-- -------------------box operaciones--------------- -->
-        <div class="lg:pt-10">
-          <div
-            class="m-5 w-70 h-auto rounded-lg bg-white md:w-70 pb-6 lg:w-[42rem]  lg:mr-0 lg:ml-16 shadow-2xl"
-          >
-            <div class="lg:grid grid-cols-2 gap-2">
-              <div>
-                <h4 class="p-4 text-[25px] font-sans font-bold">Operaciones</h4>
-              </div>
-              <div
-                class="m-5 w-40 h-8 bg-[#00d1b2] hover:bg-emerald-500 rounded lg:ml-32"
-              >
-                <button
-                  type="button"
-                  class="cursor-pointer p-1 text-white"
-                  id="botonNuevaOperacion"
-                >
-                  + Nueva Operacion
-                </button>
+        <!-- ------------------------filtros-------------- -->
+        <div class="m-5 w-70 h-auto rounded-lg bg-white md:w-70 pb-6 lg:w-72 shadow-2xl" id="filtroConteiner">
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <h4 class="p-6  text-[25px] font-sans font-bold">Filtros</h4>
+            </div>
+            <div class="pt-6 md:text-right pr-8">
+              <a href="#" class="text-base text-blue-600" id="ocultarFiltro">Ocultar filtros</a>
+            </div>
+          </div>
+          <div id="listaFiltro">
+            <div class="px-6">
+              <label for="label" class="font-bold">Tipo</label>
+              <div class="my-2">
+                <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60">
+                  <select name="tipo" id="filtro-tipo" class="w-52 md:w-[42rem] p-2 lg:w-56">
+                    <option value="todos">Todos</option>
+                    <option value="gasto">Gastos</option>
+                    <option value="ganancia">Ganancias</option>
+                  </select>
+                </div>
               </div>
             </div>
-            <!-- ----------------SIN OPERACIONES------------ -->
-            <div id="sin-operaciones">
-              <div class="m-5">
-                <img
-                  src="./assets/imagen/operaciones.svg"
-                  class="pt-20 md:pl-28 md:pr-28 md:py-0 lg:pt-20"
-                />
+            <div class="px-6">
+              <label for="label" class="font-bold">Categoría</label>
+              <div class="my-2">
+                <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60">
+                  <select name="categoria" id="filtroCategoria" class="w-52 md:w-[42rem] p-2 lg:w-56">
+                    <option value="todas">Todas</option>
+                  </select>
+                </div>
               </div>
-              <h4
-                class="flex justify-center text-2xl font-sans font-medium pt-8 pb-5"
-              >
-                Sin resultados
-              </h4>
-              <p class="pl-3 text-center">
-                Cambia los filtros o agrega operaciones
-              </p>
             </div>
-            <div class="h-auto">
-              <div class="hidden container mx-auto " id="operacionesRealizadas"></div>
+            <div class="px-6">
+              <label for="fecha" class="font-bold">Desde</label>
+              <div class="my-2">
+                <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60"><input
+                    type="date" id="filtro-fecha" class="w-52 md:w-[42.5rem] p-2 lg:w-56" />
+                </div>
+              </div>
+            </div>
+            <div class="px-6">
+              <label for="label" class="font-bold">Ordenar por</label>
+              <div class="my-2">
+                <div class="border-solid border-2 border-neutral-200 rounded-lg w-56 md:w-[43rem] lg:w-60">
+                  <select name="fitroOrdenar" id="filtro-ordenar" class="w-52 md:w-[42rem] p-2 lg:w-56">
+                    <option value="recientes">Mas reciente</option>
+                    <option value="antiguas">Menos reciente</option>
+                    <option id="ordenarPorMayor" value="monto_mayor">Mayor monto</option>
+                    <option id="ordenarPorMenor" value="monto_menor">Menor monto</option>
+                    <option id="ordenarDeA/Z" value="A/Z">A/Z</option>
+                    <option value="Z/A">Z/A</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+      <!-- -------------------box operaciones--------------- -->
+      <div class="lg:pt-10">
+        <div class="m-5 w-70 h-auto rounded-lg bg-white md:w-70 pb-6 lg:w-[42rem]  lg:mr-0 lg:ml-16 shadow-2xl">
+          <div class="lg:grid grid-cols-2 gap-2">
+            <div>
+              <h4 class="p-4 text-[25px] font-sans font-bold">Operaciones</h4>
+            </div>
+            <div class="m-5 w-40 h-8 bg-[#00d1b2] hover:bg-emerald-500 rounded lg:ml-32">
+              <button type="button" class="cursor-pointer p-1 text-white" id="botonNuevaOperacion">
+                + Nueva Operacion
+              </button>
+            </div>
+          </div>
+          <!-- ----------------SIN OPERACIONES------------ -->
+          <div id="sin-operaciones">
+            <div class="m-5">
+              <img src="./assets/imagen/operaciones.svg" class="pt-20 md:pl-28 md:pr-28 md:py-0 lg:pt-20" />
+            </div>
+            <h4 class="flex justify-center text-2xl font-sans font-medium pt-8 pb-5">
+              Sin resultados
+            </h4>
+            <p class="pl-3 text-center">
+              Cambia los filtros o agrega operaciones
+            </p>
+          </div>
+          <div class="h-auto">
+            <div class="hidden container mx-auto " id="operacionesRealizadas"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Sección de Nueva Operación -->
-    <section class="hidden" id="seccionAgregarOperacion">
-      <form action="#">
-      <div
-        class="ml-4 mt-20 mb-16 w-72 h-[40rem] rounded-lg bg-white md:w-[46rem] md:h-[40rem] lg:ml-36 shadow-2xl"
-      >
+  <!-- Sección de Nueva Operación -->
+  <section class="hidden" id="seccionAgregarOperacion">
+    <form action="#">
+      <div class="ml-4 mt-20 mb-16 w-72 h-[40rem] rounded-lg bg-white md:w-[46rem] md:h-[40rem] lg:ml-36 shadow-2xl">
         <h2 class="text-4xl ml-5 mr-4 pt-6 pb-10 font-bold">Nueva operación</h2>
         <div>
           <label class="ml-4 font-bold">Descripción</label>
           <div class="ml-4 pt-2 pb-2">
-            <input
-              type="text"
+            <input type="text"
               class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]"
-              id="input-descripcion-nueva-operacion"
-            />
+              id="input-descripcion-nueva-operacion" />
           </div>
         </div>
         <div>
           <label class="ml-4 font-bold">Monto</label>
           <div class="ml-4 pt-2 pb-2">
-            <input
-              type="number"
+            <input type="number"
               class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]"
-              id="monto-nueva-operacion"
-            />
+              id="monto-nueva-operacion" />
           </div>
         </div>
         <div>
           <label class="ml-4 font-bold">Tipo</label>
           <div class="ml-4 pt-2 pb-2">
-            <select
-              id="tipo-nueva-operacion"
-              class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]"
-            >
+            <select id="tipo-nueva-operacion"
+              class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]">
               <option value="ganancia">Ganancia</option>
               <option value="gasto">Gasto</option>
             </select>
@@ -266,41 +206,122 @@
         <div>
           <label class="ml-4 font-bold">Categoría</label>
           <div class="ml-4 pt-2 pb-2">
-            <select
-              id="categoria-nueva-operacion"
-              class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]"
-            ></select>
+            <select id="categoria-nueva-operacion"
+              class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]"></select>
           </div>
         </div>
         <div>
           <label class="ml-4 font-bold" for="date">Fecha</label>
           <div class="ml-4 pt-2 pb-2">
-            <input
-              class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]"
-              id="fecha-nueva-operacion"
-              type="date"
-              value="2023-12-22"
-            />
+            <input class="border-solid border-2 border-neutral-200 rounded-lg w-64 h-10 rounded md:w-[44rem]"
+              id="fecha-nueva-operacion" type="date" value="2023-12-22" />
           </div>
         </div>
         <div class="flex justify-end mt-6 mr-4">
-          <button
-            class="bg-[#f5f5f5] w-20 h-10 text-black rounded mr-2"
-            id="boton-cancelar-agregar-operacion"
-          >
+          <button class="bg-[#f5f5f5] w-20 h-10 text-black rounded mr-2" id="boton-cancelar-agregar-operacion">
             Cancelar
           </button>
-          <button
-            class="bg-[#48c774] w-20 h-10 text-white rounded"
-            id="boton-agregar-operacion"
-          >
+          <button class="bg-[#48c774] w-20 h-10 text-white rounded" id="boton-agregar-operacion">
             Agregar
           </button>
         </div>
       </div>
     </form>
-    </section>
-    <script src="categories.js"></script>
-    <script src="index.js"></script>
-  </body>
+  </section>
+
+  <!-- Contenedor de categorías -->
+  <section class="hidden m-4 sm:m-6 md:m-8 lg:m-12" id="category-view">
+    <div class="max-w-full mx-auto bg-white p-4 sm:p-6 md:p-8 lg:p-10 rounded-md shadow-md">
+
+      <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Categorías</h1>
+
+      <div class="flex flex-col mb-4">
+        <label for="category"
+          class="block text-sm sm:text-base md:text-lg lg:text-xl font-medium text-gray-600 mb-2">Nombre:</label>
+        <div class="flex items-center">
+          <input type="text" id="category" class="p-2 border rounded-md flex-1 mr-2">
+          <button onclick="addCategory()"
+            class="bg-[#48c774] text-white px-2 sm:px-3 md:px-4 lg:px-5 py-2 rounded-md">Agregar</button>
+        </div>
+      </div>
+
+      <div id="categoryList" class="mt-4">
+        <!-- Aquí se mostrarán las categorías -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contenedor de Reporte -->
+  <section class="hidden p-4 md:p-8" id="report-view">
+    <div class="container mx-auto">
+      <div class="bg-white p-4 md:p-8 shadow-md">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold mb-4">Reportes</h1>
+        </div>
+        <!-- Contenedor Sin Reporte -->
+        <div class="flex flex-col items-center" id="sin-reportes">
+          <img src="./assets/imagen/reportes.svg" alt="Persona y cuadro de gráficos"
+            class="w-full md:w-1/2 lg:w-2/3 xl:w-1/2 2xl:w-1/3 h-auto md:h-auto lg:h-auto xl:h-auto 2xl:h-auto md:mr-4 md:mb-0">
+          <div>
+            <h4 class="text-lg md:text-xl font-bold mb-2">Operaciones insuficientes</h4>
+            <p class="text-gray-600">Prueba agregando más operaciones</p>
+          </div>
+        </div>
+
+        <!-- Contenedor con Reporte -->
+        <div class="hidden" id="report-container">
+          <div class="mb-4">
+            <h2 class="text-lg font-bold px-4 py-4">Resumen</h2>
+            <table class="w-full mb-4">
+              <tbody class="space-y-4">
+                <tr>
+                  <td class="font-semibold">Categoría con mayor ganancia:</td>
+                  <td class="px-4 py-2"><span id="max-profit-category"></span></td>
+                  <td class="px-4 py-2"><span id="max-profit-amount"></span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Categoría con mayor gasto:</td>
+                  <td class="px-4 py-2"><span id="max-expense-category"></span></td>
+                  <td class="px-4 py-2"><span id="max-expense-amount"></span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Categoría con mayor balance:</td>
+                  <td class="px-4 py-2"><span id="max-balance-category"></span></td>
+                  <td class="px-4 py-2"><span id="max-balance-amount"></span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Mes con mayor ganancia:</td>
+                  <td class="px-4 py-2"><span id="max-profit-month"></span></td>
+                  <td class="px-4 py-2"><span id="max-profit-month-amount"></span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">Mes con mayor gasto:</td>
+                  <td class="px-4 py-2"><span id="max-expense-month"></span></td>
+                  <td class="px-4 py-2"><span id="max-expense-month-amount"></span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2 class="text-lg font-bold px-4 py-6">Totales por categorías</h2>
+
+            <div class="w-full mb-4" id="tabla-categorias"></div>
+
+            <h2 class="text-lg font-bold px-4 py-6">Totales por categorías</h2>
+
+            <div class="w-full mb-4" id="resumen-por-mes"></div>
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+  <script src="categories.js"></script>
+  <script src="index.js"></script>
+  <script src="reports.js"></script>
+  <script src="views.js"></script>
+</body>
+
 </html>
