@@ -935,3 +935,4 @@ document
       mostrarOperacionesEnHTML(operaciones);
     }
   });
+

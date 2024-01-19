@@ -1,3 +1,4 @@
+
 // Cargar datos desde localStorage
 
 const loadFromLocalStorage = () => {
@@ -348,7 +349,16 @@ const actualizarContenido = (maxProfitCategory, maxExpenseCategory, maxBalanceCa
 let loadOperaciones = loadFromLocalStorage()
 
 
-document.addEventListener("DOMContentLoaded", () => {
+/* document.addEventListener("DOMContentLoaded", () => {
     loadFromLocalStorage();
     mostrarReportes(loadOperaciones.operaciones);
-});
+}); */
+
+const inicializar = () => {
+    loadFromLocalStorage();
+    mostrarReportes(loadOperaciones.operaciones);
+}
+window.onload = inicializar()
+window.addEventListener('Storage', function(event){
+    console.log(event)
+})
