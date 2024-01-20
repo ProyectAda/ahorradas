@@ -193,6 +193,7 @@ botonAgregarNuevaOperacion.addEventListener("click", () => {
   mostrarGastosEnHTML();
   actualizarBalancesEnHTML();
   filtrarOperacionesYBalances();
+  inicializarPagina()
 });
 
 // boton eliminar

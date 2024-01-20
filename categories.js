@@ -36,6 +36,7 @@ const addCategory = () => {
         saveLocalCategories(categories);
         updateCategoryList(categories);
         inputCategory.value = '';
+        inicializarPagina()
     }
 };
 
