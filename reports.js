@@ -54,7 +54,7 @@ const getCategoryWithMaxProfit = (operaciones) => {
         }
     }
 
-    let maxProfitCategory = {};
+    let maxProfitCategory = null;
     let maxProfit = 0;
 
     for (const categoria in categoriasGanancia) {
@@ -91,7 +91,7 @@ const getCategoryWithMaxExpense = (operaciones) => {
         }
     }
 
-    let maxExpenseCategory = {};
+    let maxExpenseCategory = null;
     let maxExpense = 0;
 
     for (const categoria in categoriasGasto) {
