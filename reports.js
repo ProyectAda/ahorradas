@@ -147,7 +147,7 @@ const getCategoryWithMaxBalance = (operaciones) => {
 // obtener el resumen por mes con mayor ganancia
 
 const getMonthWithMaxProfit = (operaciones) => {
-    let maxProfitEntry = null;
+    let maxProfitEntry = {};
     let maxProfit = 0;
 
     const profitByMonth = {};
@@ -173,7 +173,7 @@ const getMonthWithMaxProfit = (operaciones) => {
 // obtener el resumen por mes con mayor gasto
 
 const getMonthWithMaxExpense = (operaciones) => {
-    let maxExpenseEntry = null;
+    let maxExpenseEntry = {};
     let maxExpense = 0;
 
     const expenseByMonth = {};
